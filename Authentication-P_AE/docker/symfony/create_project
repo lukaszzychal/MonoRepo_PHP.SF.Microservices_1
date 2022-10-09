@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# if [ ! -d ./tmp_code ];
+# then
+# docker-compose exec php symfony new --version=6.1 --php=8.1 --dir=./tmp_code
+# fi
+
+docker-compose exec php bash -c " 
+echo 'Copy bin '
+cp -R ./tmp_code/bin/ .
+echo 'Copy config '
+ cp -R ./tmp_code/config/ .
+echo 'Copy public '
+ cp -R ./tmp_code/public/ .
+echo 'Copy src '
+ cp -R ./tmp_code/src/ .
+echo 'Copy vendor '
+chmod -R a+rwx ./tmp_code/vendor
+cp -R ./tmp_code/vendor/ .
+echo 'Copy env '
+cat ./tmp_code/.env >> ./.env
+echo 'Copy gitignore '
+cat ./tmp_code/.gitignore >> ./.gitignore
+echo 'Copy composer file '
+ cp  ./tmp_code/composer.json ./composer.json
+ cp  ./tmp_code/composer.lock ./composer.lock
+echo 'Copy symfony.lock '
+ cp  ./tmp_code/symfony.lock ./symfony.lock
+echo 'Copy .php-version '
+cp ./tmp_code/.php-version ./.php-version
+# "
+    
+# docker-compose exec php rm -R tmp_code

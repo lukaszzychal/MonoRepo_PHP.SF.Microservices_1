@@ -1,0 +1,4 @@
+#!/bin/bash
+
+
+ docker-compose exec  php bash -c " symfony server:ca:install && symfony server:stop && symfony server:start --port=8000 -d"
