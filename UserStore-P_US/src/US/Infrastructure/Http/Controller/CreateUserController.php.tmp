@@ -1,0 +1,30 @@
+<?php
+
+namespace US\Infrastructure\Http\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+
+class CreateUserController extends AbstractController
+{
+    /**
+     * @Route("/users", name="create_user", method=[POST])
+     *
+     * @return Response
+     */
+    public function createUser(): Response
+    {
+        return new Response("test");
+    }
+
+    /**
+     * @Route("/users", name="get_collection_users", method=[GET])
+     *
+     * @return JsonResponse
+     */
+    public function getCollectionUsers(): JsonResponse
+    {
+        return $this->json(['property' => 'value'], 200);
+    }
+}

@@ -1,0 +1,19 @@
+version: '3.4'
+
+services:
+  php:
+    container_name: PHP_P_US
+    build:
+      context: ./docker/php
+      dockerfile: ./Dockerfile
+    ports:
+      - 8001:8000
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - P_US_network
+
+
+networks:
+  P_US_network:
+   driver: bridge

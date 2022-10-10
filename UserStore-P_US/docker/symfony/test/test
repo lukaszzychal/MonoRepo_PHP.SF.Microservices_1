@@ -1,0 +1,6 @@
+#!/bin/bash
+
+docker/symfony/test/unit
+docker/symfony/test/integration
+docker/symfony/test/application
+docker/symfony/test/others

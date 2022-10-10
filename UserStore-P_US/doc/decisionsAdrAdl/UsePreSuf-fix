@@ -1,0 +1,9 @@
+Problem:
+    Czy używać pre/suf fix w nazwach klass czy ne. Np. Interface, Abstract, Enum itp
+
+Rozwiązania:
+1. Używane zgodnie rekomendacjami PSR i Symfony 
+2. Nie używanie związku, że struktura i namesapce wskazują na używanie ich
+
+Wybór:
+1. Na tą chwiilęę będziemy siie trzymać rekonedacji symfony i PSR

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+docker/symfony/rebuild-and-start-dev
+docker/symfony/install-cli
+# docker/symfony/create_project
+
+docker/symfony/run-server-symfony

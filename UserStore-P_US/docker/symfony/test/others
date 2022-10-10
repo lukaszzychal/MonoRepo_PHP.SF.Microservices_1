@@ -1,0 +1,2 @@
+#!/bin/bash
+docker-compose exec php ./bin/phpunit --exclude-group Unit --exclude-group Integration --exclude-group Application

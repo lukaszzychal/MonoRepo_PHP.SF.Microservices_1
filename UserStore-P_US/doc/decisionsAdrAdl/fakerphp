@@ -1,0 +1,18 @@
+Problem: 
+    Czy używać bibloteki fakerphp, czy bundla symfoni zawierającego tą bibloteekęę czy żadną
+
+Rozwiązania:
+1. Nie używane żadenj bibloteki. Zamiast tego tworzenie rzeczywistych własnych fakbryk z danymi testowymi
+    + Odizolowanie od frameworku
+    - Wolniejsze w  implemenacji, więcej pracy
+2. Zaiinstalowanie czystej bibloteki
+    + brak zainstalowanych nieeporzeebnych zależności
+    - Czasami będzie trzeba samemu impleementowac brakujące funckcje
+3. Użycie bundla Foundry, który używa fakeerphp
+    + Szybsza implemeentacja, dodatkowe metody, możliwośc użycia bundla maker
+    - uzalenienie od koleejnego bundla 
+
+Wybór: 3
+Powód Wyboru: 
+    Związku z brakim czasu i potrzby stworzenia działającego MVP. Wybór 3 zaoszczędzi trochę czasu ii w przysłości bedzie można dokonać refatoryzacji
+    
