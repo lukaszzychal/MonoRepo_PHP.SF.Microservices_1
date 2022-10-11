@@ -1,1 +1,13 @@
-webmozart/assert
+Problem:
+    Walidacja w domenie. Czy używać bibloteeki symfony, zewneetrzej i uzalenianić domenę od nej, czy pisać włąsne valiidacjee
+
+Rozwiązania:
+1. Korzystanie z constraints symfony
+    Łatwe w użyciu i dostarczone z symfony, al użaleni od frameeworka, oraz potrzeba wstrzykiwania zależności servisów by pprztestować (Uppewnieenie sięę)
+2. Korzystanie z zewnetrzej bibloteki
+    Uzaleniee od zwnetrzej bibloteeki, ale łątwiejsze nie zaleeżnee od framworka. Ułati i przyszpieszy prace
+3. Piisanie włąsnynych walidacji
+    Dobre rozwiązanie, dla domeeny. Nie uzalenia od nych częsci systemu. Ale wydłuża wdrożenei
+
+Wybór: 2
+ Wybór padł na używanie zewneetrzej biiblotek  webmozart/assert

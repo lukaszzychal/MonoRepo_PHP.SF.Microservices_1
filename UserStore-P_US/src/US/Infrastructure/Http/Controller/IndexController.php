@@ -12,6 +12,6 @@ class IndexController extends AbstractController
     #[Route('/', name: 'app_index', methods: [Request::METHOD_GET])]
     public function index(): Response
     {
-        return new Response("Project [P_US] User Story");
+        return new Response('Project [P_US] User Story');
     }
 }

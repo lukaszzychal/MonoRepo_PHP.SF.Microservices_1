@@ -1,0 +1,133 @@
+name: ci-P_US-dev
+
+on: push
+  # paths:
+  #   - "UserStore-P_US/**"
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+     - 
+      name: Checkout
+      uses: actions/checkout@v3
+     - 
+      name: Copy file
+      run: |
+        ls -la UserStore-P_US
+        cp -Rf UserStore-P_US/. .
+        
+     - 
+      name: Build containers
+      run: |
+       ls -la 
+       ls -la ${PWD}/docker/symfony/
+       chmod +x ${PWD}/docker/symfony/rebuild-and-start-dev
+       chmod +x ${PWD}/docker/symfony/install-cli
+       chmod +x ${PWD}/docker/symfony/run-server-symfony
+       ${PWD}/docker/symfony/rebuild-and-start-dev
+       ${PWD}/docker/symfony/install-cli
+       ${PWD}/docker/symfony/run-server-symfony
+       docker-compose exec -T php bash -c 'php -v && composer --version'
+       
+     - 
+      name: Save image docker
+      run: |
+        docker save php > php.tar   
+     - 
+      name: Upload a Build Artifact
+      uses: actions/upload-artifact@v3.1.0
+      with:
+       name: P_US 
+       path: .
+
+  StaticCodeAnalysis:
+    runs-on: ubuntu-latest
+    needs: Build
+    steps:
+      - name: StaticCodeAnalysis
+        run: echo 'StaticCodeAnalysis '
+      -
+       name: Download a Build Artifact
+       uses: actions/download-artifact@v3.0.0
+       with:
+        name: P_US 
+      - 
+       name: Load Docker image
+       run: |
+         ls -l
+         ls -l ${PWD}
+         docker load --input ${PWD}/php.tar
+         docker-compose -f ${PWD}/docker-compose.dev.yml up -d 
+         chmod +x ${PWD}/docker/symfony/vendor-install
+         ${PWD}/docker/symfony/vendor-install
+         docker container ls
+      -    
+       name: PhpStan
+       run: |
+        echo "PhpStan"
+        echo "chmod symfony"
+          sudo chmod -R +x ${PWD}/docker/symfony/.
+          echo "chmod vendor"
+          sudo chmod -R +x ${PWD}/vendor/.
+          echo "php-cs-fixer script"
+          ${PWD}/docker/symfony/static-code-analysis/phpstan
+      - 
+        name: Php-Cs-Fixer
+        run: | 
+          echo "Php-Cs-Fixer"
+          echo "chmod symfony"
+          sudo chmod -R +x ${PWD}/docker/symfony/.
+          echo "chmod vendor"
+          sudo chmod -R +x ${PWD}/vendor/.
+          echo "php-cs-fixer script"
+          ${PWD}/docker/symfony/static-code-analysis/php-cs-fixer
+          
+
+  Test:
+    runs-on: ubuntu-latest
+    needs: Build
+    steps:
+      - name: Test
+        run: echo 'Test'
+      -
+        name: Download a Build Artifact
+        uses: actions/download-artifact@v3.0.0
+        with:
+         name: P_US 
+      - 
+       name: Load Docker image
+       run: |
+         ls -l
+         ls -l ${PWD}
+         docker load --input ${PWD}/php.tar
+         docker-compose -f ${PWD}/docker-compose.dev.yml up -d 
+         chmod +x ${PWD}/docker/symfony/vendor-install
+         ${PWD}/docker/symfony/vendor-install
+         docker container ls
+      - 
+        name: Unit Test
+        run: | 
+         echo "Unit Test"
+         ls -la ${PWD}
+         chmod +x ${PWD}/docker/symfony/symfony_cmd ${PWD}/tests/.
+         ${PWD}/docker/symfony/symfony_cmd php bin/phpunit tests/ --group Unit
+      - 
+       name: Integration Test
+       run: |
+         echo "Integration Test"
+         chmod +x ${PWD}/docker/symfony/symfony_cmd ${PWD}/tests/.
+         ${PWD}/docker/symfony/symfony_cmd php bin/phpunit tests/ --group Integration  
+      - 
+       name: Application Test
+       run: | 
+         echo "Application Test"
+         chmod +x ${PWD}/docker/symfony/symfony_cmd tests/.
+         ${PWD}/docker/symfony/symfony_cmd php bin/phpunit tests/ --group Aspplication  
+      - 
+        name: No Group Test
+        run: | 
+          echo "No Group Test"
+          chmod +x ${PWD}/docker/symfony/symfony_cmd tests/.
+          ${PWD}/docker/symfony/symfony_cmd php bin/phpunit tests/ --exclude-group Unit,Integration,Application
+  

@@ -42,7 +42,7 @@ class AddressProvider implements AddressProviderInterface
         return new Address(
             $faker->streetName(),
             $faker->buildingNumber(),
-            $faker->numberBetween(1, 10),
+            $faker->randomDigitNotNull(),
             $faker->city(),
             new PostalCode($faker->postcode(), Country::from('PL')),
             Country::from('PL')

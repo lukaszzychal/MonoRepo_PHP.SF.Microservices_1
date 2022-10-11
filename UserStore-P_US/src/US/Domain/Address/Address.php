@@ -22,7 +22,7 @@ class Address
             Assert::notEmpty($street);
             Assert::notEmpty($city);
             Assert::notEmpty($postalCode);
-            Assert::notEmpty((string)$postalCode);
+            Assert::notEmpty((string) $postalCode);
             Assert::notEmpty($country);
             Assert::notEmpty($country->value);
         } catch (InvalidArgumentException $e) {
