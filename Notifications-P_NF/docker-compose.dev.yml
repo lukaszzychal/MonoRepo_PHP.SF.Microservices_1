@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  php:
+    container_name: PHP_P_NF
+    build:
+      context: ./docker/php
+      dockerfile: ./Dockerfile
+    ports:
+      - 8002:8000
+    volumes:
+      - ./:/var/www/html
+      # - ./docker/php/99-xdebug.ini :/usr/local/etc/php/conf.d/99-xdebug.ini
+    networks:
+      - P_NF_network
+
+ 
+volumes:
+  P_NF_volume:
+
+networks:
+  P_NF_network:
+   driver: bridge

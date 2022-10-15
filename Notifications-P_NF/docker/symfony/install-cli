@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo ":: Install Symfony CLI"
+docker-compose exec -T php apk add --no-cache bash 
+docker-compose exec -T php bash -c "curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.alpine.sh' | bash "
+docker-compose exec -T php apk add symfony-cli
