@@ -1,5 +1,8 @@
 {
     "require": {
         "symfony/http-client": "^6.1"
+    },
+    "require-dev": {
+        "symfony/test-pack": "^1.0"
     }
 }
