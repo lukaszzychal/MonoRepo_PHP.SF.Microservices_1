@@ -5,6 +5,7 @@ namespace Unit;
 use App\Tests\US\Provider\Address\AddressProvider;
 use App\Tests\US\Provider\Email\EmailProvider;
 use App\US\Domain\User\User;
+use App\US\Domain\User\UserID;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\UuidV4;
@@ -22,7 +23,7 @@ class UserTest extends TestCase
     {
         $uuid = UuidV4::v4();
         $user = User::create(
-            $uuid,
+            new UserID($uuid),
             'Imię',
             'Nazwisko',
             EmailProvider::withEmail('email_testowy@test.com'),
@@ -31,8 +32,7 @@ class UserTest extends TestCase
             'url_avatar'
 
         );
-
-        $this->assertSame($uuid, $user->getUuid());
+        $this->assertSame((string) $uuid, (string) ($user->getUuid())->uuid);
         $this->assertSame('Imię', $user->getFirstName());
         $this->assertSame('email_testowy@test.com', (string) $user->getEmail());
         $this->assertSame(AddressProvider::DEFAULT_CITY, $user->getAddress()->city);

@@ -28,13 +28,13 @@ class EmailProviderTest extends TestCase
         $email_1 = EmailProvider::random();
         $email_2 = EmailProvider::random();
 
-        $this->assertIsString($email_1->value);
-        $this->assertNotEmpty($email_1->value);
+        $this->assertIsString((string) $email_1);
+        $this->assertNotEmpty((string) $email_1);
 
-        $this->assertIsString($email_2->value);
-        $this->assertNotEmpty($email_2->value);
+        $this->assertIsString((string) $email_2);
+        $this->assertNotEmpty((string) $email_2);
 
-        $this->assertNotSame($email_1->value, $email_2->value);
+        $this->assertNotSame((string) $email_1, (string) $email_2);
     }
 
 

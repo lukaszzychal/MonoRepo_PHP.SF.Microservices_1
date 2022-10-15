@@ -8,7 +8,7 @@ use App\US\Domain\Address\InvalidAddreessException;
 use App\US\Domain\PostalCode\PostalCode;
 
 use PHPUnit\Framework\TestCase;
-
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @todo Dodać inne granczne przypadki testowee
@@ -17,6 +17,7 @@ class AddressTest extends TestCase
 {
     public function testCreateValidAddress(): void
     {
+        $uuid = Uuid::v4();
         $streeet = 'street';
         $houseNumber = 'house number 4B';
         $apartmeentNumber = 'apartment numbeer 6b or null';
@@ -25,6 +26,7 @@ class AddressTest extends TestCase
         $postalcode = new PostalCode('59-300', $country);
 
         $addresVO =  new Address(
+            $uuid,
             $streeet,
             $houseNumber,
             $apartmeentNumber,
@@ -44,6 +46,7 @@ class AddressTest extends TestCase
 
     public function testCreateInValidAddress(): void
     {
+        $uuid = Uuid::v4();
         $streeet = '';
         $houseNumber = '';
         $apartmeentNumber = 'apartment numbeer 6b or null';
@@ -54,6 +57,7 @@ class AddressTest extends TestCase
         $this->expectException(InvalidAddreessException::class);
 
         $addresVO =  new Address(
+            $uuid,
             $streeet,
             $houseNumber,
             $apartmeentNumber,

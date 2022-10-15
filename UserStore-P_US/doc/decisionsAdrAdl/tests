@@ -1,0 +1,23 @@
+Problem:
+ Jak pisać i używać testów
+
+Rozwiązania:
+    1) TDD - Pisać pełnee testy z róznymi możliwymi scenariuszami przed imleemeentacją
+        Zaleety:
+        Wady:
+    2) Najpierw impleemntacja potem testy
+        Zaleety:
+        Wady:
+    3) Pisać tylko podtanowaee szczenariusze testów
+        Zaleety:
+        Wady:
+
+Wybór: 3
+Powód Wyboru:
+  Według mnie jst to jeden z nagorszych rozwiązań, al związku, że projekt nie jest skomplikowany 
+  i nie bęędzie przeznacozny na produkcje a czas mam ograniczony ze wględu na poszukwanie pracy
+   wybieram tą opcjęę, do póżniejsze rekatoryzacji
+
+   
+Cel na przysłość: 
+ Wybór: 1 

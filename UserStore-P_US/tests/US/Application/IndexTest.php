@@ -8,8 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 class IndexTest extends WebTestCase
 {
     /**
-     @group Application
-     *
+     * @group Application
+     * 
      * @return void
      */
     public function testMainPagSymfony(): void

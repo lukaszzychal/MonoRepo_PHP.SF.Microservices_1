@@ -1,6 +1,6 @@
 #!/bin/bash
 
-$PWD/docker/symfony/rebuild-and-start-dev
+$PWD/docker/symfony/rebuild-container-and-up
 $PWD/docker/symfony/install-cli
 # # docker/symfony/create_project
 

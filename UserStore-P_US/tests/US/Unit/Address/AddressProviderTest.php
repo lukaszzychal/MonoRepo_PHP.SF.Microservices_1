@@ -7,6 +7,7 @@ use App\US\Domain\Address\Address;
 use App\US\Domain\Address\Country;
 use App\US\Domain\PostalCode\PostalCode;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @group Unit
@@ -18,6 +19,7 @@ class AddressProviderTest extends TestCase
     public function testCreate(): void
     {
         $validAddress = new Address(
+            Uuid::fromString(AddressProvider::DEFAULT_UUID),
             AddressProvider::DEFAULT_STREET,
             AddressProvider::DEFAULT_HOUSE_NUMBER,
             AddressProvider::DEFAULT_APARTMEENT_NUMBER,
@@ -45,6 +47,7 @@ class AddressProviderTest extends TestCase
 
     public function testWithAddress(): void
     {
+        $uuid = Uuid::v4();
         $street = 'Uliica';
         $houseNumber = '4b';
         $apartmentNumber = null;
@@ -54,6 +57,7 @@ class AddressProviderTest extends TestCase
 
 
         $address = AddressProvider::withAddress(
+            $uuid,
             $street,
             $houseNumber,
             $apartmentNumber,

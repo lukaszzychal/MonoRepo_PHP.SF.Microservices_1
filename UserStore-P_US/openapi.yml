@@ -1,0 +1,68 @@
+openapi: '3.0.2'
+info:
+  title: API Title
+  version: '1.0'
+servers:
+  - url: https://localhost:8001
+paths:
+  /:
+    get:
+      responses:
+        '200':
+          description: OK
+  /users:
+    post:
+      summary: Adds a new user
+      parameters:
+        - in: header
+          name: Authorization 
+          schema:
+            type: string
+            example: 1234567890
+          required: true
+      security:
+        - bearerAuth: [] 
+      requestBody:
+        content:
+          application/json:
+            schema:     
+              type: object
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+                uuid:
+                  type: string
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                email:
+                  type: string
+                address:
+                  type: array
+                birthDate:
+                  type: string
+                avatar:
+                  type: string
+
+              example:  
+                uuid:  "fc69483d-8bc2-4c87-9af9-8b6e009ac457"
+                firstName: "\u0141ukasz"
+                lastName: "Z"
+                email: "email.testowy@test.pl"
+                address: []
+                birthDate: "14:10:2022"
+                avatar: ''
+      responses:
+        '200':
+          description: OK
+        '400':
+            description: Bad Request
+
+components:
+  securitySchemes:
+    bearerAuth:           
+      type: http
+      scheme: bearer

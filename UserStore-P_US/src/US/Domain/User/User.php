@@ -3,32 +3,56 @@
 namespace App\US\Domain\User;
 
 use App\US\Domain\Address\Address;
+use App\US\Domain\AggregateRoot;
 use App\US\Domain\Email\Email;
+use App\US\Infrastructure\Persistent\Doctrine\Repository\UserRepository2;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Uid\Uuid;
+use Doctrine\ORM\Mapping as ORM;
 
-class User
+#[ORM\Entity(repositoryClass: UserRepository2::class)]
+#[ORM\Table(name: 'users', schema: 'user_store')]
+class User implements AggregateRoot
 {
+    private Collection $eventLog;
+
     private function __construct(
-        private readonly Uuid $uuid,
+
+        #[ORM\Id]
+        #[ORM\Column]
+        private readonly UserID $uuid,
+
+        #[ORM\Column(length: 100)]
         private readonly string $firstName,
+
+        #[ORM\Column(length: 100)]
         private readonly string $lastName,
+
+        #[ORM\Embedded(Email::class)]
         private readonly Email $email,
-        private readonly Address $address,
+
+        #[ORM\ManyToOne(targetEntity: Address::class, cascade: ['persist'])]
+        #[ORM\JoinColumn(name: 'address_id', referencedColumnName: 'uuid')]
+        private readonly ?Address $address,
+
+        #[ORM\Column(type: 'datetime', nullable: true)]
         private readonly ?DateTimeImmutable $birthDate,
+
+        #[ORM\Column(length: 100)]
         private readonly ?string $avatar
 
     ) {
     }
 
     public static function create(
-        Uuid $uuid,
+        UserID $uuid,
         string $firstName,
         string $lastName,
         Email $email,
-        Address $address,
-        ?DateTimeImmutable $birthDate,
-        ?string $avatar
+        ?Address $address = null,
+        ?DateTimeImmutable $birthDate = null,
+        ?string $avatar = ''
     ): User {
         return new self(
             $uuid,
@@ -38,16 +62,17 @@ class User
             $address,
             $birthDate,
             $avatar
-
         );
+
+        // $this->eventLog->add();
     }
 
     /**
      * Get the value of uuid.
      */
-    public function getUuid(): Uuid
+    public function getUuid(): UserID
     {
-        return $this->uuid;
+        return UserID::fromString($this->uuid);
     }
 
     /**

@@ -5,20 +5,28 @@ namespace App\US\Domain\Email;
 use Stringable;
 use Webmozart\Assert\Assert;
 
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Embeddable]
 final class Email implements Stringable
 {
     public function __construct(
-        public readonly string $value
+        public readonly string $email
     ) {
         try {
-            Assert::email($value, sprintf('The email %s is not a valid email.', $value));
+            Assert::email($email, sprintf('The email %s is not a valid email.', $email));
         } catch (\InvalidArgumentException $e) {
-            throw new InvalidEmailException($this->value);
+            throw new InvalidEmailException($this->email);
         }
+    }
+
+    public static function fromString(string $email): self
+    {
+        return new self($email);
     }
 
     public function __toString(): string
     {
-        return $this->value;
+        return $this->email;
     }
 }

@@ -14,6 +14,23 @@ services:
     networks:
       - P_US_network
 
+  postgres:
+    image: postgres:11.1-alpine
+    container_name: db_postgres_P_US
+    environment:
+      - POSTGRES_USER=demo
+      - POSTGRES_PASSWORD=demo
+      - POSTGRES_DB=demo
+    ports:
+      - 5432:5432
+      - 29001:29001
+    volumes:
+      - P_US_volume:/var/lib/mysql
+    networks:
+      - P_US_network
+
+volumes:
+  P_US_volume:
 
 networks:
   P_US_network:

@@ -1,2 +1,19 @@
 Problem:
- Czy używać ORMa i doctrinna
+    Czy używać i jaki sposób ORMa/doctrinna oraz w jakiej warsztwie
+
+Rozwiązania:
+    1. Używać ORM w warstwi domeny
+    2. Używać ORM w warstwi infrastruktury i mapować Modele z Domeny na Encje Infrastruktury i na odrwót
+    3. Uzywać pełnego menadzera doctrina mp find, findby itp
+    4. Używać dbal i dto
+    5. Używać adnotacji lub artybutów
+    6. Używać pliku konfiguracyjneego do mapowania
+
+Wybór: 1, 4, 5
+Powód Wyboru: 
+    1 - Ze względu na ogranioczny czas na ten moment wybieram tą opcję.
+    2 - Uzycie dbal i dto nie zajmiee za wieele dodatkowej pracy
+    3 - Ze względu na ogranioczny czas na ten moment wybieram tą opcję.
+
+Cel na przysłość: 
+ Wybór: 2, 4, 6    

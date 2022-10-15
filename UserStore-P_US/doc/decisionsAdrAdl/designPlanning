@@ -1,0 +1,27 @@
+Problem:
+    Czy przeed implementacją robić projektowanie np. EvenSoursing, UML itp
+
+Rozwiązania:
+    1. Robić dokładnee planowanie:
+        Zalety: 
+            * Ułatwi i przyszpieszy implemeentację. 
+            * Zmnieszy zagrożenie nie spodziewanych błędów
+        Wady: 
+            * Początkowo może wydłużyć wdrażanie
+    2. Robić ogólne planowanie:
+        Zalety:
+            * Do pewnego momentu ułatwi i przyszpieszy implemeentację. 
+            * W peewnym stopniu zmiejszy ilośc błędu, ale mogą się pojawić nie dopowiedzeenai
+        Wady: 
+            * Początkowo może wydłużyć wdrażanie. Jęśli sie pojawią niee dopowiedzeniia możee pojawić sie powazniejszy problem. 
+    3. Nie robć planowania
+        Zalety:
+            * Przyspieszy impleemeentowanie pod warunkieem nie na potkania powaznych błędów
+        Wady: 
+            * Ryzyko pojawienia siee powaznych, niespodziewanych  błędów, które wydłuża pracę
+
+Wybór: 3
+Powód Wyboru:
+    Związku na ograniczony czas realizacji, prostą budowę aplikacji i że ten projekt nie jeest przznaczony na pprodukcje, a ma tylko pokażać pewnee umiejetności
+    wybieram na ta chiwilę niee planowaniee, wentualnie planowanie dorażne w razie problemów. 
+    W przysłości jak bęędzie więceej czasu planowanie jest prze projeektowanie
