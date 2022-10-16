@@ -13,7 +13,16 @@ services:
       # - ./docker/php/99-xdebug.ini :/usr/local/etc/php/conf.d/99-xdebug.ini
     networks:
       - P_NF_network
-
+  
+  mailhog:
+    image: mailhog/mailhog
+    logging:
+      driver: 'none'  # disable saving logs
+    ports:
+      - 1025:1025 # smtp server
+      - 8025:8025 # web ui
+    networks:
+      - P_NF_network
  
 volumes:
   P_NF_volume:
