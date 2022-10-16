@@ -1,10 +1,10 @@
-name: ci-P_US-dev
+name: ci-P_NF-dev
 
-on: 
+on:
   push:
-      paths:
-        - "UserStore-P_US/**"
-        - ".github/workflows/ci_pus_dev.yml"
+    paths:
+      - "Notifications-P_NF/**"
+      - ".github/workflows/ci_pnf_dev.yml"
 
 jobs:
   Build:
@@ -16,8 +16,8 @@ jobs:
      - 
       name: Copy file
       run: |
-        ls -la UserStore-P_US
-        cp -Rf UserStore-P_US/. .
+        ls -la Notifications-P_NF
+        cp -Rf Notifications-P_NF/. .
         
      - 
       name: Build containers
@@ -27,7 +27,6 @@ jobs:
        chmod +x ${PWD}/docker/symfony/rebuild-container-and-up
        chmod +x ${PWD}/docker/symfony/install-cli
        chmod +x ${PWD}/docker/symfony/run-server-symfony
-       chmod +x ${PWD}/bin/console
        ${PWD}/docker/symfony/rebuild-container-and-up
        ${PWD}/docker/symfony/install-cli
        ${PWD}/docker/symfony/run-server-symfony
@@ -41,7 +40,7 @@ jobs:
       name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.0
       with:
-       name: P_US 
+       name: P_NF 
        path: .
 
   StaticCodeAnalysis:
@@ -54,7 +53,7 @@ jobs:
        name: Download a Build Artifact
        uses: actions/download-artifact@v3.0.0
        with:
-        name: P_US 
+        name: P_NF 
       - 
        name: Load Docker image
        run: |
@@ -97,7 +96,7 @@ jobs:
         name: Download a Build Artifact
         uses: actions/download-artifact@v3.0.0
         with:
-         name: P_US 
+         name: P_NF 
       - 
        name: Load Docker image
        run: |
@@ -113,24 +112,24 @@ jobs:
         run: | 
          echo "Unit Test"
          ls -la ${PWD}
-         chmod +x ${PWD}/docker/symfony/symfony_cmd ${PWD}/tests/.
-         ${PWD}/docker/symfony/symfony_cmd php bin/phpunit tests/ --group Unit
+         chmod +x ${PWD}/docker/symfony/cmd ${PWD}/tests/.
+         ${PWD}/docker/symfony/cmd php bin/phpunit tests/ --group Unit
       - 
        name: Integration Test
        run: |
          echo "Integration Test"
-         chmod +x ${PWD}/docker/symfony/symfony_cmd ${PWD}/tests/.
-         ${PWD}/docker/symfony/symfony_cmd php bin/phpunit tests/ --group Integration  
+         chmod +x ${PWD}/docker/symfony/cmd ${PWD}/tests/.
+         ${PWD}/docker/symfony/cmd php bin/phpunit tests/ --group Integration  
       - 
        name: Application Test
        run: | 
          echo "Application Test"
-         chmod +x ${PWD}/docker/symfony/symfony_cmd tests/.
-         ${PWD}/docker/symfony/symfony_cmd php bin/phpunit tests/ --group Aspplication  
+         chmod +x ${PWD}/docker/symfony/cmd tests/.
+         ${PWD}/docker/symfony/cmd php bin/phpunit tests/ --group Aspplication  
       - 
         name: No Group Test
         run: | 
           echo "No Group Test"
-          chmod +x ${PWD}/docker/symfony/symfony_cmd tests/.
-          ${PWD}/docker/symfony/symfony_cmd php bin/phpunit tests/ --exclude-group Unit,Integration,Application
+          chmod +x ${PWD}/docker/symfony/cmd tests/.
+          ${PWD}/docker/symfony/cmd php bin/phpunit tests/ --exclude-group Unit,Integration,Application
   

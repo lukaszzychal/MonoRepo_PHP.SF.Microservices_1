@@ -5,20 +5,18 @@ namespace App\US\Infrastructure\Persistent\InMemory\Repository;
 use App\US\Domain\User\User;
 use App\US\Domain\User\UserID;
 
-use Doctrine\Common\Collections\Collection;
-
 class UserInMemoryRepository
 {
+    /** @phpstan-ignore-next-line */
+    private array $memory;
 
-    private Collection $memory;
-
-    public function save(User $entity): void
+    public function save(User $user): void
     {
-        $this->memory->add($entity);
+        $this->memory[(string) $user->getUuid()->uuid] = $user;
     }
 
     public function findUser(UserID $userId): User
     {
-        return $this->memory->get((string) $userId);
+        return $this->memory[(string) $userId->uuid];
     }
 }

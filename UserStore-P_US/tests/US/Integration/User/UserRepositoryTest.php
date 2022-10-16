@@ -5,8 +5,6 @@ namespace App\Tests\US\Integration\User;
 use App\Tests\US\Provider\User\UserProvider;
 use App\US\Domain\User\User;
 use App\US\Domain\User\UserRepositoryInterface;
-use App\US\Infrastructure\Persistent\Doctrine\Repository\UserRepository;
-use App\US\Infrastructure\Persistent\InMemory\Repository\UserInMemoryRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 
@@ -21,7 +19,6 @@ class UserRepositoryTest extends KernelTestCase
     public function testSaveUser()
     {
         self::bootKernel();
-
 
         /**
          * @var UserRepositoryInterface $reppo

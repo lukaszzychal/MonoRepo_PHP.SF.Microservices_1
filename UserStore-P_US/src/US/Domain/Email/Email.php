@@ -4,7 +4,6 @@ namespace App\US\Domain\Email;
 
 use Stringable;
 use Webmozart\Assert\Assert;
-
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Embeddable]

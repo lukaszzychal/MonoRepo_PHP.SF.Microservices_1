@@ -9,7 +9,6 @@ use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 /**
  * @todo dodac logi
  */
@@ -41,9 +40,10 @@ final class CreateUserRequest
                 CreateUserRequest::class,
                 'json'
             );
+
             return $obj;
         } catch (ErrorException $th) {
-            throw new InvalidParemeterRequest("Error Processing Request", 1);
+            throw new InvalidParemeterRequest();
         }
     }
 }

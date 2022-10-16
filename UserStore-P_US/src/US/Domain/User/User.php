@@ -5,43 +5,34 @@ namespace App\US\Domain\User;
 use App\US\Domain\Address\Address;
 use App\US\Domain\AggregateRoot;
 use App\US\Domain\Email\Email;
-use App\US\Infrastructure\Persistent\Doctrine\Repository\UserRepository2;
+use App\US\Infrastructure\Persistent\Doctrine\Repository\UserRepository;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\Collection;
-use Symfony\Component\Uid\Uuid;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: UserRepository2::class)]
+#[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'users', schema: 'user_store')]
 class User implements AggregateRoot
 {
-    private Collection $eventLog;
+    // private Collection $eventLog;
 
     private function __construct(
-
         #[ORM\Id]
         #[ORM\Column]
         private readonly UserID $uuid,
-
         #[ORM\Column(length: 100)]
         private readonly string $firstName,
-
         #[ORM\Column(length: 100)]
         private readonly string $lastName,
-
         #[ORM\Embedded(Email::class)]
         private readonly Email $email,
-
         #[ORM\ManyToOne(targetEntity: Address::class, cascade: ['persist'])]
         #[ORM\JoinColumn(name: 'address_id', referencedColumnName: 'uuid')]
         private readonly ?Address $address,
-
         #[ORM\Column(type: 'datetime', nullable: true)]
         private readonly ?DateTimeImmutable $birthDate,
-
         #[ORM\Column(length: 100)]
         private readonly ?string $avatar
-
     ) {
     }
 
@@ -102,7 +93,7 @@ class User implements AggregateRoot
     /**
      * Get the value of address.
      */
-    public function getAddress(): Address
+    public function getAddress(): ?Address
     {
         return $this->address;
     }

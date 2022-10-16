@@ -13,12 +13,13 @@ class SendEmailHandler implements MessageHandlerInterface
         private MailerInterface $mailer
     ) {
     }
-    public function __invoke(SendEmailCommand $sendEmailCommand)
+
+    public function __invoke(SendEmailCommand $sendEmailCommand): void
     {
         $email = (new Email())
             ->from('notification@test')
             ->to($sendEmailCommand->email)
-            ->subject($sendEmailCommand->subject)
+            ->subject($sendEmailCommand->subject ?? '')
             ->html($sendEmailCommand->context)
             ->text($sendEmailCommand->context);
 

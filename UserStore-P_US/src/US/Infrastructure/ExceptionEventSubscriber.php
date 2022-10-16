@@ -16,19 +16,17 @@ class ExceptionEventSubscriber implements EventSubscriberInterface
     ) {
     }
 
-
     public static function getSubscribedEvents(): array
     {
         return [
             KernelEvents::EXCEPTION => [
-                'exception'
-            ]
+                'exception',
+            ],
         ];
     }
 
-    public function exception(ExceptionEvent $exceptionEvent)
+    public function exception(ExceptionEvent $exceptionEvent): void
     {
-
         if (!$exceptionEvent->isMainRequest()) {
             return;
         }

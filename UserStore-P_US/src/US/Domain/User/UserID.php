@@ -12,12 +12,12 @@ final class UserID
         Uuid::isValid($this->uuid);
     }
 
-    function __toString(): string
+    public function __toString(): string
     {
         return (string) $this->uuid;
     }
 
-    public static function fromString(string $uuid)
+    public static function fromString(string $uuid): UserID
     {
         return new self(Uuid::fromString($uuid));
     }

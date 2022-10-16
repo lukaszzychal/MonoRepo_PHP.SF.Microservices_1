@@ -11,7 +11,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SendNotificationController extends AbstractController
 {
-
     public function __construct(
         private EventDispatcherInterface $eventDispatcher
     ) {

@@ -2,7 +2,7 @@
 
 namespace App\US\Infrastructure\Http\CreateUser;
 
-use \Exception;
+use Exception;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 final class InvalidParemeterRequest extends Exception
 {
-    public function __construct(string $email)
+    public function __construct()
     {
         parent::__construct(sprintf('Invalid parrameters request'), Response::HTTP_BAD_REQUEST);
     }

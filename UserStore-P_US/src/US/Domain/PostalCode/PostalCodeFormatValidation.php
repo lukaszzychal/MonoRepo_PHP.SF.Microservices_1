@@ -11,11 +11,6 @@ final class PostalCodeFormatValidation
     public const PATTERN_KEY = 'pattern';
 
     /**
-     * 
-     *
-     * @param string $postalCode
-     * @param Country $country
-     * @return boolean
      * @throws InvalidFormatPostalCodeException
      */
     public static function valid(string $postalCode, Country $country): bool
@@ -29,7 +24,7 @@ final class PostalCodeFormatValidation
 
     private static function hardCodeFormat(): array /* @phpstan-ignore-line */
     {
-        return  [
+        return [
             Country::POLAND->value => [
                 /*
                  * @todo Zamienić  na obiekt
@@ -39,7 +34,6 @@ final class PostalCodeFormatValidation
             ],
         ];
     }
-
 
     private static function getValidFormat(Country $country): string
     {

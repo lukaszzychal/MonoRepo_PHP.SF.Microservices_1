@@ -3,12 +3,12 @@
 namespace App\US\Shared;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
-use \Exception as GlobalException;
+use Exception as GlobalException;
 
 class Exception extends GlobalException implements ExceptionInterface
 {
     public function __construct(
-        protected readonly string $statusCode,
+        protected readonly int $statusCode,
         protected readonly string $title,
         protected readonly string $details,
         protected readonly string $source
@@ -36,14 +36,16 @@ class Exception extends GlobalException implements ExceptionInterface
         return $this->statusCode;
     }
 
-
+    /**
+     * @return array<string, int|string>
+     */
     public function toArray(): array
     {
         return [
             'code' => $this->statusCode,
             'title' => $this->title,
             'details' => $this->details,
-            'source' => $this->source
+            'source' => $this->source,
         ];
     }
 

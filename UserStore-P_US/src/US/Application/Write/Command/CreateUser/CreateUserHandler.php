@@ -7,11 +7,8 @@ use App\US\Domain\User\Event\UserCreated;
 use App\US\Domain\User\User;
 use App\US\Domain\User\UserID;
 use App\US\Domain\User\UserRepositoryInterface;
-use App\US\Infrastructure\Persistent\Doctrine\Repository\UserRepository2;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
-use Symfony\Component\Messenger\MessageBus;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\DispatchAfterCurrentBusStamp;
 use Symfony\Component\Uid\Uuid;
@@ -26,9 +23,8 @@ class CreateUserHandler implements MessageHandlerInterface
     ) {
     }
 
-    public function __invoke(CreateUserCommand $createUserCommand)
+    public function __invoke(CreateUserCommand $createUserCommand): void
     {
-
         $user = User::create(
             new UserID(Uuid::fromString($createUserCommand->uuid)),
             $createUserCommand->firstName,

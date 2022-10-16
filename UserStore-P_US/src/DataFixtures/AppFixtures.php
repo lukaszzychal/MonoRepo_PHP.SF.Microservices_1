@@ -13,15 +13,14 @@ use Symfony\Component\Uid\Uuid;
 class AppFixtures extends Fixture
 {
     public const USER_UUID = 'cf1e5b0d-77f7-4e83-8e99-ab74f715d5cb';
-    public const USER_EMAIIL = "my.mail@test.pl";
+    public const USER_EMAIIL = 'my.mail@test.pl';
 
     public function load(ObjectManager $manager): void
     {
-
-        $useer =  UserProvider::withData(
+        $useer = UserProvider::withData(
             new UserID(Uuid::fromString(self::USER_UUID)),
-            "Lukasz",
-            "Z",
+            'Lukasz',
+            'Z',
             Email::fromString(self::USER_EMAIIL),
             null,
             new DateTimeImmutable(),
@@ -29,7 +28,7 @@ class AppFixtures extends Fixture
         );
         $manager->persist($useer);
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 10; ++$i) {
             $user = UserProvider::random();
             $manager->persist($user);
         }

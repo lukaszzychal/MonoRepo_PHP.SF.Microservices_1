@@ -5,16 +5,13 @@ namespace App\US\Infrastructure\TokenRequest;
 use Psr\Log\LoggerInterface;
 use ReflectionClass;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-
 use Symfony\Component\Routing\Matcher\UrlMatcherInterface;
 
 class TokenEventSubscriber implements EventSubscriberInterface
 {
-
     public function __construct(
         private readonly string $appToken,
         private readonly LoggerInterface $logger,
@@ -24,14 +21,14 @@ class TokenEventSubscriber implements EventSubscriberInterface
 
     public static function getSubscribedEvents(): array
     {
-        return  [
+        return [
             KernelEvents::REQUEST => [
-                'tokenReqest'
-            ]
+                'tokenReqest',
+            ],
         ];
     }
 
-    public function tokenReqest(RequestEvent $requestEvent)
+    public function tokenReqest(RequestEvent $requestEvent): void
     {
         if (!$requestEvent->isMainRequest()) {
             return;
@@ -46,11 +43,11 @@ class TokenEventSubscriber implements EventSubscriberInterface
         if (!$headers->has('authorization')) {
             $excepton = new NoAuthorizationException(
                 401,
-                "No authorization",
+                'No authorization',
                 'Please check your authorization token',
                 ''
             );
-            $this->logger->warning("No authorization. Please check your authorization token");
+            $this->logger->warning('No authorization. Please check your authorization token');
             throw $excepton;
         }
         $token = $headers->get('authorization');
@@ -61,7 +58,7 @@ class TokenEventSubscriber implements EventSubscriberInterface
                 'Please check your authorization token',
                 ''
             );
-            $this->logger->warning("Wrong authorization token: " . $headers->get('authorization') . ' endpoint: ' . $request->getBaseUrl());
+            $this->logger->warning('Wrong authorization token: ' . $headers->get('authorization') . ' endpoint: ' . $request->getBaseUrl());
             // throw new \Exception($excepton->toJsonResponse(), $excepton->getCode());
             throw $excepton;
         }
@@ -71,7 +68,16 @@ class TokenEventSubscriber implements EventSubscriberInterface
     {
         $parameters = $this->matcher->match($request->getPathInfo());
         $controllerName = explode('::', $parameters['_controller'])[0];
+        if (!class_exists($controllerName)) {
+            throw new WrongAuthorizationException(
+                401,
+                "Wrong authorization )",
+                'Please check your authorization data',
+                ''
+            );
+        }
         $controller = new ReflectionClass($controllerName);
+
         return $controller;
     }
 

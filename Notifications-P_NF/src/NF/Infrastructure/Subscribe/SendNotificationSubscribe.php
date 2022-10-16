@@ -22,24 +22,26 @@ class SendNotificationSubscribe implements EventSubscriberInterface
         private readonly RequestStack $requestStack
     ) {
     }
+
     public static function getSubscribedEvents(): array
     {
-        return  [
-            SendNotificationEvent::NAME =>
-            [
-                'send'
-            ]
+        return [
+            SendNotificationEvent::NAME => [
+                'send',
+            ],
         ];
     }
 
-    public function send()
+    public function send(): void
     {
-
         $request = $this->requestStack->getMainRequest();
+        if (is_null($request)) {
+            throw new \Exception('Wrong Request', Response::HTTP_BAD_REQUEST);
+        }
         $notifiRequeest = NotificationRequest::fromRequest($request);
 
         if ($this->appToken !== $notifiRequeest->token) {
-            throw new \Exception("Wrong token", Response::HTTP_BAD_REQUEST);
+            throw new \Exception('Wrong token', Response::HTTP_BAD_REQUEST);
         }
 
         $obj = $this->deserializeRequest($request);
@@ -50,9 +52,10 @@ class SendNotificationSubscribe implements EventSubscriberInterface
     {
         $this->messageBus->dispatch($typeeNotification);
     }
+
     private function deserializeRequest(Request $request): CommandInterface
     {
-        $obj =   $this->serializer->deserialize(
+        $obj = $this->serializer->deserialize(
             $request->getContent(),
             TypeNotificationCommand::class,
             'json',

@@ -8,6 +8,7 @@ use App\US\Domain\User\UserRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+/** @phpstan-ignore-next-line */
 class UserRepository extends ServiceEntityRepository implements UserRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
@@ -17,7 +18,6 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
 
     public function save(User $entity): void
     {
-
         $this->_em->persist($entity);
         $this->_em->flush();
     }
@@ -30,12 +30,12 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
 
     public function findUser(UserID $userId): User
     {
-
         $qb = $this->createQueryBuilder('u')
             ->where('u.uuid = :uuid')
             ->setParameter('uuid', (string) $userId->uuid);
 
         $query = $qb->getQuery();
+
         return $query->getOneOrNullResult();
     }
 }
