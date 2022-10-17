@@ -1,7 +1,7 @@
 # MonoRepo_PHP.SF.Microservices_1
 
 Projekt demo micro-serwisów. Że względu na ograniczony czas wybrałem kompromisowe rozwiązania, które każde starałem się uzasadnić w folderach doc projektów. Z tego też względu tworzę go dość spontanicznie bez pełnego projektowania przed implementacją. Dla tego też znajdą tu się nie dokończone przemyślane decyzje, nie dokończone rozwiązania, klasy czy nie dokończone testy (które w normalnej sytuacji były by oczywiście napisane najpierw w rożnych scenariuszach ) . Z czasem przeprojektuje.
-Tworzone brancze i commity są jedynie dla mojej informacji i mogą zawierać przerośnięte commity oraz głupie , które przy merge-owaniu zostaną squash-one i usunięte.
+Tworzone brancze i commity są jedynie dla mojej informacji i mogą zawierać przerośnięte commity oraz nie zgodne z zasadammi , które przy merge-owaniu zostaną squash-one i usunięte.
 Zachęcam do zadawania pytań na temat rozwiązania, przed oceną rozwiązań projektu. <br/> <br/>
 Plany:<br/>
     • 3 serwisy: <br/>
