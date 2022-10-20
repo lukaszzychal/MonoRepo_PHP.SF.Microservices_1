@@ -27,7 +27,6 @@ class NotificationRequestTest extends TestCase
                 'type' => 'email'
             ])
         );
-
         $NfRequest = NotificationRequest::fromRequest($request);
 
         $this->assertSame('CorrectToken', $NfRequest->token);

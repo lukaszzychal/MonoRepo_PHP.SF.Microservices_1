@@ -29,7 +29,7 @@ class SendEmailNotificationTest extends WebTestCase
             ])
         );
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_CREATED);
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
 
         $this->assertEmailCount(1);
 
