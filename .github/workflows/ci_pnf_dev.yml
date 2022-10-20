@@ -104,31 +104,31 @@ jobs:
         run: | 
          echo "Unit Test"
          ls -la ${PWD}
-         chmod +x ${PWD}/docker/symfony/cmd ${PWD}/tests/.
+         chmod -R +x  ${PWD}/docker/symfony/cmd ${PWD}/tests/.
          ${PWD}/docker/symfony/cmd php bin/phpunit tests/ --group Unit
       - 
        name: Integration Test
        run: |
          echo "Integration Test"
-         chmod +x ${PWD}/docker/symfony/cmd ${PWD}/tests/.
+         chmod -R +x  ${PWD}/docker/symfony/cmd ${PWD}/tests/.
          ${PWD}/docker/symfony/cmd php bin/phpunit tests/ --group Integration  
       -
         name: Functional Test
         run: | 
          echo "Functional Test"
          ls -la ${PWD}
-         chmod +x ${PWD}/docker/. ${PWD}/tests/.
+         chmod -R +x  ${PWD}/docker/. ${PWD}/tests/.
          ${PWD}/docker/symfony/test/functional
       - 
        name: Application Test
        run: | 
          echo "Application Test"
-         chmod +x ${PWD}/docker/symfony/cmd tests/.
+         chmod -R +x ${PWD}/docker/symfony/cmd tests/.
          ${PWD}/docker/symfony/cmd php bin/phpunit tests/ --group Aspplication  
       - 
         name: No Group Test
         run: | 
           echo "No Group Test"
-          chmod +x ${PWD}/docker/symfony/cmd tests/.
+          chmod -R +x  ${PWD}/docker/symfony/cmd tests/.
           ${PWD}/docker/symfony/cmd php bin/phpunit tests/ --exclude-group Unit,Integration,Application
   
