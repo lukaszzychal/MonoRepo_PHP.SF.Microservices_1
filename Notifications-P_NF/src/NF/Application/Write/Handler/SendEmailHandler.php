@@ -29,7 +29,7 @@ class SendEmailHandler implements MessageHandlerInterface
         try {
             $this->mailer->send($email);
         } catch (TransportExceptionInterface $e) {
-            throw new NotSuccessfullySentNotificationExceeption("Error statement");
+            throw new NotSuccessfullySentNotificationExceeption();
         }
     }
 }

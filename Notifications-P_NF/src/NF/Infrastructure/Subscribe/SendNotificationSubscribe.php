@@ -38,12 +38,6 @@ class SendNotificationSubscribe implements EventSubscriberInterface
     public function send(SendNotificationEvent $sendNotificationEvent): void
     {
         $request = $sendNotificationEvent->request;
-
-        if (is_null($request)) {
-            $this->logger->critical("Wrong Request: File:" . __FILE__ . '  Line: ' . __LINE__);
-            // @todo Przerobić na konkretny wyjątek
-            throw new \Exception('Wrong Request', Response::HTTP_BAD_REQUEST);
-        }
         $notifiRequeest = NotificationRequest::fromRequest($request);
 
         $token = str_replace('Bearer ', '', $notifiRequeest->token);

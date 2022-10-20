@@ -15,7 +15,7 @@ class SendNotificationController extends AbstractController
 {
     public function __construct(
         private EventDispatcherInterface $eventDispatcher,
-        private LoggerInterface $logger
+        private LoggerInterface $logger // @phpstan-ignore-line
     ) {
     }
 

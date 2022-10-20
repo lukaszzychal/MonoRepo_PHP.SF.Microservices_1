@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 class NotificationRequest
 {
     private function __construct(
-        public readonly ?string $token,
+        public readonly string $token,
         public readonly string $type
     ) {
     }
@@ -40,10 +40,8 @@ class NotificationRequest
             throw new InvalidParemeterRequest(['Type']);
         }
 
-
-
         return new self(
-            $token,
+            $token, // @phpstan-ignore-line
             $content['type']
         );
     }
