@@ -1,4 +1,5 @@
 #!/bin/bash
 
 # composer require --dev phpstan/phpstan
+echo ":: Run PhpStan Analyse"
 docker/symfony/cmd vendor/bin/phpstan analyse src  --no-progress --level 8

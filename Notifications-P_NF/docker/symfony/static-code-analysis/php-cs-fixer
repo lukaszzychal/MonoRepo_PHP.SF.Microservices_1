@@ -1,4 +1,0 @@
-#!/bin/bash
-
-# composer require friendsofphp/php-cs-fixer
-docker/symfony/cmd  vendor/bin/php-cs-fixer fix src  --allow-risky=yes --diff --rules=@Symfony,@PSR12

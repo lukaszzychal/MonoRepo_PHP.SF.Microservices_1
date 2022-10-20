@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# composer require friendsofphp/php-cs-fixer
+echo ":: Run Php-Cs-Fixer Fix "
+docker/symfony/cmd  vendor/bin/php-cs-fixer fix --allow-risky=yes --diff --rules=@Symfony,@PSR12 src tests
