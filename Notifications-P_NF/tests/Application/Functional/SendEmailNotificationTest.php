@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Tests\Application\Application;
+namespace App\Tests\Application\Functional;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 
 /**
- * @group application
+ * @group functional
  */
 class SendEmailNotificationTest extends WebTestCase
 {
