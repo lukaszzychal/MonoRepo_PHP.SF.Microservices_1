@@ -9,6 +9,9 @@ class NotificationResponse extends JsonResponse
 {
     public function __construct()
     {
-        parent::__construct('Wysłano powiadomminie', Response::HTTP_CREATED);
+        parent::__construct([
+            'code' => Response::HTTP_OK,
+            'message' => 'Wysłano powiadomminie',
+        ], Response::HTTP_OK);
     }
 }

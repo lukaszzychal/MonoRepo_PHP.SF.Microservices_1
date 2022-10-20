@@ -4,7 +4,7 @@ namespace App\NF\Infrastructure;
 
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -31,6 +31,10 @@ class ExceptionEventSubscriber implements EventSubscriberInterface
         }
 
         $throw = $exceptionEvent->getThrowable();
+
+        /**
+         * @var string $exception
+         */
         $exception = json_encode([
             'code' => $throw->getCode(),
             'message' => $throw->getMessage(),
@@ -41,7 +45,7 @@ class ExceptionEventSubscriber implements EventSubscriberInterface
         // @todo rodzielć na osobną meetodęę z piorytetem
         $this->logger->critical($exception ?: 'Pusty wyjątek');
 
-        $jsonResponse = new JsonResponse($exception, $throw->getCode());
-        $exceptionEvent->setResponse($jsonResponse);
+        $response = new Response($exception, $throw->getCode());
+        $exceptionEvent->setResponse($response);
     }
 }

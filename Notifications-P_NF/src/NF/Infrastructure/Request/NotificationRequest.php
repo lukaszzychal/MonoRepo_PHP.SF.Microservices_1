@@ -9,32 +9,37 @@ use Symfony\Component\HttpFoundation\Response;
 class NotificationRequest
 {
     private function __construct(
-        public readonly ?string $token,
+        public readonly string $token,
         public readonly string $type
     ) {
     }
 
     public static function fromRequest(Request $request): self
     {
+        $headers = $request->headers;
+        if (!$headers->has('Authorization')) {
+            throw new InvalidParemeterRequest(['Authorization']);
+        }
+        $token = $headers->get('Authorization');
+
         $content = json_decode((string) $request->getContent(), true);
         if (is_null($content)) {
-            throw new \Exception('Wrong request', Response::HTTP_BAD_REQUEST);
+            // $this->logger->critical("Wrong Request: File:" . __FILE__ . '  Line: ' . __LINE__);
+            // @todo Przerobić na konkretny wyjątek
+            throw new \Exception('Wrong request. File: '.__FILE__.'; Line: '.__LINE__, Response::HTTP_BAD_REQUEST);
         }
-        $headers = $request->headers;
+
         if (
             !self::arrayHasKeys(
                 $content,
                 ['type']
             )
-            ||
-            !$headers->has('AUTHORIZATION')
         ) {
-            throw new InvalidParemeterRequest();
+            throw new InvalidParemeterRequest(['Type']);
         }
-        $token = $headers->get('AUTHORIZATION');
 
         return new self(
-            $token,
+            $token, // @phpstan-ignore-line
             $content['type']
         );
     }

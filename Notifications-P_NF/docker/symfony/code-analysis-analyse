@@ -1,4 +1,4 @@
 #!/bin/bash
 
 docker/symfony/static-code-analysis/phpstan
-docker/symfony/static-code-analysis/php-cs-fixer
+docker/symfony/static-code-analysis/php-cs-fixer-analysee

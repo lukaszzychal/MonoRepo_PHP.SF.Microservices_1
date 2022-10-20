@@ -1,2 +1,3 @@
 #!/bin/bash
-docker-compose exec php ./bin/phpunit --group Unit
+echo ":: Run Unit Test"
+docker-compose exec php ./bin/phpunit --group Unit,unit

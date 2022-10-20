@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Tests\Application\Application;
+namespace App\Tests\Application\Functional;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-
 /**
- * @group application
+ * @group functional
  */
 class SendEmailNotificationTest extends WebTestCase
 {
@@ -25,17 +24,17 @@ class SendEmailNotificationTest extends WebTestCase
             json_encode([
                 'type' => 'email',
                 'email' => 'my.email@test',
-                'context' => "Heello - Email send"
+                'context' => 'Heello - Email send',
             ])
         );
 
-        $this->assertResponseStatusCodeSame(Response::HTTP_CREATED);
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
 
         $this->assertEmailCount(1);
 
         $email = $this->getMailerMessage();
 
-        $this->assertEmailHtmlBodyContains($email, "Heello - Email send");
-        $this->assertEmailTextBodyContains($email, "Heello - Email send");
+        $this->assertEmailHtmlBodyContains($email, 'Heello - Email send');
+        $this->assertEmailTextBodyContains($email, 'Heello - Email send');
     }
 }

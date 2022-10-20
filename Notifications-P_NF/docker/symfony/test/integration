@@ -1,3 +1,3 @@
 #!/bin/bash
-
-docker-compose exec php ./bin/phpunit --group Integration
+echo ":: Run Integration Test"
+docker-compose exec php ./bin/phpunit --group Integration,integration
