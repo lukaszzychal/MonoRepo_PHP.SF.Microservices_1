@@ -24,7 +24,7 @@ jobs:
       run: |
        ls -la 
        ls -la ${PWD}/docker/symfony/
-       chmod +x ${PWD}/docker/.
+       chmod -R +x ${PWD}/docker/.
        ${PWD}/docker/symfony/rebuild-container-and-up
        ${PWD}/docker/symfony/install-cli
        ${PWD}/docker/symfony/run-server-symfony
