@@ -1,0 +1,87 @@
+{
+	"info": {
+		"_postman_id": "7258b76a-f2f9-4294-9e79-f9f5f7b8f315",
+		"name": "P_NF",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17577706"
+	},
+	"item": [
+		{
+			"name": "Notification",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"type\": \"email\",\r\n  \"email\": \"my123.nowy.email@test\",\r\n  \"context\": \"Hi. You accont was created. :) Welcome :)\",\r\n  \"subject\": \"User was creeated\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}/notification?queryteest=test2",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"notification"
+					],
+					"query": [
+						{
+							"key": "queryteest",
+							"value": "test2"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "HOST",
+			"value": "https://127.0.0.1:8002",
+			"type": "string"
+		},
+		{
+			"key": "TOKEN",
+			"value": "CorrectAcceesTokenNotificationService",
+			"type": "string"
+		}
+	]
+}
