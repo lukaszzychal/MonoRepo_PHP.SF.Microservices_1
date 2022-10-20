@@ -2,4 +2,5 @@
 
 # composer require friendsofphp/php-cs-fixer
 echo ":: Run Php-Cs-Fixer Analyse"
-docker/symfony/cmd  vendor/bin/php-cs-fixer --allow-risky=yes --diff --rules=@Symfony,@PSR12 src tests  
+docker/symfony/cmd  vendor/bin/php-cs-fixer fix ./src --dry-run  --allow-risky=yes --diff --rules=@Symfony,@PSR12   
+docker/symfony/cmd  vendor/bin/php-cs-fixer fix ./tests --dry-run  --allow-risky=yes --diff --rules=@Symfony,@PSR12 
