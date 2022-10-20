@@ -24,7 +24,7 @@ class NotificationRequestTest extends TestCase
                 'HTTP_AUTHORIZATION' => 'CorrectToken',
             ],
             json_encode([
-                'type' => 'email'
+                'type' => 'email',
             ])
         );
         $NfRequest = NotificationRequest::fromRequest($request);

@@ -10,7 +10,6 @@ use App\NF\Infrastructure\Event\SendNotificationEvent;
 use App\NF\Infrastructure\Request\NotificationRequest;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -42,9 +41,9 @@ class SendNotificationSubscribe implements EventSubscriberInterface
 
         $token = str_replace('Bearer ', '', $notifiRequeest->token);
         if ($this->appToken !== $token) {
-            $this->logger->critical("Wrong token [ {$token} ]: File:" . __FILE__ . '  Line: ' . __LINE__);
+            $this->logger->critical("Wrong token [ {$token} ]: File:".__FILE__.'  Line: '.__LINE__);
             // @todo Przerobić na konkretny wyjątek
-            throw new \Exception('Wrong token [ ' . $token . ' ]', Response::HTTP_BAD_REQUEST);
+            throw new \Exception('Wrong token [ '.$token.' ]', Response::HTTP_BAD_REQUEST);
         }
 
         $obj = $this->deserializeRequest($request);

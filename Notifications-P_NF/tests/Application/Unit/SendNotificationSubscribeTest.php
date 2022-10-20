@@ -7,7 +7,6 @@ use App\NF\Infrastructure\Event\SendNotificationEvent;
 use App\NF\Infrastructure\Exception\InvalidParemeterRequest;
 use App\NF\Infrastructure\Subscribe\SendNotificationSubscribe;
 use Exception;
-use PHPUnit\Framework\MockObject\MockClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
@@ -23,7 +22,6 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 class SendNotificationSubscribeTest extends TestCase
 {
-
     private MockObject|MessageBusInterface $messageBus;
     private MockObject|SerializerInterface $serializer;
     private LoggerInterface $logger;
@@ -33,7 +31,7 @@ class SendNotificationSubscribeTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->appToken =  'CorrectAcceesTokenNotificationService';
+        $this->appToken = 'CorrectAcceesTokenNotificationService';
         $this->serializer = $this->createMock(SerializerInterface::class);
         $this->messageBus = $this->createMock(MessageBusInterface::class);
         $this->logger = $this->createMock(LoggerInterface::class);
@@ -49,12 +47,10 @@ class SendNotificationSubscribeTest extends TestCase
         $this->dispatcher->addSubscriber($this->subscriber);
     }
 
-
-
     public function testNotificationSubscribeInvalidRequst()
     {
         $this->expectException(InvalidParemeterRequest::class);
-        $this->expectExceptionMessage("Invalid paremeter [ Authorization ] request");
+        $this->expectExceptionMessage('Invalid paremeter [ Authorization ] request');
 
         $request = Request::create(
             '/',
@@ -73,7 +69,7 @@ class SendNotificationSubscribeTest extends TestCase
     public function testNotificationSubscribeWitoutTokenInRequest()
     {
         $this->expectException(InvalidParemeterRequest::class);
-        $this->expectExceptionMessage("Invalid paremeter [ Authorization ] request");
+        $this->expectExceptionMessage('Invalid paremeter [ Authorization ] request');
 
         $request = Request::create(
             '/notification',
@@ -83,7 +79,7 @@ class SendNotificationSubscribeTest extends TestCase
             [],
             [],
             json_encode([
-                'test' => 'test'
+                'test' => 'test',
             ])
         );
 
@@ -94,7 +90,7 @@ class SendNotificationSubscribeTest extends TestCase
     public function testNotificationSubscribeWithWrongTokenANDWithoutTypeInRequest()
     {
         $this->expectException(InvalidParemeterRequest::class);
-        $this->expectExceptionMessage("Invalid paremeter [ Type ] request");
+        $this->expectExceptionMessage('Invalid paremeter [ Type ] request');
 
         $request = Request::create(
             '/notification',
@@ -103,10 +99,10 @@ class SendNotificationSubscribeTest extends TestCase
             [],
             [],
             [
-                'HTTP_AUTHORIZATION' => 'wrong token'
+                'HTTP_AUTHORIZATION' => 'wrong token',
             ],
             json_encode([
-                'test' => 'test'
+                'test' => 'test',
             ])
         );
 
@@ -117,7 +113,7 @@ class SendNotificationSubscribeTest extends TestCase
     public function testNotificationSubscribeWithWrongTokenANDWithTypeInRequest()
     {
         $this->expectException(Exception::class);
-        $this->expectExceptionMessage("Wrong token");
+        $this->expectExceptionMessage('Wrong token');
 
         $request = Request::create(
             '/notification',
@@ -126,10 +122,10 @@ class SendNotificationSubscribeTest extends TestCase
             [],
             [],
             [
-                'HTTP_AUTHORIZATION' => 'WrongToken'
+                'HTTP_AUTHORIZATION' => 'WrongToken',
             ],
             json_encode([
-                'type' => 'email'
+                'type' => 'email',
             ])
         );
 
@@ -139,7 +135,6 @@ class SendNotificationSubscribeTest extends TestCase
 
     public function testNotificationSubscribeWithCorrectTokenANDAllRRequireedDataInRequest()
     {
-
         $emailCommand = new SendEmailCommand(
             'email',
             'my.email@test',
@@ -162,12 +157,12 @@ class SendNotificationSubscribeTest extends TestCase
             [],
             [],
             [
-                'HTTP_AUTHORIZATION' => 'Bearer ' . $this->appToken
+                'HTTP_AUTHORIZATION' => 'Bearer '.$this->appToken,
             ],
             json_encode([
                 'type' => 'email',
                 'email' => 'my.email@test',
-                'context' => ' text email'
+                'context' => ' text email',
             ])
         );
 

@@ -5,7 +5,6 @@ namespace App\Tests\Application\Functional;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-
 /**
  * @group functional
  */
@@ -25,7 +24,7 @@ class SendEmailNotificationTest extends WebTestCase
             json_encode([
                 'type' => 'email',
                 'email' => 'my.email@test',
-                'context' => "Heello - Email send"
+                'context' => 'Heello - Email send',
             ])
         );
 
@@ -35,7 +34,7 @@ class SendEmailNotificationTest extends WebTestCase
 
         $email = $this->getMailerMessage();
 
-        $this->assertEmailHtmlBodyContains($email, "Heello - Email send");
-        $this->assertEmailTextBodyContains($email, "Heello - Email send");
+        $this->assertEmailHtmlBodyContains($email, 'Heello - Email send');
+        $this->assertEmailTextBodyContains($email, 'Heello - Email send');
     }
 }

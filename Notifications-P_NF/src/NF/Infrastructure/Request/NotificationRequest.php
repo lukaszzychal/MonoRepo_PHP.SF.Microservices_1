@@ -3,7 +3,6 @@
 namespace App\NF\Infrastructure\Request;
 
 use App\NF\Infrastructure\Exception\InvalidParemeterRequest;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -17,7 +16,6 @@ class NotificationRequest
 
     public static function fromRequest(Request $request): self
     {
-
         $headers = $request->headers;
         if (!$headers->has('Authorization')) {
             throw new InvalidParemeterRequest(['Authorization']);
@@ -28,7 +26,7 @@ class NotificationRequest
         if (is_null($content)) {
             // $this->logger->critical("Wrong Request: File:" . __FILE__ . '  Line: ' . __LINE__);
             // @todo Przerobić na konkretny wyjątek
-            throw new \Exception('Wrong request. File: ' . __FILE__ . '; Line: ' . __LINE__, Response::HTTP_BAD_REQUEST);
+            throw new \Exception('Wrong request. File: '.__FILE__.'; Line: '.__LINE__, Response::HTTP_BAD_REQUEST);
         }
 
         if (

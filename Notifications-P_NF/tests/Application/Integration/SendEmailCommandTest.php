@@ -13,7 +13,6 @@ use Symfony\Component\Mailer\MailerInterface;
  */
 class SendEmailCommandTest extends KernelTestCase
 {
-
     public function testSendEEmail(): void
     {
         $command = new SendEmailCommand(
@@ -35,7 +34,7 @@ class SendEmailCommandTest extends KernelTestCase
 
         $email = $this->getMailerMessage();
 
-        $this->assertEmailHtmlBodyContains($email, "Hello :)");
-        $this->assertEmailTextBodyContains($email, "Hello :)");
+        $this->assertEmailHtmlBodyContains($email, 'Hello :)');
+        $this->assertEmailTextBodyContains($email, 'Hello :)');
     }
 }

@@ -20,7 +20,6 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 class SendNotificationSubscribeTest extends KernelTestCase
 {
-
     private MessageBusInterface $messageBus;
     private SerializerInterface $serializer;
     private LoggerInterface $logger;
@@ -31,7 +30,7 @@ class SendNotificationSubscribeTest extends KernelTestCase
     protected function setUp(): void
     {
         $params = $this->getContainer()->get(ParameterBagInterface::class);
-        $this->appToken =  $params->get('app_token');
+        $this->appToken = $params->get('app_token');
         $this->serializer = $this->getContainer()->get(SerializerInterface::class);
         $this->messageBus = $this->getContainer()->get(MessageBusInterface::class);
         $this->logger = $this->getContainer()->get(LoggerInterface::class);
@@ -47,12 +46,10 @@ class SendNotificationSubscribeTest extends KernelTestCase
         $this->dispatcher->addSubscriber($this->subscriber);
     }
 
-
-
     public function testNotificationSubscribeInvalidRequst()
     {
         $this->expectException(InvalidParemeterRequest::class);
-        $this->expectExceptionMessage("Invalid paremeter [ Authorization ] request");
+        $this->expectExceptionMessage('Invalid paremeter [ Authorization ] request');
 
         $request = Request::create(
             '/',
@@ -71,7 +68,7 @@ class SendNotificationSubscribeTest extends KernelTestCase
     public function testNotificationSubscribeWitoutTokenInRequest()
     {
         $this->expectException(InvalidParemeterRequest::class);
-        $this->expectExceptionMessage("Invalid paremeter [ Authorization ] request");
+        $this->expectExceptionMessage('Invalid paremeter [ Authorization ] request');
 
         $request = Request::create(
             '/notification',
@@ -81,7 +78,7 @@ class SendNotificationSubscribeTest extends KernelTestCase
             [],
             [],
             json_encode([
-                'test' => 'test'
+                'test' => 'test',
             ])
         );
 
@@ -92,7 +89,7 @@ class SendNotificationSubscribeTest extends KernelTestCase
     public function testNotificationSubscribeWithWrongTokenANDWithoutTypeInRequest()
     {
         $this->expectException(InvalidParemeterRequest::class);
-        $this->expectExceptionMessage("Invalid paremeter [ Type ] request");
+        $this->expectExceptionMessage('Invalid paremeter [ Type ] request');
 
         $request = Request::create(
             '/notification',
@@ -101,10 +98,10 @@ class SendNotificationSubscribeTest extends KernelTestCase
             [],
             [],
             [
-                'HTTP_AUTHORIZATION' => 'wrong token'
+                'HTTP_AUTHORIZATION' => 'wrong token',
             ],
             json_encode([
-                'test' => 'test'
+                'test' => 'test',
             ])
         );
 
@@ -115,7 +112,7 @@ class SendNotificationSubscribeTest extends KernelTestCase
     public function testNotificationSubscribeWithWrongTokenANDWithTypeInRequest()
     {
         $this->expectException(Exception::class);
-        $this->expectExceptionMessage("Wrong token");
+        $this->expectExceptionMessage('Wrong token');
 
         $request = Request::create(
             '/notification',
@@ -124,10 +121,10 @@ class SendNotificationSubscribeTest extends KernelTestCase
             [],
             [],
             [
-                'HTTP_AUTHORIZATION' => 'WrongToken'
+                'HTTP_AUTHORIZATION' => 'WrongToken',
             ],
             json_encode([
-                'type' => 'email'
+                'type' => 'email',
             ])
         );
 
@@ -144,12 +141,12 @@ class SendNotificationSubscribeTest extends KernelTestCase
             [],
             [],
             [
-                'HTTP_AUTHORIZATION' => 'Bearer ' . $this->appToken
+                'HTTP_AUTHORIZATION' => 'Bearer '.$this->appToken,
             ],
             json_encode([
                 'type' => 'email',
                 'email' => 'my.email@test',
-                'context' => ' text email'
+                'context' => ' text email',
             ])
         );
 
@@ -160,7 +157,7 @@ class SendNotificationSubscribeTest extends KernelTestCase
 
         $email = $this->getMailerMessage();
 
-        $this->assertEmailHtmlBodyContains($email, " text email");
-        $this->assertEmailTextBodyContains($email, " text email");
+        $this->assertEmailHtmlBodyContains($email, ' text email');
+        $this->assertEmailTextBodyContains($email, ' text email');
     }
 }
