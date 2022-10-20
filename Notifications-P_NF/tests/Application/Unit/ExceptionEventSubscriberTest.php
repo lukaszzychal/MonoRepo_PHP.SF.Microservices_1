@@ -2,13 +2,8 @@
 
 namespace App\Tests\Application\Unit;
 
-use App\NF\Application\Write\Command\SendEmailCommand;
-use App\NF\Infrastructure\Event\SendNotificationEvent;
-use App\NF\Infrastructure\Exception\InvalidParemeterRequest;
 use App\NF\Infrastructure\ExceptionEventSubscriber;
-use App\NF\Infrastructure\Subscribe\SendNotificationSubscribe;
 use Exception;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -18,9 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\Messenger\Envelope;
-use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @group unit, exc
@@ -45,7 +37,6 @@ class ExceptionEventSubscriberTest extends TestCase
 
     public function testNotificationSubscribeInvalidRequst()
     {
-
         $request = Request::create(
             '/',
             'GET',
@@ -60,10 +51,10 @@ class ExceptionEventSubscriberTest extends TestCase
             $htttpKerneel,
             $request,
             HttpKernelInterface::MAIN_REQUEST,
-            new Exception("test message", Response::HTTP_BAD_REQUEST)
+            new Exception('test message', Response::HTTP_BAD_REQUEST)
         );
         $this->dispatcher->dispatch($event, KernelEvents::EXCEPTION);
-        $contentJson =  $event->getResponse()->getContent();
+        $contentJson = $event->getResponse()->getContent();
         $this->assertJson($contentJson);
         $contentArray = json_decode($contentJson, true);
         $this->assertIsArray($contentArray);
@@ -73,6 +64,6 @@ class ExceptionEventSubscriberTest extends TestCase
         $this->assertArrayHasKey('line', $contentArray);
 
         $this->assertSame(Response::HTTP_BAD_REQUEST, $contentArray['code']);
-        $this->assertSame("test message", $contentArray['message']);
+        $this->assertSame('test message', $contentArray['message']);
     }
 }
