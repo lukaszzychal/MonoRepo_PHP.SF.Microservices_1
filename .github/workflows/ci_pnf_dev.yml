@@ -116,8 +116,7 @@ jobs:
         name: Functional Test
         run: | 
          echo "Functional Test"
-         ls -la ${PWD}
-         chmod -R +x  ${PWD}/docker/. ${PWD}/tests/.
+         chmod -R +x  ${PWD}/docker/. ${PWD}/tests/. ${PWD}/bin/.
          ${PWD}/docker/symfony/test/functional
       - 
        name: Application Test
