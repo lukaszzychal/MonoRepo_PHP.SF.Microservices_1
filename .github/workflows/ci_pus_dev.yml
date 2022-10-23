@@ -31,6 +31,7 @@ jobs:
        ${PWD}/docker/symfony/rebuild-container-and-up
        ${PWD}/docker/symfony/install-cli
        docker container ls
+        ls -la ${PWD}/docker/symfony/
        ${PWD}/docker/symfony/run-server-symfony
        docker-compose exec -T php bash -c 'php -v && composer --version'
        
