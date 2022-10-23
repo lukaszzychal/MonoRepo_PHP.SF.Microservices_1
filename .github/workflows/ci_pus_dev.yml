@@ -26,7 +26,6 @@ jobs:
        chmod +x ${PWD}/docker/symfony/install-cli
        chmod +x ${PWD}/docker/symfony/run-server-symfony
        chmod +x ${PWD}/bin/console
-       chmod -R +x ${PWD}/vendor/
        ${PWD}/docker/symfony/rebuild-container-and-up
        ${PWD}/docker/symfony/install-cli
        docker container ls
