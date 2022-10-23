@@ -30,6 +30,7 @@ jobs:
        chmod +x ${PWD}/bin/console
        ${PWD}/docker/symfony/rebuild-container-and-up
        ${PWD}/docker/symfony/install-cli
+       docker container ls
        ${PWD}/docker/symfony/run-server-symfony
        docker-compose exec -T php bash -c 'php -v && composer --version'
        
