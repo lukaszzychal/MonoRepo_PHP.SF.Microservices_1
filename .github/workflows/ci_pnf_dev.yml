@@ -59,6 +59,7 @@ jobs:
          ls -l
          ls -l ${PWD}
          docker load --input ${PWD}/php.tar
+         docker network create background_network
          docker-compose -f ${PWD}/docker-compose.dev.yml up -d 
          chmod +x ${PWD}/docker/symfony/vendor-install
          ${PWD}/docker/symfony/vendor-install
@@ -96,6 +97,7 @@ jobs:
          ls -l
          ls -l ${PWD}
          docker load --input ${PWD}/php.tar
+         docker network create background_network
          docker-compose -f ${PWD}/docker-compose.dev.yml up -d 
          chmod +x ${PWD}/docker/symfony/vendor-install
          ${PWD}/docker/symfony/vendor-install
