@@ -22,13 +22,11 @@ jobs:
      - 
       name: Build containers
       run: |
-       ls -la 
-       ls -la ${PWD}/docker/symfony/
        chmod +x ${PWD}/docker/symfony/rebuild-container-and-up
        chmod +x ${PWD}/docker/symfony/install-cli
        chmod +x ${PWD}/docker/symfony/run-server-symfony
        chmod +x ${PWD}/bin/console
-       chmod +x ${PWD}/vendor/
+       chmod -R +x ${PWD}/vendor/
        ${PWD}/docker/symfony/rebuild-container-and-up
        ${PWD}/docker/symfony/install-cli
        docker container ls
