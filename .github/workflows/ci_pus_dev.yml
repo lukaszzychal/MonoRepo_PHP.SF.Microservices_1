@@ -28,9 +28,11 @@ jobs:
        chmod +x ${PWD}/docker/symfony/install-cli
        chmod +x ${PWD}/docker/symfony/run-server-symfony
        chmod +x ${PWD}/bin/console
+       chmod +x ${PWD}/vendor/
        ${PWD}/docker/symfony/rebuild-container-and-up
        ${PWD}/docker/symfony/install-cli
        docker container ls
+        ls -la ${PWD}/
         ls -la ${PWD}/vendor/
        ${PWD}/docker/symfony/run-server-symfony
        docker-compose exec -T php bash -c 'php -v && composer --version'
