@@ -13,6 +13,7 @@ services:
       # - ./docker/php/99-xdebug.ini :/usr/local/etc/php/conf.d/99-xdebug.ini
     networks:
       - P_NF_network
+      - background_network
   
   mailhog:
     image: mailhog/mailhog
@@ -30,3 +31,7 @@ volumes:
 networks:
   P_NF_network:
    driver: bridge
+  background_network:
+      name: background_network
+      driver: bridge
+      external: true
