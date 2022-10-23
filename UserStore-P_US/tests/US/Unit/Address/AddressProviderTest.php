@@ -37,7 +37,7 @@ class AddressProviderTest extends TestCase
 
     public  function testRandom(): void
     {
-        $address1 = AddressProvider::random();
+        $address1 = AddressProvider::create();
         $address2 = AddressProvider::random();
 
 

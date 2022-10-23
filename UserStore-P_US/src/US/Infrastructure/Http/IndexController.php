@@ -2,16 +2,21 @@
 
 namespace App\US\Infrastructure\Http;
 
+use App\US\Infrastructure\TokenRequest\RequiredTokenRequestInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class IndexController extends AbstractController
 {
-    #[Route('/', name: 'app_index', methods: [Request::METHOD_GET])]
-    public function index(): Response
+    public function __construct()
     {
-        return new Response('Project [P_US] User Story');
+    }
+
+    #[Route('/', name: 'app_index', methods: [Request::METHOD_GET])]
+    public function index(): JsonResponse
+    {
+        return new JsonResponse('Project [P_US] User Story');
     }
 }

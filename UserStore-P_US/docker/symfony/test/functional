@@ -1,0 +1,3 @@
+#!/bin/bash
+echo ":: Run Functional Test"
+docker-compose exec -T php ./bin/phpunit --testdox --group Functional,functional

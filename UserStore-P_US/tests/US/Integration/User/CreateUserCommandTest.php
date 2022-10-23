@@ -2,31 +2,37 @@
 
 namespace App\Tests\US\Integration\User;
 
+use App\Tests\US\Integration\FakeHttpClient;
+use App\Tests\US\Integration\FakeHttpResponse;
 use App\US\Application\Write\Command\CreateUser\CreateUserCommand;
-use App\US\Application\Write\Command\CreateUser\CreateUserHandler as CreateUserCreateUserHandler;
+use App\US\Application\Write\Command\CreateUser\CreateUserHandler;
 use App\US\Domain\User\UserID;
 use App\US\Domain\User\UserRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\HttpClient\Response\MockResponse;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
+/**
+ * @group  Integration
+ */
 class CreateUserCommandTest extends KernelTestCase
 {
 
     /**
-     * @group  now2
+     * @group g1
+     *
+     * @return void
      */
     public function testCreateUser(): void
     {
-
         self::bootKernel();
 
-        // /**
-        //  * @var UserRepositoryInterface $userRepo
-        //  */
+        $this->getContainer()->set(FakeHttpResponse::class, new FakeHttpClient());
         $userRepo = $this->getContainer()->get(UserRepositoryInterface::class);
-        $busMock = $this->getContainer()->get(MessageBusInterface::class);
+        $bus = $this->getContainer()->get(MessageBusInterface::class);
         $validator = $this->getContainer()->get(ValidatorInterface::class);
 
         $command = new CreateUserCommand(
@@ -36,9 +42,9 @@ class CreateUserCommandTest extends KernelTestCase
             "moj.mail@test.pl"
         );
 
-        $hanler = new CreateUserCreateUserHandler(
+        $hanler = new CreateUserHandler(
             $userRepo,
-            $busMock,
+            $bus,
             $validator
         );
 

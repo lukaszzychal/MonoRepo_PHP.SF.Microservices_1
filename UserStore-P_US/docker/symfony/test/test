@@ -2,5 +2,6 @@
 
 docker/symfony/test/unit
 docker/symfony/test/integration
+docker/symfony/test/functional
 docker/symfony/test/application
 docker/symfony/test/others

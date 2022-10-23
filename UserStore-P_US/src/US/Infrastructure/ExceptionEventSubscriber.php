@@ -32,30 +32,35 @@ class ExceptionEventSubscriber implements EventSubscriberInterface
         }
 
         $throw = $exceptionEvent->getThrowable();
+        dump('----');
+        dump($throw->getMessage());
+        dump(get_class(
+            $throw
+        ));
         $exception = match ($throw->getCode()) {
-            400 => new Exception(
-                $throw->getCode(),
-                'Bad Request',
-                'Wrong request. Please check again',
-                ''
-            ),
-            401 => new Exception(
-                $throw->getCode(),
-                'Unauthorized',
-                'Wrong client credentials',
-                ''
-            ),
-            404 => new Exception(
-                $throw->getCode(),
-                'Not Found',
-                'Not found, maybe it doesn’t exist',
-                ''
-            ),
+                //     400 => new Exception(
+                //         $throw->getCode(),
+                //         'Bad Request',
+                //         'Wrong request. Please check again',
+                //         ''
+                //     ),
+                //     401 => new Exception(
+                //         $throw->getCode(),
+                //         'Unauthorized',
+                //         'Wrong client credentials',
+                //         ''
+                //     ),
+                //     404 => new Exception(
+                //         $throw->getCode(),
+                //         'Not Found',
+                //         'Not found, maybe it doesn’t exist',
+                //         ''
+                //     ),
             default => new Exception(
-                400,
-                'Unknown error',
-                'Not found, maybe it doesn’t exist',
-                ''
+                $throw->getCode(),
+                $throw->getFile(),
+                $throw->getMessage(),
+                $throw->getLine()
             ),
         };
 

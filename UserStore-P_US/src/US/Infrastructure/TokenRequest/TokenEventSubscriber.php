@@ -50,15 +50,15 @@ class TokenEventSubscriber implements EventSubscriberInterface
             $this->logger->warning('No authorization. Please check your authorization token');
             throw $excepton;
         }
-        $token = $headers->get('authorization');
-        if ($this->appToken !== $headers->get('authorization')) {
+        $token = str_replace('Bearer ', '', $headers->get('authorization'));
+        if ($this->appToken !== $token) {
             $excepton = new WrongAuthorizationTokenException(
                 401,
                 "Wrong authorization token: {$token} )",
                 'Please check your authorization token',
                 ''
             );
-            $this->logger->warning('Wrong authorization token: ' . $headers->get('authorization') . ' endpoint: ' . $request->getBaseUrl());
+            $this->logger->warning('Wrong authorization token: ' . $token . ' endpoint: ' . $request->getBasePath());
             // throw new \Exception($excepton->toJsonResponse(), $excepton->getCode());
             throw $excepton;
         }

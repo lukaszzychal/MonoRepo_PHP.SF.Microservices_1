@@ -1,0 +1,10 @@
+services:
+    Symfony\Contracts\HttpClient\HttpClientInterface:
+        class: App\Tests\US\Integration\FakeHttpClient
+        public: true
+        autowire: true
+
+
+
+   
+

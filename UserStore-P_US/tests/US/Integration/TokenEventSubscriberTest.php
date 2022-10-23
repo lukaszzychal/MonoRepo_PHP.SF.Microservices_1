@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Matcher\UrlMatcherInterface;
 use Symfony\Component\Uid\UuidV4;
 
 /**
- * @group sub2
+ * @group Integration
  */
 class TokenEventSubscriberTest extends KernelTestCase
 {
@@ -26,6 +26,7 @@ class TokenEventSubscriberTest extends KernelTestCase
     private EventDispatcherInterface $dispatcher;
     private TokenEventSubscriber $subsriber;
     private HttpKernelInterface $httpKernel;
+    private string $appToken;
 
     protected function setUp(): void
     {
@@ -38,9 +39,10 @@ class TokenEventSubscriberTest extends KernelTestCase
         $this->dispatcher = $this->getContainer()->get(EventDispatcherInterface::class);
         $logger = $this->getContainer()->get(LoggerInterface::class);
         $urlMatcher = $this->getContainer()->get(UrlMatcherInterface::class);
+        $this->appToken = $this->getContainer()->getParameter('app_token');
 
         $this->subsriber = new TokenEventSubscriber(
-            'CorrectToken',
+            $this->appToken,
             $logger,
             $urlMatcher
         );
@@ -116,7 +118,9 @@ class TokenEventSubscriberTest extends KernelTestCase
             [],
             [],
             [
-                'HTTP_AUTHORIZATION' => 'CorrectToken',
+                'HTTP_AUTHORIZATION' => 'Bearer ' . $this->appToken,
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json'
             ],
             json_encode([
                 'uuid' => UuidV4::v4(),

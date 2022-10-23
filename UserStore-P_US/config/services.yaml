@@ -4,6 +4,9 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    app_token: '%env(APP_TOKEN)%'
+    nfs_host: '%env(NFS_HOST)%'
+    nfs_token: '%env(NFS_TOKEN)%'
 
 services:
     # default configuration for services in *this* file
@@ -24,6 +27,20 @@ services:
     # please note that last definitions always *replace* previous ones
 
     App\US\Infrastructure\TokenRequest\TokenEventSubscriber:
-        bind:
-            'string $appToken':  '%env(APP_TOKEN)%'
+        arguments:
+            $appToken:  '%env(APP_TOKEN)%'
+
+when@test:
+    services:
+        Symfony\Contracts\HttpClient\HttpClientInterface:
+            class: App\Tests\US\Integration\FakeHttpClient
+            public: true
+            autowire: true
+
+
+
+
+
+
+   
 

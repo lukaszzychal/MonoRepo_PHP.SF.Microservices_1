@@ -26,6 +26,7 @@ class CreateUserController extends AbstractController implements RequiredTokenRe
     public function createUser(
         Request $request
     ): JsonResponse {
+
         $createUserrRequest = CreateUserRequest::fromRequest($request, $this->serializer);
         $this->validator->validate($createUserrRequest);
         $this->messageBus->dispatch(new CreateUserCommand(
@@ -35,6 +36,6 @@ class CreateUserController extends AbstractController implements RequiredTokenRe
             $createUserrRequest->email
         ));
 
-        return CreateUserResponse::create();
+        return CreateUserResponse::create($createUserrRequest->uuid);
     }
 }

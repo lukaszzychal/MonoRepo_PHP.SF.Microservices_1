@@ -8,14 +8,13 @@ use App\US\Domain\User\UserRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 
+/**
+ * @group Integration
+ */
 class UserRepositoryTest extends KernelTestCase
 {
 
-    /**
-     * @group now11
-     *
-     * @return void
-     */
+
     public function testSaveUser()
     {
         self::bootKernel();

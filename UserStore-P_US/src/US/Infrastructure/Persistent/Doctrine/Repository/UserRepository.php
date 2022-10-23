@@ -28,7 +28,7 @@ class UserRepository extends ServiceEntityRepository implements UserRepositoryIn
         $this->_em->flush();
     }
 
-    public function findUser(UserID $userId): User
+    public function findUser(UserID $userId): ?User
     {
         $qb = $this->createQueryBuilder('u')
             ->where('u.uuid = :uuid')

@@ -1,6 +1,6 @@
 <?php
 
-namespace Application;
+namespace App\Tests\US\Application;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;

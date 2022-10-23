@@ -1,12 +1,13 @@
 <?php
 
-namespace US\Application;
+namespace App\Tests\US\Application;
 
 use DateTimeImmutable;
+use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Uid\UuidV4;
 
 /**
  * @group Application
@@ -14,24 +15,39 @@ use Symfony\Component\Uid\UuidV4;
  */
 class CreateUserControllerTest extends WebTestCase
 {
+
+    use ReloadDatabaseTrait;
+
+    private string $token;
+    private KernelBrowser $client;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->client = $this->createClient();
+        $this->token =  $this->getContainer()->getParameter('app_token');
+    }
     /**
-     * @group now123
+     * @group group1
      *
      * @return void
      */
     public function testCreateUserWithValidData()
     {
-        $client = $this->createClient();
-        $client->request(
+
+        $uuid = 'bb67376a-3b55-42f8-b210-bf170c9d8052';
+        $this->client->request(
             Request::METHOD_POST,
             '/users',
             [],
             [],
             [
-                'HTTP_AUTHORIZATION' => 'CorrectToken',
+                'HTTP_AUTHORIZATION' => 'Bearer ' . $this->token,
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json'
             ],
             json_encode([
-                'uuid' => UuidV4::v4(),
+                'uuid' => $uuid,
                 'firstName' => 'Łukasz',
                 'lastName' => 'Z',
                 'email' => 'email.testowy@test.pl',
@@ -41,15 +57,27 @@ class CreateUserControllerTest extends WebTestCase
             ])
 
         );
-        $response = $client->getResponse();
 
         $this->assertResponseStatusCodeSame(Response::HTTP_CREATED);
+        $response = $this->client->getResponse();
+        $context = json_decode($response->getContent(), true);
+        $contextFle = json_decode(
+            file_get_contents(
+                __DIR__ . '/../DataMock/NotificationSuccesResponse.json'
+            ),
+            true
+        );
         $this->assertJson($response->getContent());
-        $this->assertSame('User created', json_decode($response->getContent()));
+        $this->assertJson(file_get_contents(__DIR__ . '/../DataMock/NotificationSuccesResponse.json'));
+        $this->assertArrayHasKey('message', $context);
+        $this->assertStringContainsString('User created: #', $context['message']);
+        $this->assertSame(201, $context['code']);
+
+        // .....
     }
 
 
-    // public function testCreateUserWithInValidData()
+    // public function testCreateUserWithInValidDataThrowException()
     // {
     //     $client = $this->createClient();
     // }

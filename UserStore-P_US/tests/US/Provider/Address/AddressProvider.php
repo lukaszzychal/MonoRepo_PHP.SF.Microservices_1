@@ -41,6 +41,7 @@ class AddressProvider implements AddressProviderInterface
 
     public static function random(): Address
     {
+
         $faker = Factory::create('pl_PL');
 
         return new Address(

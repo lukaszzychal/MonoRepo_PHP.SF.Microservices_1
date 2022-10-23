@@ -13,6 +13,7 @@ services:
       # - ./docker/php/99-xdebug.ini :/usr/local/etc/php/conf.d/99-xdebug.ini
     networks:
       - P_US_network
+      - background_network
 
   postgres:
     image: postgres:11.1-alpine
@@ -28,6 +29,7 @@ services:
       - P_US_volume:/var/lib/mysql
     networks:
       - P_US_network
+      
 
 volumes:
   P_US_volume:
@@ -35,3 +37,6 @@ volumes:
 networks:
   P_US_network:
    driver: bridge
+  background_network:
+      name: background_network
+      driver: bridge
