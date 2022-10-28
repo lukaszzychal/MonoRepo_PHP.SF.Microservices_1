@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Unit;
 
 use App\Tests\US\Provider\Address\AddressProvider;

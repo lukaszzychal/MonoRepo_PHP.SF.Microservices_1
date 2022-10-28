@@ -10,7 +10,7 @@ use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
-final class NotificationClient
+class NotificationClient
 {
     private string $host = 'http(s)://locahost';
     private string $endpoint = '/notification';

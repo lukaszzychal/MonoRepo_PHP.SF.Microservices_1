@@ -34,7 +34,7 @@ class CreateUserCommandTest extends KernelTestCase
         $validator = $this->getContainer()->get(ValidatorInterface::class);
 
         $command = new CreateUserCommand(
-            Uuid::v4(),
+            (string) Uuid::v4(),
             'Łukasz',
             'Z',
             'moj.mail@test.pl'

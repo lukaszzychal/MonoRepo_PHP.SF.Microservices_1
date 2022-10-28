@@ -62,7 +62,7 @@ class UserCreatedEventTest extends KernelTestCase
         $type = NotificationTypeEnum::EMAIL;
         $dataArray = [];
         $commandEvent = new UserCreatedEvent(
-            123,
+            '123',
             $token,
             $type->value,
             $dataArray
@@ -94,7 +94,7 @@ class UserCreatedEventTest extends KernelTestCase
             'subject' => 'User was creeated',
         ];
         $commandEvent = new UserCreatedEvent(
-            $this->user->getUuid()->uuid,
+            (string) $this->user->getUuid()->uuid,
             $token,
             $type->value,
             $dataArray

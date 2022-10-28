@@ -11,7 +11,7 @@ final class UserID
     public function __construct(
         public readonly Uuid $uuid
     ) {
-        Uuid::isValid($this->uuid);
+        Uuid::isValid((string) $this->uuid);
     }
 
     public function __toString(): string

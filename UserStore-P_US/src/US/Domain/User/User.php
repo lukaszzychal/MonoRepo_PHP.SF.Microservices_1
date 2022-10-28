@@ -63,7 +63,7 @@ final class User implements AggregateRoot
      */
     public function getUuid(): UserID
     {
-        return UserID::fromString($this->uuid);
+        return $this->uuid;
     }
 
     /**
@@ -87,7 +87,7 @@ final class User implements AggregateRoot
      */
     public function getEmail(): string
     {
-        return $this->email;
+        return $this->email->email;
     }
 
     /**

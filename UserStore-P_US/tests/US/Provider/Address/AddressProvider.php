@@ -47,7 +47,7 @@ class AddressProvider implements AddressProviderInterface
             Uuid::v4(),
             $faker->streetName(),
             $faker->buildingNumber(),
-            $faker->randomDigitNotNull(),
+            $faker->randomElement($faker->sentences(5)),
             $faker->city(),
             new PostalCode($faker->postcode(), Country::from('PL')),
             Country::from('PL')
