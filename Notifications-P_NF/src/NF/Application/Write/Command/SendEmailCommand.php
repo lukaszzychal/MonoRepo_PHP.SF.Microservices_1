@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\NF\Application\Write\Command;
 
-class SendEmailCommand implements CommandInterface
+final class SendEmailCommand implements CommandInterface
 {
     public function __construct(
         public string $type,
