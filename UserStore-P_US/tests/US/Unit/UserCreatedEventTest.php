@@ -29,7 +29,7 @@ class UserCreatedEventTest extends TestCase
          */
         $sensitivedataStub = $this->createStub(SensitiveDataService::class);
         $sensitivedataStub->method('clear')
-            ->willReturn('Created user: #' . (string) $user->getUuid()->uuid);
+            ->willReturn('Created user: #'.(string) $user->getUuid()->uuid);
 
         /**
          * @var LoggerInterface|MockObject
