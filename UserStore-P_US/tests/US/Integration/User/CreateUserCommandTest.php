@@ -9,22 +9,17 @@ use App\US\Application\Write\Command\CreateUser\CreateUserHandler;
 use App\US\Domain\User\UserID;
 use App\US\Domain\User\UserRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\HttpClient\Response\MockResponse;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * @group  Integration
  */
 class CreateUserCommandTest extends KernelTestCase
 {
-
     /**
      * @group g1
-     *
-     * @return void
      */
     public function testCreateUser(): void
     {
@@ -37,9 +32,9 @@ class CreateUserCommandTest extends KernelTestCase
 
         $command = new CreateUserCommand(
             Uuid::v4(),
-            "Łukasz",
-            "Z",
-            "moj.mail@test.pl"
+            'Łukasz',
+            'Z',
+            'moj.mail@test.pl'
         );
 
         $hanler = new CreateUserHandler(
@@ -52,7 +47,7 @@ class CreateUserCommandTest extends KernelTestCase
 
         $user = $userRepo->findUser(new UserID(Uuid::fromString($command->uuid)));
 
-        $this->assertSame("moj.mail@test.pl", $user->getEmail());
+        $this->assertSame('moj.mail@test.pl', $user->getEmail());
         // ...
     }
 }

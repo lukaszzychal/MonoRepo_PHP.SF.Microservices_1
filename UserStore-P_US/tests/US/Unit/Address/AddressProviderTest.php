@@ -11,11 +11,9 @@ use Symfony\Component\Uid\Uuid;
 
 /**
  * @group Unit
- * 
  */
 class AddressProviderTest extends TestCase
 {
-
     public function testCreate(): void
     {
         $validAddress = new Address(
@@ -34,16 +32,13 @@ class AddressProviderTest extends TestCase
         $this->assertSameAddress($address, $validAddress);
     }
 
-
-    public  function testRandom(): void
+    public function testRandom(): void
     {
         $address1 = AddressProvider::create();
         $address2 = AddressProvider::random();
 
-
         $this->assertNotSameAddress($address1, $address2);
     }
-
 
     public function testWithAddress(): void
     {
@@ -55,7 +50,6 @@ class AddressProviderTest extends TestCase
         $postalCode = '59-300';
         $country = 'PL';
 
-
         $address = AddressProvider::withAddress(
             $uuid,
             $street,
@@ -66,7 +60,6 @@ class AddressProviderTest extends TestCase
             Country::from($country)
         );
 
-
         $this->assertSame($street, $address->street);
         $this->assertSame($houseNumber, $address->houseNumber);
         $this->assertSame($apartmentNumber, $address->apartmentNumber);
@@ -74,7 +67,6 @@ class AddressProviderTest extends TestCase
         $this->assertSame($city, $address->city);
         $this->assertSame($country, $address->country->value);
     }
-
 
     private function assertSameAddress(Address $address1, Address $address2)
     {
@@ -84,7 +76,7 @@ class AddressProviderTest extends TestCase
         $this->assertSame($address1->street, $address2->street);
         $this->assertSame($address1->houseNumber, $address2->houseNumber);
         $this->assertSame($address1->apartmentNumber, $address2->apartmentNumber);
-        $this->assertSame((string)$address1->postalCode, (string)$address2->postalCode);
+        $this->assertSame((string) $address1->postalCode, (string) $address2->postalCode);
         $this->assertSame($address1->city, $address2->city);
         $this->assertSame($address1->country, $address2->country);
     }

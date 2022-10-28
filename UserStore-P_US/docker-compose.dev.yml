@@ -14,10 +14,12 @@ services:
     networks:
       - P_US_network
       - background_network
+    environment:
+        WAIT_HOSTS: postgres:5432
 
   postgres:
-    image: postgres:11.1-alpine
-    container_name: db_postgres_P_US
+    image: postgres:13.4-alpine
+    container_name: postgres
     environment:
       - POSTGRES_USER=demo
       - POSTGRES_PASSWORD=demo

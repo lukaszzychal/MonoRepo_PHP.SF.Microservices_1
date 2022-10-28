@@ -5,14 +5,12 @@ namespace App\Tests\US\Unit\Email;
 use App\US\Domain\Email\Email;
 use App\US\Domain\Email\InvalidEmailException;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @group Unit
  */
 class EmailTest extends TestCase
 {
-
     public function testCreateWithValidEmail()
     {
         $email = 'email.valid@test.pl';

@@ -3,13 +3,11 @@
 namespace App\Tests\US\Integration;
 
 use App\Tests\US\Provider\User\UserProvider;
-use App\US\Application\Event\NotificationTypeEnum;
 use App\US\Infrastructure\Client\Notification\NotificationClient;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Symfony\Component\HttpClient\Response\MockResponse;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @group Integraton
@@ -42,7 +40,7 @@ class NotificationClientTest extends KernelTestCase
         );
 
         $user = UserProvider::random();
-        $reesponse =  $client->sendEmail(
+        $reesponse = $client->sendEmail(
             $user->getEmail(),
             'Subject: Notfication',
             'Context: Created User'

@@ -15,6 +15,7 @@ use Symfony\Component\Uid\Uuid;
 
 /**
  * @group Unit
+ *
  * @grop now3
  */
 class UserProviderTest extends TestCase
@@ -26,7 +27,6 @@ class UserProviderTest extends TestCase
          */
         $user = UserProvider::create();
 
-
         $this->assertInstanceOf(User::class, $user);
         $this->assertIsString($user->getFirstName());
         $this->assertNotEmpty($user->getFirstName());
@@ -35,7 +35,7 @@ class UserProviderTest extends TestCase
         $this->assertNotEmpty($user->getLastName());
 
         $this->assertInstanceOf(UserID::class, $user->getUuid());
-        $this->assertTrue(Uuid::isValid(($user->getUuid())->uuid));
+        $this->assertTrue(Uuid::isValid($user->getUuid()->uuid));
 
         $this->assertInstanceOf(Address::class, $user->getAddress());
         $this->assertInstanceOf(PostalCode::class, $user->getAddress()->postalCode);
@@ -43,7 +43,7 @@ class UserProviderTest extends TestCase
         // @todo  Dokończyć testy
     }
 
-    public  function testRandom(): void
+    public function testRandom(): void
     {
         $user1 = UserProvider::random();
         $user2 = UserProvider::random();
@@ -52,21 +52,19 @@ class UserProviderTest extends TestCase
         $this->assertNotSame($user1->getEmail(), $user2->getEmail());
     }
 
-
-    public  function testWith(): void
+    public function testWith(): void
     {
         $user = UserProvider::withData(
             new UserID(Uuid::v4()),
-            "Lukasz 2",
-            "Z 2",
-            EmailProvider::withEmail("my.email@test.pl"),
+            'Lukasz 2',
+            'Z 2',
+            EmailProvider::withEmail('my.email@test.pl'),
             AddressProvider::create(),
             new DateTimeImmutable(),
             ''
         );
 
-
-        $this->assertSame("Lukasz 2", $user->getFirstName());
-        $this->assertSame("my.email@test.pl", $user->getEmail());
+        $this->assertSame('Lukasz 2', $user->getFirstName());
+        $this->assertSame('my.email@test.pl', $user->getEmail());
     }
 }

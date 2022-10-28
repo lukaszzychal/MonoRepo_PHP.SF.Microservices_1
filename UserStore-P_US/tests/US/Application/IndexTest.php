@@ -9,8 +9,6 @@ class IndexTest extends WebTestCase
 {
     /**
      * @group Application
-     * 
-     * @return void
      */
     public function testMainPagSymfony(): void
     {
@@ -18,6 +16,6 @@ class IndexTest extends WebTestCase
         $client->request(Request::METHOD_GET, '/');
         $response = $client->getResponse();
         $this->assertResponseIsSuccessful();
-        $this->assertStringContainsString("Project [P_US] User Story", $response->getContent());
+        $this->assertStringContainsString('Project [P_US] User Story', $response->getContent());
     }
 }

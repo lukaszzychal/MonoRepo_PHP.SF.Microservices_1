@@ -9,129 +9,132 @@ on:
 jobs:
   Build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./UserStore-P_US
     steps:
      - 
       name: Checkout
       uses: actions/checkout@v3
-     - 
-      name: Copy file
-      run: |
-        ls -la UserStore-P_US
-        cp -Rf UserStore-P_US/. .
         
      - 
       name: Build containers
       run: |
-       chmod +x ${PWD}/docker/symfony/rebuild-container-and-up
-       chmod +x ${PWD}/docker/symfony/install-cli
-       chmod +x ${PWD}/docker/symfony/run-server-symfony
-       chmod +x ${PWD}/bin/console
-       ${PWD}/docker/symfony/rebuild-container-and-up
-       ${PWD}/docker/symfony/install-cli
-       docker container ls
-        ls -la ${PWD}/
-        ls -la ${PWD}/vendor/
-       ${PWD}/docker/symfony/run-server-symfony
-       docker-compose exec -T php bash -c 'php -v && composer --version'
-       
-     - 
-      name: Save image docker
-      run: |
-        docker save php > php.tar   
+          echo ":: Rebulding Contener And Up"
+          cp docker-compose.dev.yml docker-compose.yml
+          docker-compose -f docker-compose.yml up -d --build
+          docker exec PHP_P_US composer install
+          chmod +x ./bin/console
+          echo 'docker container ls'
+          docker container ls
+          echo 'docker-compose ps '
+          docker-compose ps 
+          echo 'docker-compose exec postgres ls -l'
+          docker-compose exec -T postgres ls -l
+          echo '  docker-compose exec php ping postgres'
+          docker-compose exec -T php ping -c 2 postgres
+          docker-compose exec -T php ./bin/console doctrine:database:create  --env=test
+          docker-compose exec -T php ./bin/console doctrine:migrations:migrate -n --env=test
+
+          echo ":: Version"
+          docker exec PHP_P_US ls -l
+          docker exec PHP_P_US php -v && composer --version && docker-compose --version
+          
+          
+          echo ":: Run Symfony Serverr"
+          docker exec PHP_P_US symfony server:ca:install
+          docker exec PHP_P_US symfony server:stop
+          docker exec PHP_P_US symfony server:start --port=8000 -d
+
      - 
       name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.0
       with:
        name: P_US 
-       path: .
-
+       path: |
+        ./UserStore-P_US
+        !./UserStore-P_US/doc/*
+        !./UserStore-P_US/var/*
+        !./UserStore-P_US/vendor/*
+        
   StaticCodeAnalysis:
     runs-on: ubuntu-latest
     needs: Build
     steps:
-      - name: StaticCodeAnalysis
-        run: echo 'StaticCodeAnalysis '
-      -
-       name: Download a Build Artifact
-       uses: actions/download-artifact@v3.0.0
-       with:
-        name: P_US 
       - 
-       name: Load Docker image
-       run: |
-         ls -l
-         ls -l ${PWD}
-         docker load --input ${PWD}/php.tar
-         docker-compose -f ${PWD}/docker-compose.dev.yml up -d 
-         chmod +x ${PWD}/docker/symfony/vendor-install
-         ${PWD}/docker/symfony/vendor-install
-         docker container ls
-      -    
-       name: PhpStan
-       run: |
-        echo "PhpStan"
-        echo "chmod symfony"
-          sudo chmod -R +x ${PWD}/docker/symfony/.
-          echo "chmod vendor"
-          sudo chmod -R +x ${PWD}/vendor/.
-          echo "php-cs-fixer script"
-          ${PWD}/docker/symfony/static-code-analysis/phpstan
+        name: StaticCodeAnalysis
+        run: | 
+          echo ":: Run Static Code Analysis "
+          ls -la
+      -
+        name: Download a Build Artifact
+        uses: actions/download-artifact@v3.0.0
+        with:
+          name: P_US 
+      - 
+        name: Up Container
+        run: | 
+          echo ":: List Download a Build Artifact "
+          ls -la
+          docker-compose -f docker-compose.yml up -d --build
+          docker exec PHP_P_US composer install
+
       - 
         name: Php-Cs-Fixer
         run: | 
-          echo "Php-Cs-Fixer"
-          echo "chmod symfony"
-          sudo chmod -R +x ${PWD}/docker/symfony/.
-          echo "chmod vendor"
-          sudo chmod -R +x ${PWD}/vendor/.
-          echo "php-cs-fixer script"
-          ${PWD}/docker/symfony/static-code-analysis/php-cs-fixer
-          
+          echo ":: Run Php-Cs-Fixer Analyse"
+          docker-compose exec -T php chmod +x ./vendor/bin/php-cs-fixer
+          docker-compose exec -T php ./vendor/bin/php-cs-fixer fix ./src --dry-run  --allow-risky=yes --diff --rules=@Symfony,@PSR12   
+          docker-compose exec -T php ./vendor/bin/php-cs-fixer fix ./tests --dry-run  --allow-risky=yes --diff --rules=@Symfony,@PSR12 
+      -    
+        name: PhpStan
+        run: |
+          echo ":: Run PhpStan Analyse"
+          docker-compose exec -T php chmod +x ./vendor/bin/phpstan
+          docker-compose exec -T php ./vendor/bin/phpstan analyse src  --no-progress --level 8
 
   Test:
     runs-on: ubuntu-latest
     needs: Build
     steps:
-      - name: Test
-        run: echo 'Test'
       -
         name: Download a Build Artifact
         uses: actions/download-artifact@v3.0.0
         with:
-         name: P_US 
+          name: P_US 
       - 
-       name: Load Docker image
-       run: |
-         ls -l
-         ls -l ${PWD}
-         docker load --input ${PWD}/php.tar
-         docker-compose -f ${PWD}/docker-compose.dev.yml up -d 
-         chmod +x ${PWD}/docker/symfony/vendor-install
-         ${PWD}/docker/symfony/vendor-install
-         docker container ls
-      - 
-        name: Unit Test
+        name: Up Container
         run: | 
-         echo "Unit Test"
-         ls -la ${PWD}
-         chmod +x ${PWD}/docker/symfony/symfony_cmd ${PWD}/tests/.
-         ${PWD}/docker/symfony/symfony_cmd php bin/phpunit tests/ --group Unit
+          echo ":: List Download a Build Artifact "
+          ls -la
+          docker-compose -f docker-compose.yml up -d --build
+          docker exec PHP_P_US composer install
+          chmod +x ./bin/console
+          docker-compose exec -T php ./bin/console doctrine:database:create  --env=test
+          docker-compose exec -T php ./bin/console doctrine:migrations:migrate -n --env=test
+      - 
+       name: Tests
+       run: |
+        echo ":: Run Tests"
+        chmod +x ./bin/phpunit
+        chmod -R +x ./tests
+      - 
+       name: Unit Test
+       run: | 
+        echo ":: Run Unit Test"
+        ./bin/phpunit --testdox --group Unit,unit,U,u
       - 
        name: Integration Test
        run: |
-         echo "Integration Test"
-         chmod +x ${PWD}/docker/symfony/symfony_cmd ${PWD}/tests/.
-         ${PWD}/docker/symfony/symfony_cmd php bin/phpunit tests/ --group Integration  
+         echo ":: Run Integration Test"
+         docker-compose exec -T php ./bin/phpunit --testdox --group Integration,integration,I,i
       - 
        name: Application Test
        run: | 
-         echo "Application Test"
-         chmod +x ${PWD}/docker/symfony/symfony_cmd tests/.
-         ${PWD}/docker/symfony/symfony_cmd php bin/phpunit tests/ --group Aspplication  
+         echo ":: Run Aplication Test"
+         docker-compose exec -T php ./bin/phpunit --testdox --group Application,application,A,a
       - 
-        name: No Group Test
-        run: | 
-          echo "No Group Test"
-          chmod +x ${PWD}/docker/symfony/symfony_cmd tests/.
-          ${PWD}/docker/symfony/symfony_cmd php bin/phpunit tests/ --exclude-group Unit,Integration,Application
-  
+       name: No Group Test
+       run: | 
+          echo ":: Run Other Test"
+          docker-compose exec -T php ./bin/phpunit --testdox --exclude-group Unit,unit,U,u --exclude-group Integration,integration,I,i --exclude-group Application,application,A,a

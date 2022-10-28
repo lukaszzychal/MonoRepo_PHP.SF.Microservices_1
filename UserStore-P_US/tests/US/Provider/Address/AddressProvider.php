@@ -10,7 +10,6 @@ use Symfony\Component\Uid\Uuid;
 
 class AddressProvider implements AddressProviderInterface
 {
-
     public const DEFAULT_UUID = 'cf1e5b0d-77f7-4e83-8e99-ab74f715d5cc';
     public const DEFAULT_STREET = 'street';
     public const DEFAULT_HOUSE_NUMBER = 'house number 4B';
@@ -18,7 +17,6 @@ class AddressProvider implements AddressProviderInterface
     public const DEFAULT_CITY = 'city';
     public const DEFAULT_POSTALCODE = '59-300';
     public const DEFAULT_COUNTRY = Country::POLAND;
-
 
     public static function defaults(): Address
     {
@@ -41,7 +39,6 @@ class AddressProvider implements AddressProviderInterface
 
     public static function random(): Address
     {
-
         $faker = Factory::create('pl_PL');
 
         return new Address(

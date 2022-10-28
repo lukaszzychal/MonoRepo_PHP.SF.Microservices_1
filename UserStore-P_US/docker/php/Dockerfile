@@ -8,6 +8,10 @@ RUN docker-php-ext-install pdo pdo_pgsql
 
 COPY --from=composer/composer /usr/bin/composer /usr/bin/composer
 
+RUN apk add --no-cache bash 
+RUN curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.alpine.sh' | bash 
+RUN apk add symfony-cli
+
 WORKDIR /var/www/html
 RUN chmod -R ugo+rwx .
 

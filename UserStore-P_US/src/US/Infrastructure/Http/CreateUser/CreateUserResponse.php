@@ -19,7 +19,7 @@ class CreateUserResponse implements ResponseInterface
     {
         return new JsonResponse([
             'code' => Response::HTTP_CREATED,
-            'message' => 'User created: #' . $id
+            'message' => 'User created: #'.$id,
         ], Response::HTTP_CREATED);
     }
 }

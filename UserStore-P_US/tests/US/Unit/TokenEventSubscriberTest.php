@@ -3,13 +3,11 @@
 namespace App\Tests\US\Unit;
 
 use App\US\Infrastructure\TokenRequest\TokenEventSubscriber;
-use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\Routing\Matcher\UrlMatcherInterface;
-
 
 class TokenEventSubscriberTest
 {
@@ -17,7 +15,7 @@ class TokenEventSubscriberTest
     {
         $logger = $this->createMock(LoggerInterface::class);
         $urlMatcher = $this->createMock(UrlMatcherInterface::class);
-        $subscriber =  new TokenEventSubscriber(
+        $subscriber = new TokenEventSubscriber(
             'token',
             $logger,
             $urlMatcher
@@ -30,7 +28,7 @@ class TokenEventSubscriberTest
             [],
             [],
             [
-                'headeers' => []
+                'headeers' => [],
             ]
         );
         $httpKerner = $this->createMock(HttpKernelInterface::class);

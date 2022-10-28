@@ -12,7 +12,6 @@ use PHPUnit\Framework\TestCase;
  */
 class PostalCodeProviderTest extends TestCase
 {
-
     public function testCreate(): void
     {
         $validPostalCode = PostalCodeProvider::DEFAULT_POSTCODE;
@@ -25,8 +24,7 @@ class PostalCodeProviderTest extends TestCase
         $this->assertSame($validCountry, $postalCode->country->value);
     }
 
-
-    public  function testRandom(): void
+    public function testRandom(): void
     {
         $postalCode1 = PostalCodeProvider::random();
         $postalCode2 = PostalCodeProvider::random();
@@ -35,8 +33,7 @@ class PostalCodeProviderTest extends TestCase
         $this->assertSame($postalCode1->country->value, $postalCode2->country->value);
     }
 
-
-    public  function testWith(): void
+    public function testWith(): void
     {
         $validPostCode = '59-300';
         $validCountry = 'PL';

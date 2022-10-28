@@ -6,7 +6,6 @@ use Symfony\Component\HttpClient\Response\MockResponse;
 
 class FakeHttpResponse
 {
-
     public function __construct(
         public readonly string $url,
         public readonly string $method,

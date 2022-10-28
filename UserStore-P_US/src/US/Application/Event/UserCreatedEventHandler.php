@@ -2,7 +2,6 @@
 
 namespace App\US\Application\Event;
 
-use App\Tests\US\Unit\CleanSensitiveData\CleanSensitiveDataTest;
 use App\US\Application\Write\Services\SensitiveDataService;
 use App\US\Domain\User\Event\EventHandleInterface;
 use App\US\Domain\User\Event\UserCreatedEvent;
@@ -26,18 +25,18 @@ final class UserCreatedEventHandler implements EventHandleInterface
     {
         $user = $this->userRepository->findUser(UserID::fromString($userCreated->uuid));
         if (!$user) {
-            throw new NotFoundHttpException("Not Found User");
+            throw new NotFoundHttpException('Not Found User');
         }
         $this->logger->info(
             $this->sensitiveDataService->clear(
-                sprintf("Created user: #" . $user->getUuid()->uuid)
+                sprintf('Created user: #'.$user->getUuid()->uuid)
             )
         );
 
-        $response =   $this->notificationClient->sendEmail(
+        $response = $this->notificationClient->sendEmail(
             $user->getEmail(),
             'Powiadomienie: Utworzono konto użytownika',
-            'Utworzono konto użytkownika: ' . $user->getFirstName() . ' ' . $user->getLastName()
+            'Utworzono konto użytkownika: '.$user->getFirstName().' '.$user->getLastName()
         );
     }
 }

@@ -19,7 +19,6 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  */
 class NotificationClientTest extends TestCase
 {
-
     /**
      * @var HttpClientInterface|MockObject
      */
@@ -47,15 +46,13 @@ class NotificationClientTest extends TestCase
         $this->logger = $this->createMock(LoggerInterface::class);
         $this->parameterBag = $this->createMock(ContainerBagInterface::class);
         $this->user = UserProvider::create();
-        $this->context = "Hi. You accont was created. :) Welcome :)";
-        $this->subject = "User was creeated";
+        $this->context = 'Hi. You accont was created. :) Welcome :)';
+        $this->subject = 'User was creeated';
         parent::setUp();
     }
 
-
     public function testNotificatonClient(): void
     {
-
         $this->parameterBag
             ->expects($this->exactly(2))
             ->method('has')
@@ -102,7 +99,6 @@ class NotificationClientTest extends TestCase
 
     public function testNotificatonClientThrowExceeption(): void
     {
-
         $this->parameterBag
             ->expects($this->exactly(2))
             ->method('has')
@@ -132,8 +128,7 @@ class NotificationClientTest extends TestCase
                 )
             );
 
-
-        /**
+        /*
          * @var HttpKernelInterface|MockObject
          */
         $this->httpClient

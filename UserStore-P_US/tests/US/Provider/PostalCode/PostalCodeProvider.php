@@ -9,8 +9,8 @@ use Faker\Provider\pl_PL\Address;
 
 class PostalCodeProvider implements PostalCodeProviderInterface
 {
-    const DEFAULT_POSTCODE = '59-300';
-    const DEFAULT_COUNTRY = 'PL';
+    public const DEFAULT_POSTCODE = '59-300';
+    public const DEFAULT_COUNTRY = 'PL';
 
     public static function defaults(): PostalCode
     {
@@ -26,6 +26,7 @@ class PostalCodeProvider implements PostalCodeProviderInterface
     {
         $faker = Factory::create();
         $postcode_pl = Address::postcode();
+
         return new PostalCode($postcode_pl, Country::from($faker->randomElement(['PL'])));
     }
 

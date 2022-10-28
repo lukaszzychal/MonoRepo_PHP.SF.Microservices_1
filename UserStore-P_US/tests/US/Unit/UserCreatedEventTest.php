@@ -3,13 +3,11 @@
 namespace App\Tests\US\Unit;
 
 use App\Tests\US\Provider\User\UserProvider;
-use App\US\Application\Event\NotificationTypeEnum;
 use App\US\Application\Event\UserCreatedEventHandler;
 use App\US\Application\Write\Services\SensitiveDataService;
 use App\US\Domain\User\Event\UserCreatedEvent;
 use App\US\Domain\User\UserRepositoryInterface;
 use App\US\Infrastructure\Client\Notification\NotificationClient;
-use App\US\Infrastructure\Persistent\Doctrine\Repository\UserRepository;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
@@ -17,7 +15,6 @@ use Psr\Log\LoggerInterface;
 
 /**
  * @group unit
- *
  */
 class UserCreatedEventTest extends TestCase
 {
@@ -30,7 +27,7 @@ class UserCreatedEventTest extends TestCase
          */
         $sensitivedataStub = $this->createStub(SensitiveDataService::class);
         $sensitivedataStub->method('clear')
-            ->willReturn('Created user: #' . $user->getUuid()->uuid);
+            ->willReturn('Created user: #'.$user->getUuid()->uuid);
 
         /**
          * @var LoggerInterface|MockObject
@@ -43,8 +40,8 @@ class UserCreatedEventTest extends TestCase
         $clientMock = $this->createMock(NotificationClient::class);
 
         $email = $user->getEmail();
-        $subject = "Powiadomienie: Utworzono konto użytownika";
-        $context = "Utworzono konto użytkownika: Lukasz Z";
+        $subject = 'Powiadomienie: Utworzono konto użytownika';
+        $context = 'Utworzono konto użytkownika: Lukasz Z';
         $clientMock
             ->expects($this->once())
             ->method('sendEmail')
@@ -58,7 +55,7 @@ class UserCreatedEventTest extends TestCase
             ->method('findUser')->willReturn($user);
 
         /**
-         * @var LoggerInterface  $loggerMock
+         * @var LoggerInterface $loggerMock
          */
         $handleer = new UserCreatedEventHandler(
             $loggerMock,

@@ -7,24 +7,22 @@ use App\US\Domain\PostalCode\InvalidFormatPostalCodeException;
 use App\US\Domain\PostalCode\InvalidPostalCodeException;
 use App\US\Domain\PostalCode\PostalCode;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\BrowserKit\Response;
 
 /**
  * @group unit
+ *
  * @todo Dodać inne granczne przypadki testowee
  */
 class PostalCodeTest extends TestCase
 {
-
     public function testCreateWithValidPolandPostalCode()
     {
         $validPostalCode = '59-300';
-        $postalCode =  new PostalCode($validPostalCode, Country::POLAND);
+        $postalCode = new PostalCode($validPostalCode, Country::POLAND);
 
         $this->assertSame($validPostalCode, $postalCode->value);
         $this->assertSame(Country::POLAND, $postalCode->country);
     }
-
 
     public function testCreateWithInValidPolandPostalCode()
     {
@@ -33,7 +31,6 @@ class PostalCodeTest extends TestCase
 
         new PostalCode($postalCode, Country::POLAND);
     }
-
 
     public function testCreateWithEmptyPostalCode()
     {

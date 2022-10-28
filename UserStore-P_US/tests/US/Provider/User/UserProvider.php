@@ -12,29 +12,21 @@ use DateTimeImmutable;
 use Faker\Factory;
 use Symfony\Component\Uid\Uuid;
 
-use function Zenstruck\Foundry\faker;
-
 class UserProvider implements UserProviderInterface
 {
-
     public static function defaults(): User
     {
         return User::create(
             new UserID(Uuid::v4()),
-            "Lukasz",
-            "Z",
-            EmailProvider::withEmail("my.email@test.pl"),
+            'Lukasz',
+            'Z',
+            EmailProvider::withEmail('my.email@test.pl'),
             AddressProvider::create(),
             new DateTimeImmutable(),
             ''
         );
     }
 
-    /**
-     * 
-     *
-     * @return User
-     */
     public static function create(): User
     {
         return self::defaults();

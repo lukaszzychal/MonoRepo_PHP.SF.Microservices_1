@@ -58,9 +58,9 @@ class ExceptionEventSubscriber implements EventSubscriberInterface
                 //     ),
             default => new Exception(
                 $throw->getCode(),
-                $throw->getFile(),
+                'undefined error',
                 $throw->getMessage(),
-                $throw->getLine()
+                ' File: '.$throw->getFile().'; Line: '.$throw->getLine()
             ),
         };
 

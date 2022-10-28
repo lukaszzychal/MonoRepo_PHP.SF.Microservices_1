@@ -18,11 +18,9 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 /**
  * @group integration
  * @group iuc
- *
  */
 class UserCreatedEventTest extends KernelTestCase
 {
-
     private User $user;
     private LoggerInterface $logger;
     private SensitiveDataService $sensitivedata;
@@ -37,9 +35,8 @@ class UserCreatedEventTest extends KernelTestCase
         $this->logger = $this->getContainer()->get(LoggerInterface::class);
         $this->sensitivedata = $this->getContainer()->get(SensitiveDataService::class);
 
-
         $this->client = $this->createMock(NotificationClient::class);
-        /**
+        /*
          * @var UserRepositoryInterface
          */
         $this->userRepo = $this->getContainer()->get(UserRepositoryInterface::class);
@@ -63,15 +60,13 @@ class UserCreatedEventTest extends KernelTestCase
             $token,
             $type->value,
             $dataArray
-
         );
         $handleer($commandEvent);
     }
 
     public function testCreatedEvent(): void
     {
-
-        /**
+        /*
          * @var NotificationClient|MockObject
          */
         $this->client
@@ -88,16 +83,15 @@ class UserCreatedEventTest extends KernelTestCase
         $token = 'CorrectAcceesTokenNotificationService';
         $type = NotificationTypeEnum::EMAIL;
         $dataArray = [
-            "email" => $this->user->getEmail(),
-            "context" => "Hi. You accont was created. :) Welcome :)",
-            "subject" => "User was creeated"
+            'email' => $this->user->getEmail(),
+            'context' => 'Hi. You accont was created. :) Welcome :)',
+            'subject' => 'User was creeated',
         ];
         $commandEvent = new UserCreatedEvent(
             $this->user->getUuid()->uuid,
             $token,
             $type->value,
             $dataArray
-
         );
 
         $handleer($commandEvent);

@@ -50,7 +50,7 @@ class TokenEventSubscriber implements EventSubscriberInterface
             $this->logger->warning('No authorization. Please check your authorization token');
             throw $excepton;
         }
-        $token = str_replace('Bearer ', '', $headers->get('authorization'));
+        $token = str_replace('Bearer ', '', $headers->get('authorization', '') ?? '');
         if ($this->appToken !== $token) {
             $excepton = new WrongAuthorizationTokenException(
                 401,
@@ -58,7 +58,7 @@ class TokenEventSubscriber implements EventSubscriberInterface
                 'Please check your authorization token',
                 ''
             );
-            $this->logger->warning('Wrong authorization token: ' . $token . ' endpoint: ' . $request->getBasePath());
+            $this->logger->warning('Wrong authorization token: '.$token.' endpoint: '.$request->getBasePath());
             // throw new \Exception($excepton->toJsonResponse(), $excepton->getCode());
             throw $excepton;
         }
@@ -69,12 +69,7 @@ class TokenEventSubscriber implements EventSubscriberInterface
         $parameters = $this->matcher->match($request->getPathInfo());
         $controllerName = explode('::', $parameters['_controller'])[0];
         if (!class_exists($controllerName)) {
-            throw new WrongAuthorizationException(
-                401,
-                "Wrong authorization )",
-                'Please check your authorization data',
-                ''
-            );
+            throw new WrongAuthorizationException(401, 'Wrong authorization )', 'Please check your authorization data', '');
         }
         $controller = new ReflectionClass($controllerName);
 

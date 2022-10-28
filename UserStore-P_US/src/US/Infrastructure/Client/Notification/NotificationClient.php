@@ -5,8 +5,6 @@ namespace App\US\Infrastructure\Client\Notification;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Symfony\Component\HttpClient\Exception\ClientException;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
@@ -14,11 +12,12 @@ class NotificationClient
 {
     private string $host = 'http(s)://locahost';
     private string $endpoint = '/notification';
-    private  string $token = '';
+    private string $token = '';
 
     public function __construct(
         private readonly HttpClientInterface $httpClient,
         private readonly LoggerInterface $logger,
+        /** @phpstan-ignore-next-line */
         private readonly ContainerBagInterface $params
     ) {
         $this->validaton($params);
@@ -32,12 +31,16 @@ class NotificationClient
             [
                 'email' => $email,
                 'subject' => $subject,
-                'context' => $context
+                'context' => $context,
             ]
         );
-        return  $this->request($request);
+
+        return $this->request($request);
     }
 
+    /**
+     * @return void
+     */
     private function validaton(ContainerBagInterface $params)
     {
         if ($params->has('nfs_host')) {
@@ -59,15 +62,20 @@ class NotificationClient
                     'headers' => [
                         'Authorization' => $this->token,
                     ],
-                    'body' => $this->createBodyRequest($notificationRequest)
+                    'body' => $this->createBodyRequest($notificationRequest),
                 ]
             );
             $this->ResponseLog($response);
         } catch (ClientException $e) {
-            $response = new JsonResponse([
-                'Tymczasowy bład'
-            ]);
-            // zrobć powtarzanie
+            $this->logger->critical("
+                Code: {$e->getCode()}
+                Message: {$e->getMessage()}
+                File: {$e->getFile()}
+                Line: {$e->getLine()}
+            ");
+
+            return $e->getResponse();
+            // @todo  zrobć powtarzanie, poprawić return data
         }
 
         return $response;
@@ -75,20 +83,23 @@ class NotificationClient
 
     private function RequestLog(NotificationRequest $notificationRequest): void
     {
-        // dump(__METHOD__);
-        // dump($notificationRequest);
+        $this->logger->info("
+            type: {$notificationRequest->type}
+            data: ".implode(',', $notificationRequest->data).'
+        ');
     }
 
     private function ResponseLog(ResponseInterface $response): void
     {
-        // dump(__METHOD__);
-        // dump($response->getContent());
+        $this->logger->info("
+            code: {$response->getStatusCode()} ,
+            content: {$response->getContent()} ,
+        ");
     }
-
 
     private function createBodyRequest(NotificationRequest $notificationRequest): string
     {
-        $body =    [
+        $body = [
             'token' => $this->token,
             'type' => $notificationRequest->type,
         ];
@@ -96,13 +107,12 @@ class NotificationClient
         foreach ($notificationRequest->data as $key => $value) {
             $body[$key] = $value;
         }
-
+        /* @phpstan-ignore-next-line */
         return json_encode($body);
     }
 
-
     private function getURI(): string
     {
-        return $this->host . $this->endpoint;
+        return $this->host.$this->endpoint;
     }
 }

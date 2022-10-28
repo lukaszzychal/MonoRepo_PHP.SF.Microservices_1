@@ -11,7 +11,6 @@ use PHPUnit\Framework\TestCase;
  */
 class EmailProviderTest extends TestCase
 {
-
     public function testCreate(): void
     {
         $validEmail = EmailProvider::DEFAULT_MAIL;
@@ -22,8 +21,7 @@ class EmailProviderTest extends TestCase
         $this->assertSame($validEmail, (string) $email);
     }
 
-
-    public  function testRandom(): void
+    public function testRandom(): void
     {
         $email_1 = EmailProvider::random();
         $email_2 = EmailProvider::random();
@@ -37,8 +35,7 @@ class EmailProviderTest extends TestCase
         $this->assertNotSame((string) $email_1, (string) $email_2);
     }
 
-
-    public  function testWithEmail(): void
+    public function testWithEmail(): void
     {
         $validEEmail = 'my.email@test.pl';
 

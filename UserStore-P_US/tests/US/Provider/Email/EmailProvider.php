@@ -7,7 +7,7 @@ use Faker\Factory;
 
 class EmailProvider implements EmaiProviderInterface
 {
-    const DEFAULT_MAIL = 'mail.testowy@test.pl';
+    public const DEFAULT_MAIL = 'mail.testowy@test.pl';
 
     public static function defaults(): Email
     {
@@ -22,6 +22,7 @@ class EmailProvider implements EmaiProviderInterface
     public static function random(): Email
     {
         $faker = Factory::create();
+
         return new Email($faker->email());
     }
 

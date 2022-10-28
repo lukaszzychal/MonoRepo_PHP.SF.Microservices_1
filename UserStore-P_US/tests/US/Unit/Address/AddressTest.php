@@ -6,7 +6,6 @@ use App\US\Domain\Address\Address;
 use App\US\Domain\Address\Country;
 use App\US\Domain\Address\InvalidAddreessException;
 use App\US\Domain\PostalCode\PostalCode;
-
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
 
@@ -25,7 +24,7 @@ class AddressTest extends TestCase
         $country = Country::POLAND;
         $postalcode = new PostalCode('59-300', $country);
 
-        $addresVO =  new Address(
+        $addresVO = new Address(
             $uuid,
             $streeet,
             $houseNumber,
@@ -56,7 +55,7 @@ class AddressTest extends TestCase
 
         $this->expectException(InvalidAddreessException::class);
 
-        $addresVO =  new Address(
+        $addresVO = new Address(
             $uuid,
             $streeet,
             $houseNumber,

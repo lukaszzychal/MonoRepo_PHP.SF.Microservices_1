@@ -2,7 +2,6 @@
 
 namespace App\Tests\US\Provider\Address;
 
-
 use App\Tests\US\Provider\ProviderInterface;
 use App\US\Domain\Address\Address;
 use App\US\Domain\Address\Country;

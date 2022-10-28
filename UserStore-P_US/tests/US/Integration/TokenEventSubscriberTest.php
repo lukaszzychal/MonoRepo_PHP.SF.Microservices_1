@@ -6,7 +6,6 @@ use App\US\Infrastructure\TokenRequest\NoAuthorizationException;
 use App\US\Infrastructure\TokenRequest\TokenEventSubscriber;
 use App\US\Infrastructure\TokenRequest\WrongAuthorizationTokenException;
 use DateTimeImmutable;
-use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -22,7 +21,6 @@ use Symfony\Component\Uid\UuidV4;
  */
 class TokenEventSubscriberTest extends KernelTestCase
 {
-
     private EventDispatcherInterface $dispatcher;
     private TokenEventSubscriber $subsriber;
     private HttpKernelInterface $httpKernel;
@@ -32,9 +30,9 @@ class TokenEventSubscriberTest extends KernelTestCase
     {
         self::bootKernel();
 
-        /**
+        /*
          * @var EventDispatcherInterface $dispatcher
-         * 
+         *
          */
         $this->dispatcher = $this->getContainer()->get(EventDispatcherInterface::class);
         $logger = $this->getContainer()->get(LoggerInterface::class);
@@ -51,11 +49,8 @@ class TokenEventSubscriberTest extends KernelTestCase
         $this->httpKernel = $this->getContainer()->get(HttpKernelInterface::class);
     }
 
-
-
     public function testGiveNoTokenWhenTokenNotRequiredThenNoThrowExcepton()
     {
-
         $request = Request::create(
             '/',
             'GET',
@@ -70,9 +65,8 @@ class TokenEventSubscriberTest extends KernelTestCase
         $this->dispatcher->dispatch($event, KernelEvents::REQUEST);
     }
 
-    public function  testGiveNoTokenWhenTokenRequiredThenThrowExcepton()
+    public function testGiveNoTokenWhenTokenRequiredThenThrowExcepton()
     {
-
         $request = Request::create(
             '/users',
             'POST',
@@ -88,9 +82,8 @@ class TokenEventSubscriberTest extends KernelTestCase
         $this->dispatcher->dispatch($event, KernelEvents::REQUEST);
     }
 
-    public function  testGiveWrongTokenWhenTokenRequiredThenThrowExcepton()
+    public function testGiveWrongTokenWhenTokenRequiredThenThrowExcepton()
     {
-
         $request = Request::create(
             '/users',
             'POST',
@@ -108,9 +101,8 @@ class TokenEventSubscriberTest extends KernelTestCase
         $this->dispatcher->dispatch($event, KernelEvents::REQUEST);
     }
 
-    public function  testGiveCorrectTokenWhenTokenRequiredThenNoThrowExcepton()
+    public function testGiveCorrectTokenWhenTokenRequiredThenNoThrowExcepton()
     {
-
         $request = Request::create(
             '/users',
             'POST',
@@ -118,9 +110,9 @@ class TokenEventSubscriberTest extends KernelTestCase
             [],
             [],
             [
-                'HTTP_AUTHORIZATION' => 'Bearer ' . $this->appToken,
+                'HTTP_AUTHORIZATION' => 'Bearer '.$this->appToken,
                 'Content-Type' => 'application/json',
-                'Accept' => 'application/json'
+                'Accept' => 'application/json',
             ],
             json_encode([
                 'uuid' => UuidV4::v4(),
@@ -129,7 +121,7 @@ class TokenEventSubscriberTest extends KernelTestCase
                 'email' => 'email.testowy@test.pl',
                 'address' => [],
                 'birthDate' => (new DateTimeImmutable())->format('d:m:Y'),
-                'avatar' => ''
+                'avatar' => '',
             ])
         );
 
@@ -138,7 +130,6 @@ class TokenEventSubscriberTest extends KernelTestCase
         $this->expectNotToPerformAssertions();
         $this->dispatcher->dispatch($event, KernelEvents::REQUEST);
     }
-
 
     private function createRequestEvent(Request $request): RequestEvent
     {
