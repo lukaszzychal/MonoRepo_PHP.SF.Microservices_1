@@ -23,7 +23,7 @@ jobs:
       name: Build containers
       run: |
        ls -la 
-       ls -la ${PWD}/docker/symfony/
+       ls -la ${PWD}/docker/symfony/ 
        chmod -R +x ${PWD}/docker/.
        docker network create background_network
        ${PWD}/docker/symfony/rebuild-container-and-up
