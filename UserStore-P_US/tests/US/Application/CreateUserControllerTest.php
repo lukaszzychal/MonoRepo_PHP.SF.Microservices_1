@@ -27,7 +27,7 @@ class CreateUserControllerTest extends WebTestCase
     }
 
     /**
-     * @group group1
+     * @group acuc
      *
      * @return void
      */

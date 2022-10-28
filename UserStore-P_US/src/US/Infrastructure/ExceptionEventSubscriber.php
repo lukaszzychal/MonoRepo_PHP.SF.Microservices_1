@@ -59,10 +59,10 @@ class ExceptionEventSubscriber implements EventSubscriberInterface
             ),
         };
 
-        // @todo rodzielć na osobną meetodęę z piorytetem
+        // // @todo rodzielć na osobną meetodęę z piorytetem
         $this->logger->critical($throw->getMessage());
-
-        $jsonResponse = new JsonResponse($exception->toArray(), $exception->getCode());
-        $exceptionEvent->setResponse($jsonResponse);
+        throw $throw;
+        // $jsonResponse = new JsonResponse($exception->toArray(), $exception->getCode());
+        // $exceptionEvent->setResponse($jsonResponse);
     }
 }

@@ -8,7 +8,8 @@ use App\US\Application\Event\UserCreatedEventHandler;
 use App\US\Application\Write\Services\SensitiveDataService;
 use App\US\Domain\User\Event\UserCreatedEvent;
 use App\US\Domain\User\User;
-use App\US\Domain\User\UserRepositoryInterface;
+use App\US\Domain\User\UserReadRepositoryInterface;
+use App\US\Domain\User\UserWriteRepositoryInterface;
 use App\US\Infrastructure\Client\Notification\NotificationClient;
 use Exception;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -25,7 +26,8 @@ class UserCreatedEventTest extends KernelTestCase
     private LoggerInterface $logger;
     private SensitiveDataService $sensitivedata;
     private NotificationClient|MockObject  $client;
-    private UserRepositoryInterface $userRepo;
+    private UserWriteRepositoryInterface $userWriteRepo;
+    private UserReadRepositoryInterface $userReadRepo;
 
     protected function setUp(): void
     {
@@ -37,10 +39,12 @@ class UserCreatedEventTest extends KernelTestCase
 
         $this->client = $this->createMock(NotificationClient::class);
         /*
-         * @var UserRepositoryInterface
+         * @var UserWriteRepositoryInterface
          */
-        $this->userRepo = $this->getContainer()->get(UserRepositoryInterface::class);
-        $this->userRepo->save($this->user);
+        $this->userWriteRepo = $this->getContainer()->get(UserWriteRepositoryInterface::class);
+        $this->userWriteRepo->save($this->user);
+
+        $this->userReadRepo = $this->getContainer()->get(UserReadRepositoryInterface::class);
     }
 
     public function testInvalidCreatedEvent(): void
@@ -50,7 +54,7 @@ class UserCreatedEventTest extends KernelTestCase
             $this->logger,
             $this->sensitivedata,
             $this->client,
-            $this->userRepo
+            $this->userReadRepo
         );
         $token = 'CorrectAcceesTokenNotificationService';
         $type = NotificationTypeEnum::EMAIL;
@@ -77,7 +81,7 @@ class UserCreatedEventTest extends KernelTestCase
             $this->logger,
             $this->sensitivedata,
             $this->client,
-            $this->userRepo
+            $this->userReadRepo
         );
 
         $token = 'CorrectAcceesTokenNotificationService';

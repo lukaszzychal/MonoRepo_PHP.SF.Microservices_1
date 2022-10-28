@@ -38,10 +38,7 @@ class NotificationClient
         return $this->request($request);
     }
 
-    /**
-     * @return void
-     */
-    private function validaton(ContainerBagInterface $params)
+    private function validaton(ContainerBagInterface $params): void
     {
         if ($params->has('nfs_host')) {
             $this->host = $params->get('nfs_host');
@@ -103,8 +100,11 @@ class NotificationClient
             'token' => $this->token,
             'type' => $notificationRequest->type,
         ];
-
-        foreach ($notificationRequest->data as $key => $value) {
+        /**
+         * @var array<string> $data
+         */
+        $data = $notificationRequest->data;
+        foreach ($data as $key => $value) {
             $body[$key] = $value;
         }
         /* @phpstan-ignore-next-line */

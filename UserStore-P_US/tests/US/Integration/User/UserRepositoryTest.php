@@ -5,6 +5,7 @@ namespace App\Tests\US\Integration\User;
 use App\Tests\US\Provider\User\UserProvider;
 use App\US\Domain\User\User;
 use App\US\Domain\User\UserRepositoryInterface;
+use App\US\Domain\User\UserWriteRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -19,14 +20,14 @@ class UserRepositoryTest extends KernelTestCase
         /**
          * @var UserRepositoryInterface $reppo
          */
-        $reppo = $this->getContainer()->get(UserRepositoryInterface::class);
+        $reppo = $this->getContainer()->get(UserWriteRepositoryInterface::class);
         $user = UserProvider::create();
         $reppo->save($user);
 
         /**
          * @var User $userFromDB
          */
-        $userFromDB = $reppo->findUser($user->getUuid());
+        $userFromDB = $reppo->find($user->getUuid());
 
         $this->assertInstanceOf(User::class, $userFromDB);
         $this->assertSame($user->getEmail(), $userFromDB->getEmail());

@@ -6,7 +6,7 @@ use App\Tests\US\Provider\User\UserProvider;
 use App\US\Application\Event\UserCreatedEventHandler;
 use App\US\Application\Write\Services\SensitiveDataService;
 use App\US\Domain\User\Event\UserCreatedEvent;
-use App\US\Domain\User\UserRepositoryInterface;
+use App\US\Domain\User\UserReadRepositoryInterface;
 use App\US\Infrastructure\Client\Notification\NotificationClient;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
@@ -48,11 +48,11 @@ class UserCreatedEventTest extends TestCase
             ->with($email, $subject, $context);
 
         /**
-         * @var UserRepositoryInterface|MockObject
+         * @var UserReadRepositoryInterface|MockObject
          */
-        $userRepo = $this->createMock(UserRepositoryInterface::class);
+        $userRepo = $this->createMock(UserReadRepositoryInterface::class);
         $userRepo->expects($this->once())
-            ->method('findUser')->willReturn($user);
+            ->method('find')->willReturn($user);
 
         /**
          * @var LoggerInterface $loggerMock

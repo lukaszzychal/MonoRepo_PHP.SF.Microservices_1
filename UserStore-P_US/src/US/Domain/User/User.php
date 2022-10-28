@@ -5,12 +5,10 @@ namespace App\US\Domain\User;
 use App\US\Domain\Address\Address;
 use App\US\Domain\AggregateRoot;
 use App\US\Domain\Email\Email;
-use App\US\Infrastructure\Persistent\Doctrine\Repository\UserRepository;
 use DateTimeImmutable;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\Entity]
 #[ORM\Table(name: 'users', schema: 'user_store')]
 class User implements AggregateRoot
 {

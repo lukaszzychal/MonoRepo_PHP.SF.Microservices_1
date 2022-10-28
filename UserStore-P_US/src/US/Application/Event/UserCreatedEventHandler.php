@@ -6,7 +6,7 @@ use App\US\Application\Write\Services\SensitiveDataService;
 use App\US\Domain\User\Event\EventHandleInterface;
 use App\US\Domain\User\Event\UserCreatedEvent;
 use App\US\Domain\User\UserID;
-use App\US\Domain\User\UserRepositoryInterface;
+use App\US\Domain\User\UserReadRepositoryInterface;
 use App\US\Infrastructure\Client\Notification\NotificationClient;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -17,13 +17,13 @@ final class UserCreatedEventHandler implements EventHandleInterface
         private readonly LoggerInterface $logger,
         private readonly SensitiveDataService $sensitiveDataService,
         private readonly NotificationClient $notificationClient,
-        private readonly UserRepositoryInterface $userRepository
+        private readonly UserReadRepositoryInterface $userRepository
     ) {
     }
 
     public function __invoke(UserCreatedEvent $userCreated): void
     {
-        $user = $this->userRepository->findUser(UserID::fromString($userCreated->uuid));
+        $user = $this->userRepository->find(UserID::fromString($userCreated->uuid));
         if (!$user) {
             throw new NotFoundHttpException('Not Found User');
         }

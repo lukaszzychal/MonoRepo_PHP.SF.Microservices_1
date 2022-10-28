@@ -4,38 +4,44 @@ namespace App\US\Infrastructure\Persistent\Doctrine\Repository;
 
 use App\US\Domain\User\User;
 use App\US\Domain\User\UserID;
-use App\US\Domain\User\UserRepositoryInterface;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
+use App\US\Domain\User\UserReadRepositoryInterface;
+use App\US\Domain\User\UserWriteRepositoryInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 
-/** @phpstan-ignore-next-line */
-class UserRepository extends ServiceEntityRepository implements UserRepositoryInterface
+final class UserRepository implements UserReadRepositoryInterface, UserWriteRepositoryInterface
 {
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, User::class);
+    private string $class;
+
+    public function __construct(
+        private EntityManagerInterface $entityManager
+    ) {
+        $this->class = User::class;
     }
 
     public function save(User $entity): void
     {
-        $this->_em->persist($entity);
-        $this->_em->flush();
+        $this->entityManager->persist($entity);
+        $this->entityManager->flush();
     }
 
-    public function remove(User $entity): void
+    public function find(UserID $userId): ?User
     {
-        $this->_em->remove($entity);
-        $this->_em->flush();
-    }
-
-    public function findUser(UserID $userId): ?User
-    {
-        $qb = $this->createQueryBuilder('u')
+        $qb = $this->createQueryBuilder();
+        $qb
             ->where('u.uuid = :uuid')
             ->setParameter('uuid', (string) $userId->uuid);
 
         $query = $qb->getQuery();
 
         return $query->getOneOrNullResult();
+    }
+
+    private function createQueryBuilder(): QueryBuilder
+    {
+        $qb = $this->entityManager->createQueryBuilder();
+        $qb->from($this->class, 'u')->select('u');
+
+        return $qb;
     }
 }
