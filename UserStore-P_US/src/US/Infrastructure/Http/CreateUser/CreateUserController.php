@@ -37,6 +37,6 @@ class CreateUserController extends AbstractController implements RequiredTokenRe
             $createUserrRequest->email
         ));
 
-        return CreateUserResponse::create((string)$createUserrRequest->uuid);
+        return CreateUserResponse::create((string) $createUserrRequest->uuid);
     }
 }

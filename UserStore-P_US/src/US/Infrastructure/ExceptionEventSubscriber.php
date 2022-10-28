@@ -56,7 +56,7 @@ final class ExceptionEventSubscriber implements EventSubscriberInterface
                 $throw->getCode(),
                 'undefined error',
                 $throw->getMessage(),
-                ' File: ' . $throw->getFile() . '; Line: ' . $throw->getLine()
+                ' File: '.$throw->getFile().'; Line: '.$throw->getLine()
             ),
         };
 

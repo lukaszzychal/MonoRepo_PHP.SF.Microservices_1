@@ -15,7 +15,7 @@ class Exception extends GlobalException implements ExceptionInterface
         protected readonly string $details,
         protected readonly string $source
     ) {
-        parent::__construct($this->toJsonResponse()->getContent(), $statusCode);
+        parent::__construct($this->toString(), $statusCode);
     }
 
     public function getTitle(): string
@@ -54,5 +54,10 @@ class Exception extends GlobalException implements ExceptionInterface
     public function toJsonResponse(): JsonResponse
     {
         return new JsonResponse($this->toArray(), $this->statusCode);
+    }
+
+    public function toString(): string
+    {
+        return implode(';', $this->toArray());
     }
 }

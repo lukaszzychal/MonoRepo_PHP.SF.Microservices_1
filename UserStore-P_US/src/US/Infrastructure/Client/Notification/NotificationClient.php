@@ -84,7 +84,7 @@ class NotificationClient
     {
         $this->logger->info("
             type: {$notificationRequest->type}
-            data: " . implode(',', $notificationRequest->data) . '
+            data: ".implode(',', $notificationRequest->data).'
         ');
     }
 
@@ -115,6 +115,6 @@ class NotificationClient
 
     private function getURI(): string
     {
-        return $this->host . $this->endpoint;
+        return $this->host.$this->endpoint;
     }
 }

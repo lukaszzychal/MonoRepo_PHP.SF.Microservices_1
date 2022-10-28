@@ -112,7 +112,7 @@ class TokenEventSubscriberTest extends KernelTestCase
             [],
             [],
             [
-                'HTTP_AUTHORIZATION' => 'Bearer ' . $this->appToken,
+                'HTTP_AUTHORIZATION' => 'Bearer '.$this->appToken,
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ],

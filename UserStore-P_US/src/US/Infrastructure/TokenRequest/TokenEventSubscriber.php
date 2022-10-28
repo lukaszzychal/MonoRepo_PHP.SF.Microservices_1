@@ -60,7 +60,7 @@ final class TokenEventSubscriber implements EventSubscriberInterface
                 'Please check your authorization token',
                 ''
             );
-            $this->logger->warning('Wrong authorization token: ' . $token . ' endpoint: ' . $request->getBasePath());
+            $this->logger->warning('Wrong authorization token: '.$token.' endpoint: '.$request->getBasePath());
             // throw new \Exception($excepton->toJsonResponse(), $excepton->getCode());
             throw $excepton;
         }

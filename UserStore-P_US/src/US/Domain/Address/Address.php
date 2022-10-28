@@ -33,7 +33,7 @@ final class Address
         public readonly Country $country
     ) {
         try {
-            Assert::uuid($uuid);
+            Assert::uuid((string) $uuid);
             Assert::notEmpty($street);
             Assert::notEmpty($houseNumber);
             Assert::notEmpty($street);
