@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\US\Infrastructure\Client\Notification;
 
 use Psr\Log\LoggerInterface;
@@ -8,7 +10,7 @@ use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
-class NotificationClient
+final class NotificationClient
 {
     private string $host = 'http(s)://locahost';
     private string $endpoint = '/notification';
@@ -82,7 +84,7 @@ class NotificationClient
     {
         $this->logger->info("
             type: {$notificationRequest->type}
-            data: ".implode(',', $notificationRequest->data).'
+            data: " . implode(',', $notificationRequest->data) . '
         ');
     }
 
@@ -113,6 +115,6 @@ class NotificationClient
 
     private function getURI(): string
     {
-        return $this->host.$this->endpoint;
+        return $this->host . $this->endpoint;
     }
 }

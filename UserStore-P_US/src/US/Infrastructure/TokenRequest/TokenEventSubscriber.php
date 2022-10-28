@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\US\Infrastructure\TokenRequest;
 
 use Psr\Log\LoggerInterface;
@@ -10,7 +12,7 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\Matcher\UrlMatcherInterface;
 
-class TokenEventSubscriber implements EventSubscriberInterface
+final class TokenEventSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private readonly string $appToken,
@@ -58,7 +60,7 @@ class TokenEventSubscriber implements EventSubscriberInterface
                 'Please check your authorization token',
                 ''
             );
-            $this->logger->warning('Wrong authorization token: '.$token.' endpoint: '.$request->getBasePath());
+            $this->logger->warning('Wrong authorization token: ' . $token . ' endpoint: ' . $request->getBasePath());
             // throw new \Exception($excepton->toJsonResponse(), $excepton->getCode());
             throw $excepton;
         }

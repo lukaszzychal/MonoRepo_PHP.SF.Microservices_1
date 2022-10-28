@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\US\Infrastructure;
 
 use App\US\Shared\Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-class ExceptionEventSubscriber implements EventSubscriberInterface
+final class ExceptionEventSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private readonly LoggerInterface $logger
@@ -55,14 +56,12 @@ class ExceptionEventSubscriber implements EventSubscriberInterface
                 $throw->getCode(),
                 'undefined error',
                 $throw->getMessage(),
-                ' File: '.$throw->getFile().'; Line: '.$throw->getLine()
+                ' File: ' . $throw->getFile() . '; Line: ' . $throw->getLine()
             ),
         };
 
         // // @todo rodzielć na osobną meetodęę z piorytetem
         $this->logger->critical($throw->getMessage());
         throw $throw;
-        // $jsonResponse = new JsonResponse($exception->toArray(), $exception->getCode());
-        // $exceptionEvent->setResponse($jsonResponse);
     }
 }

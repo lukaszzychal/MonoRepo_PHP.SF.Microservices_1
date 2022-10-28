@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\US\Application\Write\Command\CreateUser;
 
 use App\US\Domain\Email\Email;
@@ -15,7 +17,7 @@ use Symfony\Component\Messenger\Stamp\DispatchAfterCurrentBusStamp;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class CreateUserHandler implements MessageHandlerInterface
+final class CreateUserHandler implements MessageHandlerInterface
 {
     public function __construct(
         private readonly UserWriteRepositoryInterface $userWriteRepository,

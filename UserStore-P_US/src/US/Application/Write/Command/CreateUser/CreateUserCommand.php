@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\US\Application\Write\Command\CreateUser;
 
 use Symfony\Component\Uid\Uuid;
 
-class CreateUserCommand
+final class CreateUserCommand
 {
     public function __construct(
         public readonly string $uuid,

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace US\Infrastructure\Http\CreateUser;
 
 use App\US\Infrastructure\Http\CreateUser\InvalidParemeterRequest;
