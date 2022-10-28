@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\US\Integration\Repository;
 
 use App\Tests\US\Provider\User\UserProvider;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Test\US\Unit\User;
 
 use App\US\Domain\Address\Address;

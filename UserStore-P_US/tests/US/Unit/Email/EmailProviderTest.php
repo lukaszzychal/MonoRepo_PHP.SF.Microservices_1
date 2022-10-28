@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace Appp\Tests\US\Unit\Email;
 
 use App\Tests\US\Provider\Email\EmailProvider;

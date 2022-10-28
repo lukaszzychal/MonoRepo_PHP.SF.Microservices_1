@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\US\Provider\PostalCode;
 
 use App\US\Domain\Address\Country;

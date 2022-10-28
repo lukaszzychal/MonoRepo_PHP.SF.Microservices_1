@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\US\Application;
 
 use DateTimeImmutable;
@@ -40,7 +42,7 @@ class CreateUserControllerTest extends WebTestCase
             [],
             [],
             [
-                'HTTP_AUTHORIZATION' => 'Bearer '.$this->token,
+                'HTTP_AUTHORIZATION' => 'Bearer ' . $this->token,
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ],
@@ -60,12 +62,12 @@ class CreateUserControllerTest extends WebTestCase
         $context = json_decode($response->getContent(), true);
         $contextFle = json_decode(
             file_get_contents(
-                __DIR__.'/../DataMock/NotificationSuccesResponse.json'
+                __DIR__ . '/../DataMock/NotificationSuccesResponse.json'
             ),
             true
         );
         $this->assertJson($response->getContent());
-        $this->assertJson(file_get_contents(__DIR__.'/../DataMock/NotificationSuccesResponse.json'));
+        $this->assertJson(file_get_contents(__DIR__ . '/../DataMock/NotificationSuccesResponse.json'));
         $this->assertArrayHasKey('message', $context);
         $this->assertStringContainsString('User created: #', $context['message']);
         $this->assertSame(201, $context['code']);

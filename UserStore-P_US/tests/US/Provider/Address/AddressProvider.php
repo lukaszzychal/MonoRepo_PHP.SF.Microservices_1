@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\US\Provider\Address;
 
 use App\US\Domain\Address\Address;

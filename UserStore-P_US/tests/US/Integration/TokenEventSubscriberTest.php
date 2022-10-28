@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\US\Integration;
 
 use App\US\Infrastructure\TokenRequest\NoAuthorizationException;
@@ -110,7 +112,7 @@ class TokenEventSubscriberTest extends KernelTestCase
             [],
             [],
             [
-                'HTTP_AUTHORIZATION' => 'Bearer '.$this->appToken,
+                'HTTP_AUTHORIZATION' => 'Bearer ' . $this->appToken,
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
             ],
