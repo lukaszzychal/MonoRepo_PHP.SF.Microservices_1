@@ -25,7 +25,10 @@ jobs:
        ls -la 
        ls -la ${PWD}/docker/symfony/
        chmod -R +x ${PWD}/docker/.
+<<<<<<< HEAD
        docker network create background_network
+=======
+>>>>>>> 3895d5fcb2cfa380f17852bebab4c7858ae44da3
        ${PWD}/docker/symfony/rebuild-container-and-up
        ${PWD}/docker/symfony/install-cli
        ${PWD}/docker/symfony/run-server-symfony
