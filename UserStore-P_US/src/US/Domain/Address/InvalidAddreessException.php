@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\US\Domain\Address;
 
 use App\US\Domain\PostalCode\PostalCode;
 use Exception;
 
-class InvalidAddreessException extends Exception
+final class InvalidAddreessException extends Exception
 {
     public function __construct(Address $address)
     {

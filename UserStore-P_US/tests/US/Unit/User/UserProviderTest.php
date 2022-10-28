@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\US\Unit\User;
 
 use App\Tests\US\Provider\Address\AddressProvider;
@@ -35,7 +37,7 @@ class UserProviderTest extends TestCase
         $this->assertNotEmpty($user->getLastName());
 
         $this->assertInstanceOf(UserID::class, $user->getUuid());
-        $this->assertTrue(Uuid::isValid($user->getUuid()->uuid));
+        $this->assertTrue(Uuid::isValid($user->getUuid()->uuid->__toString()));
 
         $this->assertInstanceOf(Address::class, $user->getAddress());
         $this->assertInstanceOf(PostalCode::class, $user->getAddress()->postalCode);

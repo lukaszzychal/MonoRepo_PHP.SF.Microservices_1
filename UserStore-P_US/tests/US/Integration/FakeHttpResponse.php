@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\US\Integration;
 
 use Symfony\Component\HttpClient\Response\MockResponse;
 
-class FakeHttpResponse
+final class FakeHttpResponse
 {
     public function __construct(
         public readonly string $url,

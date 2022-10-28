@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\US\Domain\Address;
 
 use App\US\Domain\PostalCode\PostalCode;
@@ -31,7 +33,7 @@ final class Address
         public readonly Country $country
     ) {
         try {
-            Assert::uuid($uuid);
+            Assert::uuid((string) $uuid);
             Assert::notEmpty($street);
             Assert::notEmpty($houseNumber);
             Assert::notEmpty($street);

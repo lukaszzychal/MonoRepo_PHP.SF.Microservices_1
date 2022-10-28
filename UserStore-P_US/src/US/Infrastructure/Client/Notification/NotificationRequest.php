@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\US\Infrastructure\Client\Notification;
 
-class NotificationRequest
+final class NotificationRequest
 {
     /**
      * @todo do przerobiienia polee data

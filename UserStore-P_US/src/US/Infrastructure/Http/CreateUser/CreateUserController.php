@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\US\Infrastructure\Http\CreateUser;
 
 use App\US\Application\Write\Command\CreateUser\CreateUserCommand;
@@ -29,12 +31,12 @@ class CreateUserController extends AbstractController implements RequiredTokenRe
         $createUserrRequest = CreateUserRequest::fromRequest($request, $this->serializer);
         $this->validator->validate($createUserrRequest);
         $this->messageBus->dispatch(new CreateUserCommand(
-            $createUserrRequest->uuid,
+            (string) $createUserrRequest->uuid,
             $createUserrRequest->firstName,
             $createUserrRequest->lastName,
             $createUserrRequest->email
         ));
 
-        return CreateUserResponse::create($createUserrRequest->uuid);
+        return CreateUserResponse::create((string) $createUserrRequest->uuid);
     }
 }

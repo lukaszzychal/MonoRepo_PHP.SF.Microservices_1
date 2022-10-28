@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\US\Infrastructure\Persistent\InMemory\Repository;
 
 use App\US\Domain\User\User;
 use App\US\Domain\User\UserID;
 
-class UserInMemoryRepository
+final class UserInMemoryRepository
 {
     /** @phpstan-ignore-next-line */
     private array $memory;

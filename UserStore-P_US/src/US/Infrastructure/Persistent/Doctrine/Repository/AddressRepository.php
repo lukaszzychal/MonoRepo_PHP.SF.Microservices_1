@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\US\Infrastructure\Persistent\Doctrine\Repository;
 
 use App\US\Domain\Address\Address;
@@ -7,7 +9,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /** @phpstan-ignore-next-line */
-class AddressRepository extends ServiceEntityRepository
+final class AddressRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

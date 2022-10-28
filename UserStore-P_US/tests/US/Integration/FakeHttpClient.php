@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\US\Integration;
 
 use LogicException;
@@ -9,7 +11,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 use Symfony\Contracts\HttpClient\ResponseStreamInterface;
 
-class FakeHttpClient implements HttpClientInterface
+final class FakeHttpClient implements HttpClientInterface
 {
     public function __construct(
         /**

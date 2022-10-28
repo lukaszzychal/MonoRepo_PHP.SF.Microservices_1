@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\US\Shared;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,7 +15,7 @@ class Exception extends GlobalException implements ExceptionInterface
         protected readonly string $details,
         protected readonly string $source
     ) {
-        parent::__construct($this->toJsonResponse(), $statusCode);
+        parent::__construct($this->toString(), $statusCode);
     }
 
     public function getTitle(): string
@@ -52,5 +54,10 @@ class Exception extends GlobalException implements ExceptionInterface
     public function toJsonResponse(): JsonResponse
     {
         return new JsonResponse($this->toArray(), $this->statusCode);
+    }
+
+    public function toString(): string
+    {
+        return implode(';', $this->toArray());
     }
 }

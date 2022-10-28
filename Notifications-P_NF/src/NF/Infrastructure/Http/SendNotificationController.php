@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\NF\Infrastructure\Http;
 
 use App\NF\Infrastructure\Event\SendNotificationEvent;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\US\Provider\Address;
 
 use App\US\Domain\Address\Address;
@@ -45,7 +47,7 @@ class AddressProvider implements AddressProviderInterface
             Uuid::v4(),
             $faker->streetName(),
             $faker->buildingNumber(),
-            $faker->randomDigitNotNull(),
+            $faker->randomElement($faker->sentences(5)),
             $faker->city(),
             new PostalCode($faker->postcode(), Country::from('PL')),
             Country::from('PL')

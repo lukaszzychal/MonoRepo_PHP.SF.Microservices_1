@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\US\Infrastructure\Http\CreateUser;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -9,7 +11,7 @@ use US\Infrastructure\Http\ResponseInterface;
 /**
  * @todo dodac logi
  */
-class CreateUserResponse implements ResponseInterface
+final class CreateUserResponse implements ResponseInterface
 {
     private function __construct()
     {

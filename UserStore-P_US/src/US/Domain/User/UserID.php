@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\US\Domain\User;
 
 use Symfony\Component\Uid\Uuid;
@@ -9,7 +11,7 @@ final class UserID
     public function __construct(
         public readonly Uuid $uuid
     ) {
-        Uuid::isValid($this->uuid);
+        Uuid::isValid((string) $this->uuid);
     }
 
     public function __toString(): string

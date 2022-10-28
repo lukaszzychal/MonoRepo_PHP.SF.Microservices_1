@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\US\Domain\User;
 
 use App\US\Domain\Address\Address;
@@ -10,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'users', schema: 'user_store')]
-class User implements AggregateRoot
+final class User implements AggregateRoot
 {
     // private Collection $eventLog;
 
@@ -61,7 +63,7 @@ class User implements AggregateRoot
      */
     public function getUuid(): UserID
     {
-        return UserID::fromString($this->uuid);
+        return $this->uuid;
     }
 
     /**
@@ -85,7 +87,7 @@ class User implements AggregateRoot
      */
     public function getEmail(): string
     {
-        return $this->email;
+        return $this->email->email;
     }
 
     /**

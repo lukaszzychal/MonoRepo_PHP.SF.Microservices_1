@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\US\Integration\User;
 
 use App\Tests\US\Integration\FakeHttpClient;
@@ -32,7 +34,7 @@ class CreateUserCommandTest extends KernelTestCase
         $validator = $this->getContainer()->get(ValidatorInterface::class);
 
         $command = new CreateUserCommand(
-            Uuid::v4(),
+            (string) Uuid::v4(),
             'Łukasz',
             'Z',
             'moj.mail@test.pl'

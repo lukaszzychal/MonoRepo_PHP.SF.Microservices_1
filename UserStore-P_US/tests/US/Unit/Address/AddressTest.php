@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Test\US\Unit\User;
 
 use App\US\Domain\Address\Address;
@@ -11,6 +13,8 @@ use Symfony\Component\Uid\Uuid;
 
 /**
  * @todo Dodać inne granczne przypadki testowee
+ *
+ * @group Unit
  */
 class AddressTest extends TestCase
 {
