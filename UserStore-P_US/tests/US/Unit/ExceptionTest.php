@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @group now12
+ * @group Unit
  */
 class ExceptionTest extends TestCase
 {

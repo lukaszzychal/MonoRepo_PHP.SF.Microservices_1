@@ -13,6 +13,7 @@ use Symfony\Component\Uid\Uuid;
 
 /**
  * @todo Dodać inne granczne przypadki testowee
+ * @group Unit
  */
 class AddressTest extends TestCase
 {

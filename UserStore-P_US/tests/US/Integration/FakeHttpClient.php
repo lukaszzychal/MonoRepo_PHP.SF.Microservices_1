@@ -11,7 +11,8 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 use Symfony\Contracts\HttpClient\ResponseStreamInterface;
 
-class FakeHttpClient implements HttpClientInterface
+
+final class FakeHttpClient implements HttpClientInterface
 {
     public function __construct(
         /**

@@ -1,3 +1,3 @@
 #!/bin/bash
 echo ":: Run Unit Test"
-docker-compose exec php ./bin/phpunit --testdox --group Unit,unit
+docker-compose exec php ./bin/phpunit --testdox --group Unit,unit,U,u

@@ -11,6 +11,9 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\Routing\Matcher\UrlMatcherInterface;
 
+/**
+ * @group Unit
+ */
 class TokenEventSubscriberTest
 {
     public function testTokenEven()
