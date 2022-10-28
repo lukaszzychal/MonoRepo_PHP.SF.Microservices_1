@@ -32,11 +32,6 @@ class ExceptionEventSubscriber implements EventSubscriberInterface
         }
 
         $throw = $exceptionEvent->getThrowable();
-        dump('----');
-        dump($throw->getMessage());
-        dump(get_class(
-            $throw
-        ));
         $exception = match ($throw->getCode()) {
                 //     400 => new Exception(
                 //         $throw->getCode(),
