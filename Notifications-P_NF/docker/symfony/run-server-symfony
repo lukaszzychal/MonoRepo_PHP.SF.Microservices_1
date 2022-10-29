@@ -2,4 +2,14 @@
 
 echo ":: Run Symfony Serverr"
  docker-compose exec -T php bash -c " symfony server:ca:install && symfony server:stop && symfony server:start --port=8000 -d"
+echo ":: Drop Database"
+ docker-compose exec -T php bash -c " ./bin/console doctrine:database:drop --force --if-exists"
+ docker-compose exec -T php bash -c " ./bin/console doctrine:database:drop --force --if-exists --env=test"
+ echo ":: Create Database"
+ docker-compose exec -T php bash -c " ./bin/console doctrine:database:create"
+ docker-compose exec -T php bash -c " ./bin/console doctrine:database:create --env=test"
+#  echo ":: Migration "
+#   docker-compose exec -T php bash -c " ./bin/console --no-interaction doctrine:migrations:migrate "
+#  docker-compose exec -T php bash -c " ./bin/console --no-interaction doctrine:migrations:migrate --env=test"
+ 
 

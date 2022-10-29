@@ -25,6 +25,22 @@ services:
     networks:
       - P_NF_network
  
+  postgres:
+    image: postgres:13.4-alpine
+    container_name: DB_Postgres_P_NF
+    environment:
+      - POSTGRES_USER=demo
+      - POSTGRES_PASSWORD=demo
+      - POSTGRES_DB=NF
+    ports:
+      - 5433:5432
+      - 29002:29001
+    volumes:
+      - P_NF_volume:/var/lib/mysql
+    networks:
+      - P_NF_network
+
+
 volumes:
   P_NF_volume:
 
