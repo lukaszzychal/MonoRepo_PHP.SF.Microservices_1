@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\NF\Application\Write\Command;
 
-final class SendEmailCommand implements CommandInterface
+use App\NF\Application\Write\ASyncCommandInterface;
+
+final class SendEmailCommand implements ASyncCommandInterface
 {
     public function __construct(
         public string $type,

@@ -5,13 +5,15 @@ namespace App\Tests\Application\Integration;
 use App\NF\Application\Write\Command\SendEmailCommand;
 use App\NF\Application\Write\Handler\SendEmailHandler;
 use App\NF\Infrastructure\Enum\TypeEnum;
+use App\Tests\EmailNotificationTestCase;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Mailer\MailerInterface;
 
 /**
  * @group integration
+ * @group group11
  */
-class SendEmailCommandTest extends KernelTestCase
+class SendEmailCommandTest extends EmailNotificationTestCase
 {
     public function testSendEEmail(): void
     {
@@ -30,10 +32,10 @@ class SendEmailCommandTest extends KernelTestCase
 
         $handlerr($command);
 
-        $this->assertEmailCount(1);
+        $transport = $this->getTransport();
+        $this->assertCount(1, $transport->getSent());
 
         $email = $this->getMailerMessage();
-
         $this->assertEmailHtmlBodyContains($email, 'Hello :)');
         $this->assertEmailTextBodyContains($email, 'Hello :)');
     }

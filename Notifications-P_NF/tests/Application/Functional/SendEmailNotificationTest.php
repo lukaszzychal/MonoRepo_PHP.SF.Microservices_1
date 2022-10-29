@@ -2,13 +2,15 @@
 
 namespace App\Tests\Application\Functional;
 
+use App\NF\Application\Write\Command\SendEmailCommand;
+use App\Tests\EmailNotificationTestCase;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @group functional
  */
-class SendEmailNotificationTest extends WebTestCase
+class SendEmailNotificationTest extends EmailNotificationTestCase
 {
     public function testSendEmailNotificaton()
     {
@@ -30,11 +32,11 @@ class SendEmailNotificationTest extends WebTestCase
 
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
 
-        $this->assertEmailCount(1);
+        $transport = $this->getTransport();
+        $this->assertCount(1, $transport->getSent());
+        $msq = $this->getMessageFromTransport($transport);
 
-        $email = $this->getMailerMessage();
-
-        $this->assertEmailHtmlBodyContains($email, 'Heello - Email send');
-        $this->assertEmailTextBodyContains($email, 'Heello - Email send');
+        $this->assertSame($msq->context, 'Heello - Email send');
+        $this->assertSame($msq->email, 'my.email@test');
     }
 }

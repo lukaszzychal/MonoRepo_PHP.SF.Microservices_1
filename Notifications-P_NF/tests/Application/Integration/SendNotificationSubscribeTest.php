@@ -5,9 +5,9 @@ namespace App\Tests\Application\Integration;
 use App\NF\Infrastructure\Event\SendNotificationEvent;
 use App\NF\Infrastructure\Exception\InvalidParemeterRequest;
 use App\NF\Infrastructure\Subscribe\SendNotificationSubscribe;
+use App\Tests\EmailNotificationTestCase;
 use Exception;
 use Psr\Log\LoggerInterface;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -16,9 +16,9 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
- * @group integration
+ * @group Aplication
  */
-class SendNotificationSubscribeTest extends KernelTestCase
+class SendNotificationSubscribeTest extends EmailNotificationTestCase
 {
     private MessageBusInterface $messageBus;
     private SerializerInterface $serializer;
@@ -132,8 +132,14 @@ class SendNotificationSubscribeTest extends KernelTestCase
         $this->dispatcher->dispatch($event, SendNotificationEvent::NAME);
     }
 
+    /**
+     * @group test1
+     * 
+     * @return void
+     */
     public function testNotificationSubscribeWithCorrectTokenANDAllRRequireedDataInRequest()
     {
+
         $request = Request::create(
             '/notification',
             'POST',
@@ -141,7 +147,7 @@ class SendNotificationSubscribeTest extends KernelTestCase
             [],
             [],
             [
-                'HTTP_AUTHORIZATION' => 'Bearer '.$this->appToken,
+                'HTTP_AUTHORIZATION' => 'Bearer ' . $this->appToken,
             ],
             json_encode([
                 'type' => 'email',
@@ -150,14 +156,15 @@ class SendNotificationSubscribeTest extends KernelTestCase
             ])
         );
 
+
         $event = new SendNotificationEvent($request);
         $this->dispatcher->dispatch($event, SendNotificationEvent::NAME);
 
-        $this->assertEmailCount(1);
+        $transport = $this->getTransport();
+        $this->assertCount(1, $transport->getSent());
+        $msq = $this->getMessageFromTransport($transport);
 
-        $email = $this->getMailerMessage();
-
-        $this->assertEmailHtmlBodyContains($email, ' text email');
-        $this->assertEmailTextBodyContains($email, ' text email');
+        $this->assertSame($msq->context, ' text email');
+        $this->assertSame($msq->email, 'my.email@test');
     }
 }

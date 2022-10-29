@@ -1,17 +1,20 @@
 framework:
     messenger:
+        default_bus: notification.bus
+        buses:
+            notification.bus: ~
         # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
-        # failure_transport: failed
+        failure_transport: failed
 
         transports:
             # https://symfony.com/doc/current/messenger.html#transport-configuration
             async: '%env(MESSENGER_TRANSPORT_DSN)%'
             failed: 'doctrine://default?queue_name=failed'
-            # sync: 'sync://'
+            sync: 'sync://'
 
         routing:
             # Route your messages to the transports
-            'App\NF\Application\Write\Handler\ASyncHandlernterface': async
+            'App\NF\Application\Write\ASyncCommandInterface': async
             'Symfony\Component\Mailer\Messenger\SendEmailMessage': async
 
 when@test:
@@ -20,4 +23,6 @@ when@test:
            transports:
                # replace with your transport name here (e.g., my_transport: 'in-memory://')
                # For more Messenger testing tools, see https://github.com/zenstruck/messenger-test
-               async: 'in-memory://'
+            async: 'in-memory://'
+            failed: 'in-memory://'
+            sync: 'in-memory://'

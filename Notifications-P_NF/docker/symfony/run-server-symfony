@@ -11,5 +11,6 @@ echo ":: Drop Database"
 #  echo ":: Migration "
 #   docker-compose exec -T php bash -c " ./bin/console --no-interaction doctrine:migrations:migrate "
 #  docker-compose exec -T php bash -c " ./bin/console --no-interaction doctrine:migrations:migrate --env=test"
- 
+#  echo ":: consume "
+#   docker-compose exec -T php bash -c "nohup ./bin/console messenger:consume async  "
 

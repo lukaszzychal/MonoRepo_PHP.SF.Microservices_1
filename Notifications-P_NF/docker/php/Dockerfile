@@ -1,6 +1,6 @@
 FROM php:8.1-fpm-alpine
 LABEL Name=P_AE-LukaszZychal Version=0.0.1
-RUN apk update && apk add wget git
+RUN apk update && apk add wget git htop
 RUN apk --update --no-cache add \
     postgresql-dev
 RUN docker-php-ext-install pdo pdo_pgsql
