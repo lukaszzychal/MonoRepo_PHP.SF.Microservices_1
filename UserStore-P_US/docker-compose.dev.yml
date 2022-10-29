@@ -10,7 +10,8 @@ services:
       - 8001:8000
     volumes:
       - ./:/var/www/html
-      # - ./docker/php/99-xdebug.ini :/usr/local/etc/php/conf.d/99-xdebug.ini
+      - ./docker/php/99-xdebug.ini:/usr/local/etc/php/conf.d/99-xdebug.ini
+      - ./var/coverage:/opt/phpstorm-coverage
     networks:
       - P_US_network
       - background_network
@@ -19,7 +20,7 @@ services:
 
   postgres:
     image: postgres:13.4-alpine
-    container_name: postgres
+    container_name: DB_Postgres_P_US
     environment:
       - POSTGRES_USER=demo
       - POSTGRES_PASSWORD=demo
