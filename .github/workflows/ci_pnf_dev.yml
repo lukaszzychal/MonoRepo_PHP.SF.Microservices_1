@@ -30,7 +30,11 @@ jobs:
          
           DIR=./var
           if [ -d "$DIR" ]; then
-      
+          echo "Remove Var"
+          chmod -R 777 ./var
+          rm -rf "$DIR"
+          mkdir ./var
+          chmod -R 777 ./var
           fi
           
           ls -la ./bin/NF
