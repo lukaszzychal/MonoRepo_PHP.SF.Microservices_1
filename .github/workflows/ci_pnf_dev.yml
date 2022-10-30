@@ -13,12 +13,7 @@ jobs:
      - 
       name: Checkout
       uses: actions/checkout@v3
-     - 
-      name: Copy file
-      run: |
-        ls -la Notifications-P_NF
-        cp -Rf Notifications-P_NF/. .
-        
+
      - 
       name: Build containers
       run: |
@@ -49,38 +44,33 @@ jobs:
           docker exec PHP_P_NF symfony server:start --port=8000 -d
        
      - 
-      name: Save image docker
-      run: |
-        docker save php > php.tar   
-     - 
       name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.0
       with:
        name: P_NF 
-       path: .
+       path: |
+        ./Notifications-P_NF
+        !./Notifications-P_NF/var/*
+        !./Notifications-P_NF/vendor/*
 
   StaticCodeAnalysis:
     runs-on: ubuntu-latest
     needs: Build
     steps:
       - name: StaticCodeAnalysis
-        run: echo 'StaticCodeAnalysis '
+        run: |
+          echo 'StaticCodeAnalysis '
+          docker network create background_network
+          docker-compose -f ${PWD}/docker-compose.dev.yml up -d 
+          chmod +x ${PWD}/docker/symfony/vendor-install
+          ${PWD}/docker/symfony/vendor-install
+          docker container ls
       -
        name: Download a Build Artifact
        uses: actions/download-artifact@v3.0.0
        with:
         name: P_NF 
-      - 
-       name: Load Docker image
-       run: |
-         ls -l
-         ls -l ${PWD}
-         docker load --input ${PWD}/php.tar
-         docker network create background_network
-         docker-compose -f ${PWD}/docker-compose.dev.yml up -d 
-         chmod +x ${PWD}/docker/symfony/vendor-install
-         ${PWD}/docker/symfony/vendor-install
-         docker container ls
+
       -    
        name: PhpStan
        run: |
@@ -103,22 +93,20 @@ jobs:
     runs-on: ubuntu-latest
     needs: Build
     steps:
+      - name: Tests
+        run: |
+          echo 'RUN Tests '
+          docker network create background_network
+          docker-compose -f ${PWD}/docker-compose.dev.yml up -d 
+          chmod +x ${PWD}/docker/symfony/vendor-install
+          ${PWD}/docker/symfony/vendor-install
+          docker container ls
       -
         name: Download a Build Artifact
         uses: actions/download-artifact@v3.0.0
         with:
          name: P_NF 
-      - 
-       name: Load Docker image
-       run: |
-         ls -l
-         ls -l ${PWD}
-         docker load --input ${PWD}/php.tar
-         docker network create background_network
-         docker-compose -f ${PWD}/docker-compose.dev.yml up -d 
-         chmod +x ${PWD}/docker/symfony/vendor-install
-         ${PWD}/docker/symfony/vendor-install
-         docker container ls
+     
       - 
         name: Unit Test
         run: | 
