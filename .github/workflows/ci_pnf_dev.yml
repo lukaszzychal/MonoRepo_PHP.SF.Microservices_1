@@ -29,14 +29,16 @@ jobs:
           ls -la
          
           DIR=./var
-          if [ -d "$DIR" ]; then
+          if [ -d "$DIR" ]
+          then
+          echo "Remove Var"
           chmod -R 777 ./var
           rm -rf "$DIR"
+          fi
           mkdir ./var
           chmod -R 777 ./var
-          fi
           
-          ls -la ./bin/NF
+          ls -la ./src/NF
           docker exec PHP_P_NF composer install
           chmod +x ./bin/console
           echo 'docker container ls'
