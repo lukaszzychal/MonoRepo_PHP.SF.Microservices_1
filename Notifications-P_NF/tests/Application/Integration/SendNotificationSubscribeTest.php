@@ -134,12 +134,11 @@ class SendNotificationSubscribeTest extends EmailNotificationTestCase
 
     /**
      * @group test1
-     * 
+     *
      * @return void
      */
     public function testNotificationSubscribeWithCorrectTokenANDAllRRequireedDataInRequest()
     {
-
         $request = Request::create(
             '/notification',
             'POST',
@@ -147,7 +146,7 @@ class SendNotificationSubscribeTest extends EmailNotificationTestCase
             [],
             [],
             [
-                'HTTP_AUTHORIZATION' => 'Bearer ' . $this->appToken,
+                'HTTP_AUTHORIZATION' => 'Bearer '.$this->appToken,
             ],
             json_encode([
                 'type' => 'email',

@@ -20,7 +20,7 @@ final class SendEmailHandler implements MessageHandlerInterface
 
     public function __invoke(SendEmailCommand $sendEmailCommand): void
     {
-        $context = $sendEmailCommand->context . ' <h4>This mail send: ' . (new DateTimeImmutable())->format('d.m.Y h:m:s') . '</h4>';
+        $context = $sendEmailCommand->context.' <h4>This mail send: '.(new DateTimeImmutable())->format('d.m.Y h:m:s').'</h4>';
         $email = (new Email())
             ->from('notification@test')
             ->to($sendEmailCommand->email)

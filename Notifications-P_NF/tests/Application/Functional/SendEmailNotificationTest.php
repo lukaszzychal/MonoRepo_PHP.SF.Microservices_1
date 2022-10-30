@@ -2,9 +2,7 @@
 
 namespace App\Tests\Application\Functional;
 
-use App\NF\Application\Write\Command\SendEmailCommand;
 use App\Tests\EmailNotificationTestCase;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

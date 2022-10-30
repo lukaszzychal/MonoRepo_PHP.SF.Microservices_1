@@ -6,7 +6,6 @@ use App\NF\Application\Write\Command\SendEmailCommand;
 use App\NF\Application\Write\Handler\SendEmailHandler;
 use App\NF\Infrastructure\Enum\TypeEnum;
 use App\Tests\EmailNotificationTestCase;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Mailer\MailerInterface;
 
 /**
