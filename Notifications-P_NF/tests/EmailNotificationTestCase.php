@@ -16,11 +16,16 @@ class EmailNotificationTestCase extends WebTestCase
 
         return  $transport;
     }
-    protected function getMessageFromTransport(InMemoryTransport $transport): SendEmailCommand|SendEmailMessage
+    /**
+     *
+     * @param InMemoryTransport $transport
+     * @return SendEmailMessage
+     */
+    protected function getMessageFromTransport(InMemoryTransport $transport): SendEmailMessage
     {
         $envelopes = $transport->get();
         /**
-         * @var SendEmailCommand|SendEmailMessage $msq
+         * @var SendEmailMessage $msq
          */
         $msq = $envelopes[0]->getMessage();
         return $msq;

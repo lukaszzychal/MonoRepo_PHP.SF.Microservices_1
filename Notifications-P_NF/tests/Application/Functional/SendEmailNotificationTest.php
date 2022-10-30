@@ -33,10 +33,12 @@ class SendEmailNotificationTest extends EmailNotificationTestCase
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
 
         $transport = $this->getTransport();
-        $this->assertCount(1, $transport->getSent());
-        $msq = $this->getMessageFromTransport($transport);
+        $messages = $transport->getSent();
 
-        $this->assertSame($msq->context, 'Heello - Email send');
-        $this->assertSame($msq->email, 'my.email@test');
+        $this->assertCount(1, $messages);
+
+        $email = $this->getMailerMessage();
+        $this->assertEmailHtmlBodyContains($email, 'Heello - Email send');
+        $this->assertEmailTextBodyContains($email, 'Heello - Email send');
     }
 }

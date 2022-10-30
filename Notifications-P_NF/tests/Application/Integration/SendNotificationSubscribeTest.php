@@ -156,15 +156,16 @@ class SendNotificationSubscribeTest extends EmailNotificationTestCase
             ])
         );
 
-
         $event = new SendNotificationEvent($request);
         $this->dispatcher->dispatch($event, SendNotificationEvent::NAME);
 
         $transport = $this->getTransport();
-        $this->assertCount(1, $transport->getSent());
-        $msq = $this->getMessageFromTransport($transport);
+        $messages = $transport->getSent();
 
-        $this->assertSame($msq->context, ' text email');
-        $this->assertSame($msq->email, 'my.email@test');
+        $this->assertCount(1, $messages);
+
+        $email = $this->getMailerMessage();
+        $this->assertEmailHtmlBodyContains($email, ' text email');
+        $this->assertEmailTextBodyContains($email, ' text email');
     }
 }
