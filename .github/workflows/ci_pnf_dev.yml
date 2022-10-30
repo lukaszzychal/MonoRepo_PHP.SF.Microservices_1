@@ -22,9 +22,10 @@ jobs:
      - 
       name: Build containers
       run: |
-          echo ":: Rebulding Contener And Up"
+         echo ":: Rebulding Contener And Up"
           cp docker-compose.dev.yml docker-compose.yml
           docker-compose -f docker-compose.yml up -d --build
+          docker network create background_network
           docker exec PHP_P_NF composer install
           chmod +x ./bin/console
           echo 'docker container ls'
