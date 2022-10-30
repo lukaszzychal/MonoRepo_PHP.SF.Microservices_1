@@ -29,7 +29,8 @@ jobs:
           ls -la
          
           DIR=./var
-          if [ -d "$DIR" ]; then
+          if [ -d "$DIR" ]
+          then
           echo "Remove Var"
           chmod -R 777 ./var
           rm -rf "$DIR"
