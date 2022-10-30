@@ -88,7 +88,7 @@ jobs:
           ls -la
           docker network create background_network
           docker-compose -f docker-compose.yml up -d --build
-          docker exec PHP_P_US composer install
+          docker exec PHP_P_NF composer install
           chmod +x ./bin/console
           docker-compose exec -T php ./bin/console doctrine:database:create  --env=test
 
@@ -128,7 +128,7 @@ jobs:
           ls -la
           docker network create background_network
           docker-compose -f docker-compose.yml up -d --build
-          docker exec PHP_P_US composer install
+          docker exec PHP_P_NF composer install
           chmod +x ./bin/console
           docker-compose exec -T php ./bin/console doctrine:database:create  --env=test
 
