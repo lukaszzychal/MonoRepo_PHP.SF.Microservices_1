@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo ":: Clear Var "
+#   docker-compose exec -T php bash -c " chmod -R 777 ./var && rm -R ./var && mkdir ./var && chmod -R 777 ./var "
+  docker-compose exec -T php bash -c "  rm -Rf ./var "

@@ -2,6 +2,7 @@
 
 $PWD/docker/symfony/rebuild-container-and-up
 $PWD/docker/symfony/install-cli
+$PWD/docker/symfony/vendor-install
 # # docker/symfony/create_project
 
 $PWD/docker/symfony/run-server-symfony

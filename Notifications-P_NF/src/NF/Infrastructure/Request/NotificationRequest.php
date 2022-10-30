@@ -28,7 +28,7 @@ final class NotificationRequest
         if (is_null($content)) {
             // $this->logger->critical("Wrong Request: File:" . __FILE__ . '  Line: ' . __LINE__);
             // @todo Przerobić na konkretny wyjątek
-            throw new \Exception('Wrong request. File: ' . __FILE__ . '; Line: ' . __LINE__, Response::HTTP_BAD_REQUEST);
+            throw new \Exception('Wrong request. File: '.__FILE__.'; Line: '.__LINE__, Response::HTTP_BAD_REQUEST);
         }
 
         if (
