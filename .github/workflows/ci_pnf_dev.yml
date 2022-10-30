@@ -27,7 +27,7 @@ jobs:
           docker-compose -f docker-compose.yml up -d --build
           echo ":: Clear var"
           docker-compose exec -T php bash -c " ls -la "
-          docker-compose exec -T php bash -c " chmod -R 0777 ./var && rm -rf ./var "
+          docker-compose exec -T php bash -c " find ./var -type d -exec chmod -R 777 {} \; && find ./var -type d -exec rm -rf {} \; "
           docker-compose exec -T php bash -c " docker-compose exec -T php bash -c " ls -la "
           docker exec PHP_P_NF composer install
           chmod +x ./bin/console
