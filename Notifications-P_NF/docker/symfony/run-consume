@@ -1,4 +1,4 @@
 #!/bin/bash
 
 echo ":: consume "
-  docker-compose exec -T php bash -c "nohup ./bin/console messenger:consume async failed  "
+  docker-compose exec -T php bash -c "nohup ./bin/console messenger:consume async failed -vv  "
