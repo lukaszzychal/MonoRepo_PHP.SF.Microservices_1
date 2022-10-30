@@ -32,6 +32,8 @@ jobs:
           if [ -d "$DIR" ]; then
           chmod -R 777 ./var
           rm -rf "$DIR"
+          mkdir ./var
+          chmod -R 777 ./var
           fi
           
           ls -la ./bin/NF
