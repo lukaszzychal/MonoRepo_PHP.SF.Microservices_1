@@ -14,17 +14,14 @@ use PHPUnit\Framework\TestCase;
  */
 class EventLogsTest extends TestCase
 {
-
     protected function setUp(): void
     {
         parent::setUp();
     }
 
-
-
     public function testEmpty()
     {
-        $trait = new class
+        $trait = new class()
         {
             use EventLogs;
         };
@@ -37,7 +34,6 @@ class EventLogsTest extends TestCase
 
     /**
      * @depends testEmpty
-     *
      */
     public function testAddOneEvent($trait)
     {
@@ -45,7 +41,7 @@ class EventLogsTest extends TestCase
 
         $trait->addEvent($event);
 
-        $this->assertEventLogs($trait, 1);
+        $this->assertEventLogs($trait, get_class($event), 1);
         $this->assertTrue($trait->hasEvents());
 
         return $trait;
@@ -53,7 +49,6 @@ class EventLogsTest extends TestCase
 
     /**
      * @depends testAddOneEvent
-     *
      */
     public function testAddTwoEvent($trait)
     {
@@ -61,7 +56,7 @@ class EventLogsTest extends TestCase
 
         $trait->addEvent($event);
 
-        $this->assertEventLogs($trait, 2);
+        $this->assertEventLogs($trait, get_class($event), 2);
         $this->assertTrue($trait->hasEvents());
 
         return $trait;
@@ -69,7 +64,6 @@ class EventLogsTest extends TestCase
 
     /**
      * @depends testAddTwoEvent
-     *
      */
     public function testClearEvent($trait): void
     {
@@ -78,11 +72,14 @@ class EventLogsTest extends TestCase
         $this->assertFalse($trait->hasEvents());
     }
 
-    public function assertEventLogs($trait, int $count = 0)
+    public function assertEventLogs($trait, string $className = '', int $count = 0)
     {
         $this->assertSame($count, $trait->countEvents());
         $this->assertIsArray($trait->getEvents());
         $this->assertSame($count, count($trait->getEvents()));
         $this->assertSame($count, $trait->countEvents());
+        if ($trait->countEvents() > 0) {
+            $this->assertSame($className, $trait->getEvents()[0]->eventName);
+        }
     }
 }

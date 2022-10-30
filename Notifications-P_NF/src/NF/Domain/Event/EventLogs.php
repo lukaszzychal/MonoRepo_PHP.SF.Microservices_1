@@ -14,7 +14,7 @@ trait EventLogs
     }
 
     /**
-     * Return array Domain Events
+     * Return array Domain Events.
      *
      * @return DomainEventInterface[]
      */
