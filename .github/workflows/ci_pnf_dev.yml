@@ -26,9 +26,15 @@ jobs:
           cp docker-compose.dev.yml docker-compose.yml
           docker-compose -f docker-compose.yml up -d --build
           echo ":: Clear var"
-          docker-compose exec -T php bash -c " ls -la "
-          docker-compose exec -T php bash -c " find ./var -type d -exec chmod -R 777 {} \; && find ./var -type d -exec rm -rf {} \; "
-          docker-compose exec -T php bash -c " docker-compose exec -T php bash -c " ls -la "
+          ls -la
+         
+          DIR=./var
+          if [ -d "$DIR" ]; then
+          chmod -R 777 ./var
+          rm -rf "$DIR"
+          fi
+          
+          ls -la
           docker exec PHP_P_NF composer install
           chmod +x ./bin/console
           echo 'docker container ls'
