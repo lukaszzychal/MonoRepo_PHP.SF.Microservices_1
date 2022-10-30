@@ -22,14 +22,30 @@ jobs:
      - 
       name: Build containers
       run: |
-       ls -la 
-       ls -la ${PWD}/docker/symfony/ 
-       chmod -R +x ${PWD}/docker/. ${PWD}/bin/.
-       docker network create background_network
-       ${PWD}/docker/symfony/rebuild-container-and-up
-       ${PWD}/docker/symfony/install-cli
-       ${PWD}/docker/symfony/run-server-symfony
-       docker-compose exec -T php bash -c 'php -v && composer --version'
+          echo ":: Rebulding Contener And Up"
+          cp docker-compose.dev.yml docker-compose.yml
+          docker-compose -f docker-compose.yml up -d --build
+          docker exec PHP_P_NF composer install
+          chmod +x ./bin/console
+          echo 'docker container ls'
+          docker container ls
+          echo 'docker-compose ps '
+          docker-compose ps 
+          echo 'docker-compose exec postgres ls -l'
+          docker-compose exec -T postgres ls -l
+          echo '  docker-compose exec php ping postgres'
+          docker-compose exec -T php ping -c 2 postgres
+          docker-compose exec -T php ./bin/console doctrine:database:create  --env=test
+
+          echo ":: Version"
+          docker exec PHP_P_NF ls -l
+          docker exec PHP_P_NF php -v && composer --version && docker-compose --version
+          
+          
+          echo ":: Run Symfony Serverr"
+          docker exec PHP_P_NF symfony server:ca:install
+          docker exec PHP_P_NF symfony server:stop
+          docker exec PHP_P_NF symfony server:start --port=8000 -d
        
      - 
       name: Save image docker
