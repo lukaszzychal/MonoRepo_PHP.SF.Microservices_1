@@ -34,9 +34,9 @@ jobs:
           echo "Remove Var"
           chmod -R 777 ./var
           rm -rf "$DIR"
+          fi
           mkdir ./var
           chmod -R 777 ./var
-          fi
           
           ls -la ./src/NF
           docker exec PHP_P_NF composer install
