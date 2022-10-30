@@ -9,6 +9,9 @@ on:
 jobs:
   Build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./Notifications-P_NF
     steps:
      - 
       name: Checkout
