@@ -24,7 +24,7 @@ jobs:
       run: |
        ls -la 
        ls -la ${PWD}/docker/symfony/ 
-       chmod -R +x ${PWD}/docker/.
+       chmod -R +x ${PWD}/docker/. ${PWD}/bin/.
        docker network create background_network
        ${PWD}/docker/symfony/rebuild-container-and-up
        ${PWD}/docker/symfony/install-cli
