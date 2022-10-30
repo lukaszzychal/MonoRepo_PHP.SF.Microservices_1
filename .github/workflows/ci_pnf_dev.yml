@@ -60,19 +60,23 @@ jobs:
     runs-on: ubuntu-latest
     needs: Build
     steps:
-      - name: StaticCodeAnalysis
-        run: |
-          echo 'StaticCodeAnalysis '
-          docker network create background_network
-          docker-compose -f ${PWD}/docker-compose.dev.yml up -d 
-          chmod +x ${PWD}/docker/symfony/vendor-install
-          ${PWD}/docker/symfony/vendor-install
-          docker container ls
       -
        name: Download a Build Artifact
        uses: actions/download-artifact@v3.0.0
        with:
         name: P_NF 
+
+      - 
+        name: Build and Up Container
+        run: | 
+          echo ":: List Download a Build Artifact "
+          ls -la
+          docker network create background_network
+          docker-compose -f docker-compose.yml up -d --build
+          docker exec PHP_P_US composer install
+          chmod +x ./bin/console
+          docker-compose exec -T php ./bin/console doctrine:database:create  --env=test
+
 
       -    
        name: PhpStan
@@ -96,20 +100,23 @@ jobs:
     runs-on: ubuntu-latest
     needs: Build
     steps:
-      - name: Tests
-        run: |
-          echo 'RUN Tests '
-          docker network create background_network
-          docker-compose -f ${PWD}/docker-compose.dev.yml up -d 
-          chmod +x ${PWD}/docker/symfony/vendor-install
-          ${PWD}/docker/symfony/vendor-install
-          docker container ls
       -
         name: Download a Build Artifact
         uses: actions/download-artifact@v3.0.0
         with:
          name: P_NF 
      
+      - 
+        name: Build and Up Container
+        run: | 
+          echo ":: List Download a Build Artifact "
+          ls -la
+          docker network create background_network
+          docker-compose -f docker-compose.yml up -d --build
+          docker exec PHP_P_US composer install
+          chmod +x ./bin/console
+          docker-compose exec -T php ./bin/console doctrine:database:create  --env=test
+
       - 
         name: Unit Test
         run: | 
