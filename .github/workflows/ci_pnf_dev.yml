@@ -20,10 +20,10 @@ jobs:
      - 
       name: Build containers
       run: |
-         echo ":: Rebulding Contener And Up"
+          echo ":: Rebulding Contener And Up"
           cp docker-compose.dev.yml docker-compose.yml
           docker network create background_network
-           docker-compose exec -T php bash -c " chmod -R 0777 ./var && rm -rf ./var "
+          docker-compose exec -T php bash -c " chmod -R 0777 ./var && rm -rf ./var "
           ls -la
           ls -la ./src/NF
           docker-compose -f docker-compose.yml up -d --build
