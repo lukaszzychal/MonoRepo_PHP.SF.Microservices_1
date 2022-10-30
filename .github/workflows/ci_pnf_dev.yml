@@ -34,7 +34,7 @@ jobs:
           rm -rf "$DIR"
           fi
           
-          ls -la
+          ls -la ./bin/NF
           docker exec PHP_P_NF composer install
           chmod +x ./bin/console
           echo 'docker container ls'
