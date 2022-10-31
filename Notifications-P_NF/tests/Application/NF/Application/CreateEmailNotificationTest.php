@@ -6,9 +6,9 @@ use App\Tests\EmailNotificationTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @group functional
+ * @group Aplication
  */
-class SendEmailNotificationTest extends EmailNotificationTestCase
+class CreateEmailNotificationTest extends EmailNotificationTestCase
 {
     public function testSendEmailNotificaton()
     {
