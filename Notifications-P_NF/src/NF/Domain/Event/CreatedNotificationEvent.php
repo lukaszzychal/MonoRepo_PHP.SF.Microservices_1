@@ -18,6 +18,6 @@ class CreatedNotificationEvent implements DomainEventInterface
         public readonly StatusEnum $status
     ) {
         $this->date = new DateTimeImmutable();
-        $this->eventName = get_class($this);
+        $this->eventName = (new \ReflectionClass($this))->getShortName();
     }
 }

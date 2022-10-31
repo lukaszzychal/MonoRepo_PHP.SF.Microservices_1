@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\NF\Domain\Event;
 
-trait EventLogs
+trait EventLogsTrait
 {
     private array $events = [];
 
@@ -35,6 +35,8 @@ trait EventLogs
 
     public function clear(): void
     {
+        dump(__METHOD__);
         $this->events = [];
+        dump($this->events);
     }
 }
