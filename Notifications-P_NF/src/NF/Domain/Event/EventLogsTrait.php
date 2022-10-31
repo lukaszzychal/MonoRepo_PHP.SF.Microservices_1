@@ -35,8 +35,6 @@ trait EventLogsTrait
 
     public function clear(): void
     {
-        dump(__METHOD__);
         $this->events = [];
-        dump($this->events);
     }
 }
