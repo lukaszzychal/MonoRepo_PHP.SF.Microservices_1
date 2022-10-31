@@ -4,7 +4,7 @@ namespace App\Tests\Application\Unit;
 
 use App\NF\Application\Write\Command\SendEmailCommand;
 use App\NF\Application\Write\Handler\SendEmailHandler;
-use App\NF\Infrastructure\Enum\TypeEnum;
+use App\NF\Domain\Enum\TypeEnum;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Mailer\MailerInterface;
 

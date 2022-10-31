@@ -7,6 +7,7 @@ use App\NF\Domain\Enum\TypeEnum;
 use App\NF\Domain\Event\CreatedNotificationEvent;
 use App\NF\Infrastructure\DomainEvent\DomainEventStore;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @group Unit
@@ -17,6 +18,7 @@ class DomainEventStoreTest extends TestCase
     public function testEmptyStore(): void
     {
         $eventStore = DomainEventStore::getInstance();
+        $eventStore->clear();
         $this->assertFalse($eventStore->hasEvents());
         $this->assertSame(0, $eventStore->countEvents());
     }
@@ -24,7 +26,7 @@ class DomainEventStoreTest extends TestCase
     public function testAddEventToStore(): void
     {
         $eventStore = DomainEventStore::getInstance();
-        $event = new CreatedNotificationEvent(TypeEnum::EMAIL, StatusEnum::CREATE);
+        $event = new CreatedNotificationEvent((string) Uuid::v4(), TypeEnum::EMAIL->value, StatusEnum::CREATE->value);
 
         $eventStore->addEvent($event);
 
@@ -36,8 +38,8 @@ class DomainEventStoreTest extends TestCase
     {
 
         $eventStore = DomainEventStore::getInstance();
-        $event1 = new CreatedNotificationEvent(TypeEnum::EMAIL, StatusEnum::CREATE);
-        $event2 = new CreatedNotificationEvent(TypeEnum::EMAIL, StatusEnum::CREATE);
+        $event1 = new CreatedNotificationEvent((string) Uuid::v4(), TypeEnum::EMAIL->value, StatusEnum::CREATE->value);
+        $event2 = new CreatedNotificationEvent((string) Uuid::v4(), TypeEnum::EMAIL->value, StatusEnum::CREATE->value);
 
         $eventStore->addManyEvent($event1, $event2);
 
@@ -49,8 +51,8 @@ class DomainEventStoreTest extends TestCase
     {
         $eventStore = DomainEventStore::getInstance();
         $events = [
-            new CreatedNotificationEvent(TypeEnum::EMAIL, StatusEnum::CREATE),
-            new CreatedNotificationEvent(TypeEnum::EMAIL, StatusEnum::CREATE)
+            new CreatedNotificationEvent((string) Uuid::v4(), TypeEnum::EMAIL->value, StatusEnum::CREATE->value),
+            new CreatedNotificationEvent((string) Uuid::v4(), TypeEnum::EMAIL->value, StatusEnum::CREATE->value)
         ];
 
         $eventStore->addArrayEvent($events);
