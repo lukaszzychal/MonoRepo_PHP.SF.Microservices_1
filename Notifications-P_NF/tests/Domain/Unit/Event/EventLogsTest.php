@@ -5,8 +5,9 @@ namespace App\Domain\Event;
 use App\NF\Domain\Enum\StatusEnum;
 use App\NF\Domain\Enum\TypeEnum;
 use App\NF\Domain\Event\CreatedNotificationEvent;
-use App\NF\Domain\Event\EventLogs;
+use App\NF\Domain\Event\EventLogsTrait;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @group unit
@@ -14,17 +15,21 @@ use PHPUnit\Framework\TestCase;
  */
 class EventLogsTest extends TestCase
 {
+    private Uuid $uuid;
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->uuid = Uuid::v4();
     }
 
     public function testEmpty()
     {
         $trait = new class()
         {
-            use EventLogs;
+            use EventLogsTrait;
         };
+
 
         $this->assertEventLogs($trait, 0);
         $this->assertFalse($trait->hasEvents());
@@ -37,7 +42,7 @@ class EventLogsTest extends TestCase
      */
     public function testAddOneEvent($trait)
     {
-        $event = new CreatedNotificationEvent(TypeEnum::EMAIL, StatusEnum::CREATE);
+        $event = new CreatedNotificationEvent((string) $this->uuid, TypeEnum::EMAIL->value, StatusEnum::CREATE->value);
 
         $trait->addEvent($event);
 
@@ -52,7 +57,7 @@ class EventLogsTest extends TestCase
      */
     public function testAddTwoEvent($trait)
     {
-        $event = new CreatedNotificationEvent(TypeEnum::EMAIL, StatusEnum::SENT);
+        $event = new CreatedNotificationEvent((string) $this->uuid, TypeEnum::EMAIL->value, StatusEnum::SENT->value);
 
         $trait->addEvent($event);
 
@@ -79,7 +84,13 @@ class EventLogsTest extends TestCase
         $this->assertSame($count, count($trait->getEvents()));
         $this->assertSame($count, $trait->countEvents());
         if ($trait->countEvents() > 0) {
-            $this->assertSame($className, $trait->getEvents()[0]->eventName);
+            $shortName = $this->getShortNameClass($className);
+            $this->assertSame($shortName, $trait->getEvents()[0]->eventName);
         }
+    }
+
+    private function getShortNameClass($object)
+    {
+        return (new \ReflectionClass($object))->getShortName();
     }
 }

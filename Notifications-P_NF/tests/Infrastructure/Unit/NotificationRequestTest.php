@@ -2,7 +2,7 @@
 
 namespace App\Tests\Infrastructure\Unit;
 
-use App\NF\Infrastructure\Enum\TypeEnum;
+use App\NF\Domain\Enum\TypeEnum;
 use App\NF\Infrastructure\Request\NotificationRequest;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;

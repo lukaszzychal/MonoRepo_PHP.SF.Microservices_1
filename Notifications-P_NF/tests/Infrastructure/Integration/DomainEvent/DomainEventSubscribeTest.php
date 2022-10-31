@@ -4,6 +4,7 @@ namespace App\Tests\Infrastructure\Unit\DomainEvent;
 
 use App\NF\Domain\Enum\TypeEnum;
 use App\NF\Domain\Model\Notification;
+use App\NF\Domain\Model\NotificationId;
 use App\NF\Infrastructure\DomainEvent\DomainEventStore;
 use App\NF\Infrastructure\DomainEvent\DomainEventSubscribe;
 use Doctrine\ORM\EntityManager;
@@ -13,6 +14,7 @@ use Doctrine\ORM\Events;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @group integration
@@ -22,7 +24,6 @@ class DomainEventSubscribeTest extends KernelTestCase
 {
     private EventDispatcherInterface $dispatcher;
     private DomainEventSubscribe $subsriber;
-    private HttpKernelInterface $httpKernel;
     private EntityManager $em;
 
     protected function setUp(): void
@@ -48,7 +49,7 @@ class DomainEventSubscribeTest extends KernelTestCase
         $store = DomainEventStore::getInstance();
         $this->assertFalse($store->hasEvents());
 
-        $notification = new Notification(TypeEnum::EMAIL);
+        $notification = new Notification(NotificationId::fromUUID(Uuid::v4()), TypeEnum::EMAIL);
         $this->assertSame(1, $notification->countEvents());
 
         $event = new LifecycleEventArgs($notification, $this->em);
@@ -63,7 +64,7 @@ class DomainEventSubscribeTest extends KernelTestCase
         $store = DomainEventStore::getInstance();
         $this->assertSame(1, $store->countEvents());
 
-        $notification = new Notification(TypeEnum::EMAIL);
+        $notification = new Notification(NotificationId::fromUUID(Uuid::v4()), TypeEnum::EMAIL);
         $this->assertSame(1, $notification->countEvents());
 
         $event = new LifecycleEventArgs($notification, $this->em);
@@ -78,7 +79,7 @@ class DomainEventSubscribeTest extends KernelTestCase
         $store = DomainEventStore::getInstance();
         $this->assertSame(2, $store->countEvents());
 
-        $notification = new Notification(TypeEnum::EMAIL);
+        $notification = new Notification(NotificationId::fromUUID(Uuid::v4()), TypeEnum::EMAIL);
         $this->assertSame(1, $notification->countEvents());
 
         $event = new LifecycleEventArgs($notification, $this->em);
