@@ -14,8 +14,9 @@ class CreatedNotificationEvent implements DomainEventInterface
     public string $eventName;
 
     public function __construct(
-        public readonly TypeEnum $type,
-        public readonly StatusEnum $status
+        public readonly string $id,
+        public readonly string $type,
+        public readonly string $status
     ) {
         $this->date = new DateTimeImmutable();
         $this->eventName = (new \ReflectionClass($this))->getShortName();
