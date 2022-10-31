@@ -6,6 +6,7 @@ namespace App\NF\Infrastructure\Subscribe;
 
 use App\NF\Application\Write\Command\CommandInterface;
 use App\NF\Application\Write\Command\TypeNotificationCommand;
+use App\NF\Infrastructure\Event\CreateNotificationEvent;
 use App\NF\Infrastructure\Event\SendNotificationEvent;
 use App\NF\Infrastructure\Request\NotificationRequest;
 use Psr\Log\LoggerInterface;
@@ -15,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
-final class SendNotificationSubscribe implements EventSubscriberInterface
+final class CreateNotificationSubscribe implements EventSubscriberInterface
 {
     public function __construct(
         private readonly string $appToken,
@@ -28,31 +29,31 @@ final class SendNotificationSubscribe implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            SendNotificationEvent::NAME => [
+            CreateNotificationEvent::NAME => [
                 'send',
             ],
         ];
     }
 
-    public function send(SendNotificationEvent $sendNotificationEvent): void
+    public function send(CreateNotificationEvent $createNotificationEvent): void
     {
-        $request = $sendNotificationEvent->request;
+        $request = $createNotificationEvent->request;
         $notifiRequeest = NotificationRequest::fromRequest($request);
 
         $token = str_replace('Bearer ', '', $notifiRequeest->token);
         if ($this->appToken !== $token) {
-            $this->logger->critical("Wrong token [ {$token} ]: File:".__FILE__.'  Line: '.__LINE__);
+            $this->logger->critical("Wrong token [ {$token} ]: File:" . __FILE__ . '  Line: ' . __LINE__);
             // @todo Przerobić na konkretny wyjątek
-            throw new \Exception('Wrong token [ '.$token.' ]', Response::HTTP_BAD_REQUEST);
+            throw new \Exception('Wrong token [ ' . $token . ' ]', Response::HTTP_BAD_REQUEST);
         }
 
         $obj = $this->deserializeRequest($request);
-        $this->sendNotification($obj);
+        $this->crateNotification($obj);
     }
 
-    private function sendNotification(CommandInterface $typeeNotification): void
+    private function crateNotification(CommandInterface $typeNotification): void
     {
-        $this->messageBus->dispatch($typeeNotification);
+        $this->messageBus->dispatch($typeNotification);
     }
 
     private function deserializeRequest(Request $request): CommandInterface

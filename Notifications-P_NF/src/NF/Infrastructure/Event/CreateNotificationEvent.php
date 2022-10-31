@@ -7,9 +7,9 @@ namespace App\NF\Infrastructure\Event;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 
-final class SendNotificationEvent extends RequestEvent
+final class CreateNotificationEvent extends RequestEvent
 {
-    public const NAME = 'send.notification';
+    public const NAME = 'create.notification';
 
     public function __construct(
         public readonly Request $request
