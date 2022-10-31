@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Application\Functional;
+namespace App\Tests\Application\NF\Application;
 
 use App\Tests\EmailNotificationTestCase;
 use Symfony\Component\HttpFoundation\Response;

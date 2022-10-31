@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Application\Unit;
+namespace App\Tests\Unit\NF\Application;
 
 use App\NF\Infrastructure\ExceptionEventSubscriber;
 use Exception;

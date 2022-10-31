@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Infrastructure\Unit;
+namespace App\Tests\Unit\NF\Infrastructure;
 
 use App\NF\Domain\Enum\StatusEnum;
 use App\NF\Domain\Enum\TypeEnum;
