@@ -1,41 +1,44 @@
 <?php
 
-namespace App\Tests\Integration\NF\Application;
+namespace App\Tests\Unit\NF\Application;
 
+use App\NF\Application\Write\Command\SendEmailCommand;
+use App\NF\Infrastructure\Event\CreateNotificationEvent;
 use App\NF\Infrastructure\Event\SendNotificationEvent;
 use App\NF\Infrastructure\Exception\InvalidParemeterRequest;
+use App\NF\Infrastructure\Subscribe\CreateNotificationSubscribe;
 use App\NF\Infrastructure\Subscribe\SendNotificationSubscribe;
-use App\Tests\EmailNotificationTestCase;
 use Exception;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
- * @group Aplication
+ * @group unit
  */
-class SendNotificationSubscribeTest extends EmailNotificationTestCase
+class CreateNotificationSubscribeTest extends TestCase
 {
-    private MessageBusInterface $messageBus;
-    private SerializerInterface $serializer;
+    private MockObject|MessageBusInterface $messageBus;
+    private MockObject|SerializerInterface $serializer;
     private LoggerInterface $logger;
     private string $appToken;
-    private SendNotificationSubscribe $subscriber;
+    private CreateNotificationSubscribe $subscriber;
     private EventDispatcherInterface $dispatcher;
 
     protected function setUp(): void
     {
-        $params = $this->getContainer()->get(ParameterBagInterface::class);
-        $this->appToken = $params->get('app_token');
-        $this->serializer = $this->getContainer()->get(SerializerInterface::class);
-        $this->messageBus = $this->getContainer()->get(MessageBusInterface::class);
-        $this->logger = $this->getContainer()->get(LoggerInterface::class);
+        $this->appToken = 'CorrectAcceesTokenNotificationService';
+        $this->serializer = $this->createMock(SerializerInterface::class);
+        $this->messageBus = $this->createMock(MessageBusInterface::class);
+        $this->logger = $this->createMock(LoggerInterface::class);
 
-        $this->subscriber = new SendNotificationSubscribe(
+        $this->subscriber = new CreateNotificationSubscribe(
             $this->appToken,
             $this->serializer,
             $this->messageBus,
@@ -61,8 +64,8 @@ class SendNotificationSubscribeTest extends EmailNotificationTestCase
             ''
         );
 
-        $event = new SendNotificationEvent($request);
-        $this->dispatcher->dispatch($event, SendNotificationEvent::NAME);
+        $event = new CreateNotificationEvent($request);
+        $this->dispatcher->dispatch($event, CreateNotificationEvent::NAME);
     }
 
     public function testNotificationSubscribeWitoutTokenInRequest()
@@ -82,8 +85,8 @@ class SendNotificationSubscribeTest extends EmailNotificationTestCase
             ])
         );
 
-        $event = new SendNotificationEvent($request);
-        $this->dispatcher->dispatch($event, SendNotificationEvent::NAME);
+        $event = new CreateNotificationEvent($request);
+        $this->dispatcher->dispatch($event, CreateNotificationEvent::NAME);
     }
 
     public function testNotificationSubscribeWithWrongTokenANDWithoutTypeInRequest()
@@ -105,8 +108,8 @@ class SendNotificationSubscribeTest extends EmailNotificationTestCase
             ])
         );
 
-        $event = new SendNotificationEvent($request);
-        $this->dispatcher->dispatch($event, SendNotificationEvent::NAME);
+        $event = new CreateNotificationEvent($request);
+        $this->dispatcher->dispatch($event, CreateNotificationEvent::NAME);
     }
 
     public function testNotificationSubscribeWithWrongTokenANDWithTypeInRequest()
@@ -128,17 +131,27 @@ class SendNotificationSubscribeTest extends EmailNotificationTestCase
             ])
         );
 
-        $event = new SendNotificationEvent($request);
-        $this->dispatcher->dispatch($event, SendNotificationEvent::NAME);
+        $event = new CreateNotificationEvent($request);
+        $this->dispatcher->dispatch($event, CreateNotificationEvent::NAME);
     }
 
-    /**
-     * @group test1
-     *
-     * @return void
-     */
     public function testNotificationSubscribeWithCorrectTokenANDAllRRequireedDataInRequest()
     {
+        $emailCommand = new SendEmailCommand(
+            'email',
+            'my.email@test',
+            'text email',
+            ' subject email'
+        );
+        $this->serializer->expects($this->once())->method('deserialize')->willReturn($emailCommand);
+
+        $this->messageBus->expects($this->once())
+            ->method('dispatch')
+            ->with(
+                self::isInstanceOf(SendEmailCommand::class)
+            )
+            ->willReturn(new Envelope($emailCommand));
+
         $request = Request::create(
             '/notification',
             'POST',
@@ -155,16 +168,7 @@ class SendNotificationSubscribeTest extends EmailNotificationTestCase
             ])
         );
 
-        $event = new SendNotificationEvent($request);
-        $this->dispatcher->dispatch($event, SendNotificationEvent::NAME);
-
-        $transport = $this->getTransport();
-        $messages = $transport->getSent();
-
-        $this->assertCount(1, $messages);
-
-        $email = $this->getMailerMessage();
-        $this->assertEmailHtmlBodyContains($email, ' text email');
-        $this->assertEmailTextBodyContains($email, ' text email');
+        $event = new CreateNotificationEvent($request);
+        $this->dispatcher->dispatch($event, CreateNotificationEvent::NAME);
     }
 }
