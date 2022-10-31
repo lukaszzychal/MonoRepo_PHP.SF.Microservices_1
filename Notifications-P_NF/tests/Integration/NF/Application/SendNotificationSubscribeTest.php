@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Application\Integration;
+namespace App\Tests\Integration\NF\Application;
 
 use App\NF\Infrastructure\Event\SendNotificationEvent;
 use App\NF\Infrastructure\Exception\InvalidParemeterRequest;
@@ -146,7 +146,7 @@ class SendNotificationSubscribeTest extends EmailNotificationTestCase
             [],
             [],
             [
-                'HTTP_AUTHORIZATION' => 'Bearer '.$this->appToken,
+                'HTTP_AUTHORIZATION' => 'Bearer ' . $this->appToken,
             ],
             json_encode([
                 'type' => 'email',

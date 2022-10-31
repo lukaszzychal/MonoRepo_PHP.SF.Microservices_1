@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Domain\Unit;
+namespace App\Tests\Unit\NF\Domain\Unit;
 
 use App\NF\Domain\Model\NotificationId;
 use PHPUnit\Framework\TestCase;

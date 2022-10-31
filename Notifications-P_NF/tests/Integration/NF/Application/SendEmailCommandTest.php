@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Application\Integration;
+namespace App\Tests\Integration\NF\Application;
 
 use App\NF\Application\Write\Command\SendEmailCommand;
 use App\NF\Application\Write\Handler\SendEmailHandler;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Infrastructure\Unit\DomainEvent;
+namespace App\Tests\Integration\NF\Infrastructure\DomainEvent;
 
 use App\NF\Domain\Enum\TypeEnum;
 use App\NF\Domain\Model\Notification;
