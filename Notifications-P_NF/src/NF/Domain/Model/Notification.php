@@ -37,7 +37,7 @@ final class Notification implements EventLogsWriteInterface
         );
     }
 
-    public function create(
+    public static function create(
         NotificationId $id,
         TypeEnum $type,
         DetailsNotification $detailsNotification
@@ -60,5 +60,13 @@ final class Notification implements EventLogsWriteInterface
         if ($this->status == StatusEnum::FAILED->value) {
             $this->status = StatusEnum::FAILED;
         }
+    }
+
+    /**
+     * Get the value of id
+     */
+    public function getId(): NotificationId
+    {
+        return $this->id;
     }
 }

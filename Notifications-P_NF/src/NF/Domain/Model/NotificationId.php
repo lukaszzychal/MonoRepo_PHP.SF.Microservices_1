@@ -29,10 +29,17 @@ final class NotificationId
         return new self($uuid);
     }
 
-    public static function fromUUID(Uuid $uuid)
+    public static function fromUUID(Uuid $uuid): self
     {
 
         return new self((string) $uuid);
+    }
+
+    public static function random(): self
+    {
+        return self::fromUUID(
+            Uuid::v4()
+        );
     }
 
     public function __toString()
