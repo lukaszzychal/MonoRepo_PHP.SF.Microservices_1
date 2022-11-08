@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\NF\Domain\Event;
+namespace App\NF\Domain\Event\EventLogs;
+
+use App\NF\Domain\Event\DomainEventInterface;
 
 trait EventLogsTrait
 {
