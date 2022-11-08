@@ -7,6 +7,7 @@ use App\NF\Domain\Enum\TypeEnum;
 use App\NF\Domain\Event\CreatedNotificationEvent;
 use App\NF\Domain\Model\DetailsNotification;
 use App\NF\Domain\Model\EmailDetailsNotification;
+use App\NF\Domain\Model\Notification;
 use App\NF\Domain\Model\NotificationId;
 use Symfony\Component\Uid\Uuid;
 
@@ -41,6 +42,15 @@ class NotificationProvider
             $status ?:  StatusEnum::CREATED,
             $details ?: self::createEmailDetails()
 
+        );
+    }
+
+    public static function createNotificaton(): Notification
+    {
+        return Notification::create(
+            NotificationId::random(),
+            TypeEnum::EMAIL,
+            NotificationProvider::createEmailDetails()
         );
     }
 }
