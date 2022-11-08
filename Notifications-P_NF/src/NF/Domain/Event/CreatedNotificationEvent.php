@@ -6,6 +6,8 @@ namespace App\NF\Domain\Event;
 
 use App\NF\Domain\Enum\StatusEnum;
 use App\NF\Domain\Enum\TypeEnum;
+use App\NF\Domain\Model\DetailsNotification;
+use App\NF\Domain\Model\NotificationId;
 use DateTimeImmutable;
 
 class CreatedNotificationEvent implements DomainEventInterface
@@ -14,9 +16,10 @@ class CreatedNotificationEvent implements DomainEventInterface
     public string $eventName;
 
     public function __construct(
-        public readonly string $id,
-        public readonly string $type,
-        public readonly string $status
+        public readonly NotificationId $id,
+        public readonly TypeEnum $type,
+        public readonly StatusEnum $status,
+        public readonly DetailsNotification $details
     ) {
         $this->date = new DateTimeImmutable();
         $this->eventName = (new \ReflectionClass($this))->getShortName();
