@@ -10,7 +10,7 @@ trait EventLogsTrait
 {
     private array $events = [];
 
-    protected function addEvent(DomainEventInterface $domainEvent): void
+    public function addEvent(DomainEventInterface $domainEvent): void
     {
         $this->events[] = $domainEvent;
     }
