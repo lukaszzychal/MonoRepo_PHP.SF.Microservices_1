@@ -6,7 +6,7 @@ namespace App\NF\Domain\Enum;
 
 enum StatusEnum: string
 {
-    case CREATE = 'create';
+    case CREATED = 'created';
     case SENT = 'sent';
     case FAILED = 'failed';
 }
