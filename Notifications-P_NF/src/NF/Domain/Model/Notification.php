@@ -7,21 +7,20 @@ namespace App\NF\Domain\Model;
 use App\NF\Domain\Enum\StatusEnum;
 use App\NF\Domain\Enum\TypeEnum;
 use App\NF\Domain\Event\CreatedNotificationEvent;
-use App\NF\Domain\Event\EventLogsTrait;
-use App\NF\Domain\Event\EventLogsWriteInterface;
+use App\NF\Domain\Event\EventLogs\EventLogsTrait;
+use App\NF\Domain\Event\EventLogs\EventLogsWriteInterface;
 use Symfony\Component\Serializer\Annotation\DiscriminatorMap;
 
-
-#[DiscriminatorMap(typeProperty: 'type', mapping: [
-    'email' => NotificationEmail::class,
-])]
-class Notification implements EventLogsWriteInterface
+// #[DiscriminatorMap(typeProperty: 'type', mapping: [
+//     'email' => NotificationEmail::class,
+// ])]
+final class Notification implements EventLogsWriteInterface
 {
     use EventLogsTrait;
 
     private readonly StatusEnum $status;
 
-    public function __construct(
+    private function __construct(
         private readonly NotificationId $id,
         private readonly TypeEnum $type,
         private readonly DetailsNotification $detailsNotification
@@ -36,6 +35,14 @@ class Notification implements EventLogsWriteInterface
                 $this->detailsNotification
             )
         );
+    }
+
+    public function create(
+        NotificationId $id,
+        TypeEnum $type,
+        DetailsNotification $detailsNotification
+    ): self {
+        return new self($id, $type, $detailsNotification);
     }
 
     public function send(): void
