@@ -1,6 +1,6 @@
 <?php
 
-namespace App\NF\Domain\Event;
+namespace App\NF\Domain\Event\EventLogs;
 
 interface EventLogsReadInterface
 {
