@@ -22,6 +22,8 @@ use Symfony\Component\Uid\Uuid;
 class EventLogsTest extends TestCase
 {
     private Uuid $uuid;
+    private EmailDetailsNotification $emailDetails;
+
     protected function setUp(): void
     {
         parent::setUp();
