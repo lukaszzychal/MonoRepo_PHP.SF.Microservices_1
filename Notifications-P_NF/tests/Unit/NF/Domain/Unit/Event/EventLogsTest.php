@@ -42,7 +42,9 @@ class EventLogsTest extends TestCase
     {
         $trait = new class() implements EventLogsReadInterface, EventLogsWriteInterface
         {
-            use EventLogsTrait;
+            use EventLogsTrait {
+                addEvent as public;
+            }
         };
 
 
