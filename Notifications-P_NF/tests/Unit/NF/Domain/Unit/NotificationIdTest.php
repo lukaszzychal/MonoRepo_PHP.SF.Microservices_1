@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\NF\Domain\Unit;
 
 use App\NF\Domain\Model\NotificationId;
