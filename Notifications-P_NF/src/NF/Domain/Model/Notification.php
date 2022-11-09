@@ -14,7 +14,7 @@ use Symfony\Component\Serializer\Annotation\DiscriminatorMap;
 // #[DiscriminatorMap(typeProperty: 'type', mapping: [
 //     'email' => NotificationEmail::class,
 // ])]
-final class Notification implements EventLogsWriteInterface
+class Notification implements EventLogsWriteInterface
 {
     use EventLogsTrait;
 
