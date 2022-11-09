@@ -31,7 +31,6 @@ final class NotificationId
 
     public static function fromUUID(Uuid $uuid): self
     {
-
         return new self((string) $uuid);
     }
 

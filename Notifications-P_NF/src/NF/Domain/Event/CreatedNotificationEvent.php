@@ -26,7 +26,6 @@ class CreatedNotificationEvent implements DomainEventInterface
         $this->eventName = (new \ReflectionClass($this))->getShortName();
     }
 
-
     public function getDateCalled(): DateTimeImmutable
     {
         return $this->dateCalled;

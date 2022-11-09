@@ -22,12 +22,10 @@ use Symfony\Component\Uid\Uuid;
  */
 class EventStoreTest extends TestCase
 {
-
     private const UUID = '50180b33-cc54-47d1-a193-5d26f5ddd982';
+
     /**
      * @dataProvider RepoProvident
-     *
-     * @return void
      */
     public function testEventsStore(EventStoreRepositoryInterface $eventStore): void
     {
@@ -43,7 +41,7 @@ class EventStoreTest extends TestCase
             ->willReturn(NotificationId::fromString(self::UUID));
         $notificationMock->expects($this->once())->method('getEvents')
             ->willReturn([
-                NotificationProvider::createEmailEvent()
+                NotificationProvider::createEmailEvent(),
             ]);
         $uuid = Uuid::fromString((string) $notificationMock->getId());
 
@@ -74,7 +72,7 @@ class EventStoreTest extends TestCase
         return [
             [new InMemoryEventStoreRepository(
                 $eventStreamReppositoryMock
-            )]
+            )],
         ];
     }
 }

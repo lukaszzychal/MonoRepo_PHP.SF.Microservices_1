@@ -8,7 +8,6 @@ use Symfony\Component\Uid\Uuid;
 
 class EventStream
 {
-
     private static array $events = [];
 
     public function __construct(
@@ -19,7 +18,7 @@ class EventStream
     }
 
     /**
-     * Get the value of version
+     * Get the value of version.
      */
     public function getVersion(): int
     {
@@ -28,7 +27,7 @@ class EventStream
 
     public function IncremetVersion(): void
     {
-        $this->version++;
+        ++$this->version;
     }
 
     public function updateDate(DateTimeImmutable $updateAt): void
@@ -37,7 +36,7 @@ class EventStream
     }
 
     /**
-     * Get the value of id
+     * Get the value of id.
      */
     public function getId()
     {
@@ -49,6 +48,7 @@ class EventStream
         if (is_null(self::$events)) {
             self::$events = $eventStoreRepository->getEvents($this->getId());
         }
+
         return self::$events;
     }
 

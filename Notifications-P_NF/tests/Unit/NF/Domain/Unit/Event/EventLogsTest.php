@@ -40,13 +40,11 @@ class EventLogsTest extends TestCase
 
     public function testEmpty(): EventLogsReadInterface|EventLogsWriteInterface
     {
-        $trait = new class() implements EventLogsReadInterface, EventLogsWriteInterface
-        {
+        $trait = new class () implements EventLogsReadInterface, EventLogsWriteInterface {
             use EventLogsTrait {
                 addEvent as public;
             }
         };
-
 
         $this->assertEventLogs($trait, 0);
         $this->assertFalse($trait->hasEvents());
@@ -91,7 +89,6 @@ class EventLogsTest extends TestCase
         $this->assertEventLogs($trait, 2, get_class($event));
         $this->assertTrue($trait->hasEvents());
 
-
         return $trait;
     }
 
@@ -114,8 +111,8 @@ class EventLogsTest extends TestCase
         if ($trait->countEvents() > 0) {
             $shortName = $this->getShortNameClass($className);
 
-            /**
-             * @todo przemodelować tak by był zwracany typ/ podpowiedzi 
+            /*
+             * @todo przemodelować tak by był zwracany typ/ podpowiedzi
              */
             $this->assertSame($shortName, $trait->getEvents()[0]->eventName);
             $this->assertInstanceOf(EmailDetailsNotification::class, $trait->getEvents()[0]->details);

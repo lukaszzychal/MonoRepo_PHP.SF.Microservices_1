@@ -8,7 +8,6 @@ use Symfony\Component\Uid\Uuid;
 
 class StoredEvent
 {
-
     private DateTimeImmutable $occurredOn;
 
     public function __construct(

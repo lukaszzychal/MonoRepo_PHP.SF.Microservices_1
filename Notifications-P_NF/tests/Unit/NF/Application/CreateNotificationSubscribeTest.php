@@ -4,10 +4,8 @@ namespace App\Tests\Unit\NF\Application;
 
 use App\NF\Application\Write\Command\SendEmailCommand;
 use App\NF\Infrastructure\Event\CreateNotificationEvent;
-use App\NF\Infrastructure\Event\SendNotificationEvent;
 use App\NF\Infrastructure\Exception\InvalidParemeterRequest;
 use App\NF\Infrastructure\Subscribe\CreateNotificationSubscribe;
-use App\NF\Infrastructure\Subscribe\SendNotificationSubscribe;
 use Exception;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -159,7 +157,7 @@ class CreateNotificationSubscribeTest extends TestCase
             [],
             [],
             [
-                'HTTP_AUTHORIZATION' => 'Bearer ' . $this->appToken,
+                'HTTP_AUTHORIZATION' => 'Bearer '.$this->appToken,
             ],
             json_encode([
                 'type' => 'email',

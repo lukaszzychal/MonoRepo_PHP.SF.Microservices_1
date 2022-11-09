@@ -36,7 +36,6 @@ class DomainEventStoreTest extends TestCase
 
     public function testAddManyEventToStore(): void
     {
-
         $eventStore = DomainEventStore::getInstance();
         $event1 = new CreatedNotificationEvent((string) Uuid::v4(), TypeEnum::EMAIL->value, StatusEnum::CREATE->value);
         $event2 = new CreatedNotificationEvent((string) Uuid::v4(), TypeEnum::EMAIL->value, StatusEnum::CREATE->value);
@@ -52,7 +51,7 @@ class DomainEventStoreTest extends TestCase
         $eventStore = DomainEventStore::getInstance();
         $events = [
             new CreatedNotificationEvent((string) Uuid::v4(), TypeEnum::EMAIL->value, StatusEnum::CREATE->value),
-            new CreatedNotificationEvent((string) Uuid::v4(), TypeEnum::EMAIL->value, StatusEnum::CREATE->value)
+            new CreatedNotificationEvent((string) Uuid::v4(), TypeEnum::EMAIL->value, StatusEnum::CREATE->value),
         ];
 
         $eventStore->addArrayEvent($events);

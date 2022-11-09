@@ -15,18 +15,17 @@ final class DomainEventStore
     {
     }
 
-    protected function __clone()
+    private function __clone()
     {
     }
 
     public function __wakeup()
     {
-        throw new \Exception("Cannot unserialize a singleton.");
+        throw new \Exception('Cannot unserialize a singleton.');
     }
 
     public static function getInstance(): self
     {
-
         if (is_null(self::$instances)) {
             self::$instances = new self();
         }
@@ -40,9 +39,7 @@ final class DomainEventStore
     }
 
     /**
-     *
      * @param DomainEventInterface[] $events
-     * @return void
      */
     public function addArrayEvent(array $events = []): void
     {
@@ -59,7 +56,6 @@ final class DomainEventStore
     }
 
     /**
-     *
      * @return DomainEventInterface[]
      */
     public function getEvents(): array
