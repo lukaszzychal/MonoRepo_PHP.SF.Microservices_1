@@ -13,9 +13,6 @@ use Symfony\Component\Uid\Uuid;
 
 class NotificationProvider
 {
-
-
-
     public static function createEmailDetails(
         string $from = 'from',
         string $to = 'to',
@@ -40,7 +37,8 @@ class NotificationProvider
             NotificationId::fromUUID($uuid ?: Uuid::v4()),
             $type ?: TypeEnum::EMAIL,
             $status ?:  StatusEnum::CREATED,
-            $details ?: self::createEmailDetails()
+            $details ?: self::createEmailDetails(),
+            __CLASS__
 
         );
     }
