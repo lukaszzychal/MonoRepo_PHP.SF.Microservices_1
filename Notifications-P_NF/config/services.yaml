@@ -29,3 +29,10 @@ services:
     App\NF\Infrastructure\Subscribe\CreateNotificationSubscribe:
         bind:
           $appToken:  '%env(APP_TOKEN)%'
+
+
+when@test:
+    services:  
+        App\NF\Infrastructure\Repository\EventStoreRepositoryInterface:
+            alias: App\NF\Infrastructure\Repository\InMemoryEventStoreRepository
+            public: true
