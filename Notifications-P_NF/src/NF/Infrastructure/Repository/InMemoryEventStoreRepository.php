@@ -53,7 +53,8 @@ class InMemoryEventStoreRepository implements EventStoreRepositoryInterface
         );
 
         $stream->updateDate($event->getDateCalled());
-        self::$eventStore[] = $storedEvent;
+
+        self::$eventStore[(string) $stream->getId()][] = $storedEvent;
     }
 
     private function getStream(Uuid $uuid): EventStream
@@ -78,6 +79,6 @@ class InMemoryEventStoreRepository implements EventStoreRepositoryInterface
         if (is_null($this->stream)) {
             $this->stream =  $this->getStream($uuid);
         }
-        return self::$eventStore[$this->stream->getId()];
+        return self::$eventStore[(string) $this->stream->getId()] ?? [];
     }
 }
