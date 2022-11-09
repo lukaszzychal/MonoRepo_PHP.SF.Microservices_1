@@ -10,7 +10,7 @@ class EventStream
     public function __construct(
         private Uuid $id,
         private int $version,
-        private DateTimeImmutable $updateAt = null,
+        private ?DateTimeImmutable $updateAt = null,
     ) {
     }
 
