@@ -5,7 +5,6 @@ namespace App\NF\Infrastructure\Repository;
 use App\NF\Domain\Event\DomainEventInterface;
 use App\NF\Infrastructure\Event\EventStream;
 use App\NF\Infrastructure\Event\StoredEvent;
-use Exception;
 use Symfony\Component\Uid\Uuid;
 
 class InMemoryEventStoreRepository implements EventStoreRepositoryInterface
@@ -33,7 +32,7 @@ class InMemoryEventStoreRepository implements EventStoreRepositoryInterface
          */
         $this->stream = $this->getStream($uuid);
         if (is_null($this->stream)) {
-            throw new Exception('Not found stream');
+            throw new \Exception('Not found stream');
         }
         foreach ($events as $event) {
             //  @phpstan-ignore-next-line
