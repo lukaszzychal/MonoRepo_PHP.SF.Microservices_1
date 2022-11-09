@@ -16,7 +16,7 @@ class InMemoryEventStreamReppository implements EventStreamRepositoryInterface
      */
     private array $eventStream = [];
 
-    public function create(Uuid $uuid): void
+    public function create(Uuid $uuid): EventStream
     {
         return new EventStream($uuid, 0, null);
     }
