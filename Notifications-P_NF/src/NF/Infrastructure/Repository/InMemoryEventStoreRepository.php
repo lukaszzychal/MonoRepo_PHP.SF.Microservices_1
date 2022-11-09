@@ -32,8 +32,6 @@ class InMemoryEventStoreRepository implements EventStoreRepositoryInterface
     public function storeEvents(Uuid $uuid, string $source, array $events): void
     {
         $this->stream = $this->getStream($uuid);
-        dump($uuid);
-        dump($this->stream);
         foreach ($events as $event) {
             $this->store($this->stream, $source, $event);
         }
