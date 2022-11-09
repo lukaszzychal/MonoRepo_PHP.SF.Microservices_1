@@ -19,7 +19,8 @@ class CreatedNotificationEvent implements DomainEventInterface
         public readonly NotificationId $id,
         public readonly TypeEnum $type,
         public readonly StatusEnum $status,
-        public readonly DetailsNotification $details
+        public readonly DetailsNotification $details,
+        public readonly string $placeOccurrence
     ) {
         $this->dateCalled = new DateTimeImmutable();
         $this->eventName = (new \ReflectionClass($this))->getShortName();
