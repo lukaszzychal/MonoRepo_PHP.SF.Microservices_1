@@ -16,7 +16,8 @@ class InMemoryEventStoreRepository implements EventStoreRepositoryInterface
      * striing => StoredEvent
      * ]
      */
-    private array $eventStore = [];
+    private static array $eventStore = [];
+    private ?EventStream $stream = null;
 
     public function __construct(
         /**
@@ -30,28 +31,29 @@ class InMemoryEventStoreRepository implements EventStoreRepositoryInterface
 
     public function storeEvents(Uuid $uuid, string $source, array $events): void
     {
+        $this->stream = $this->getStream($uuid);
+
         foreach ($events as $event) {
-            $this->store($uuid, $source, $event);
+            $this->store($this->stream, $source, $event);
         }
     }
 
-    public function store(Uuid $uuid, string $placeOccurrence, DomainEventInterface $event): void
+    public function store(EventStream $stream, string $placeOccurrence, DomainEventInterface $event): void
     {
-
-        $version = 0;
-        $stream = $this->getStream($uuid);
         $version = $stream->getVersion();
+        $stream->IncremetVersion();
+        $initVersion = $stream->getVersion();
 
         $storedEvent = new StoredEvent(
-            ++$version,
+            $initVersion,
             $stream->getId(),
             $placeOccurrence,
             get_class($event),
             $event
         );
-        $stream->IncremetVersion();
+
         $stream->updateDate($event->getDateCalled());
-        $this->eventStore[] = $storedEvent;
+        self::$eventStore[] = $storedEvent;
     }
 
     private function getStream(Uuid $uuid): EventStream
@@ -61,5 +63,21 @@ class InMemoryEventStoreRepository implements EventStoreRepositoryInterface
         }
 
         return $this->eventStreamRepository->create($uuid);
+    }
+
+    public function countEvents(Uuid $uuid): int
+    {
+        if (is_null($this->stream)) {
+            $this->stream =  $this->getStream($uuid);
+        }
+        return $this->stream->getVersion();
+    }
+
+    public function getEvents(Uuid $uuid): array
+    {
+        if (is_null($this->stream)) {
+            $this->stream =  $this->getStream($uuid);
+        }
+        return self::$eventStore[$this->stream->getId()];
     }
 }

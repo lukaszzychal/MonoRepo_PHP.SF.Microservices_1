@@ -3,10 +3,13 @@
 namespace App\NF\Infrastructure\Repository;
 
 use App\NF\Domain\Event\DomainEventInterface;
+use App\NF\Infrastructure\Event\EventStream;
 use Symfony\Component\Uid\Uuid;
 
 interface EventStoreRepositoryInterface
 {
     public function storeEvents(Uuid $uuid, string $source, array $events): void;
-    public function store(Uuid $uuid, string $placeOccurrence, DomainEventInterface $event): void;
+    public function store(EventStream $stream, string $placeOccurrence, DomainEventInterface $event): void;
+    public function countEvents(Uuid $uuid): int;
+    public function getEvents(Uuid $uuid): array;
 }
