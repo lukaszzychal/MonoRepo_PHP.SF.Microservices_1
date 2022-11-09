@@ -36,10 +36,9 @@ class NotificationProvider
         return new CreatedNotificationEvent(
             NotificationId::fromUUID($uuid ?: Uuid::v4()),
             $type ?: TypeEnum::EMAIL,
-            $status ?:  StatusEnum::CREATED,
+            $status ?: StatusEnum::CREATED,
             $details ?: self::createEmailDetails(),
             __CLASS__
-
         );
     }
 

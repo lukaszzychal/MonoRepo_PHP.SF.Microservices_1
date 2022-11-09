@@ -6,7 +6,6 @@ use App\NF\Domain\Event\EventLogs\EventLogsReadInterface;
 use App\NF\Domain\Event\EventLogs\EventLogsWriteInterface;
 use App\NF\Domain\Model\Notification;
 use App\NF\Infrastructure\Repository\EventStoreRepositoryInterface;
-
 use App\Tests\Providers\NotificationProvider;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Uid\Uuid;

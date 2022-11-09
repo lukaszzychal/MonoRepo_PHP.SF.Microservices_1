@@ -17,16 +17,15 @@ use Symfony\Component\Uid\Uuid;
  */
 class EventStreamRepositoryTest extends KernelTestCase
 {
-
     private EventStreamRepositoryInterface $eventStreamRepository;
     private Uuid $uuiid;
 
     protected function setUp(): void
     {
-        /**
+        /*
          * @var EventStreamRepositoryInterface $eventStreamRepository
          */
-        $this->eventStreamRepository =  $this->getContainer()->get(EventStreamRepositoryInterface::class);
+        $this->eventStreamRepository = $this->getContainer()->get(EventStreamRepositoryInterface::class);
         $this->uuiid = Uuid::fromString('eca5fcaa-5601-429c-b760-80f6d27821cb');
     }
 
@@ -51,8 +50,6 @@ class EventStreamRepositoryTest extends KernelTestCase
 
     /**
      * @group g1
-     *
-     * @return void
      */
     public function testEventStreamGetExistStream(): void
     {
@@ -72,8 +69,6 @@ class EventStreamRepositoryTest extends KernelTestCase
 
     /**
      * @group g2
-     *
-     * @return void
      */
     public function testEventStreamGetExistEvents(): void
     {

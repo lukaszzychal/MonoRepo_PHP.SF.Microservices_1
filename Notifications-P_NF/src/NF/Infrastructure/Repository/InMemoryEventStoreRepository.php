@@ -10,7 +10,7 @@ use Symfony\Component\Uid\Uuid;
 class InMemoryEventStoreRepository implements EventStoreRepositoryInterface
 {
     /**
-     * Undocumented variable
+     * Undocumented variable.
      *
      * @var array[
      * striing => StoredEvent
@@ -59,16 +59,18 @@ class InMemoryEventStoreRepository implements EventStoreRepositoryInterface
     public function countEvents(Uuid $uuid): int
     {
         if (is_null($this->stream)) {
-            $this->stream =  $this->getStream($uuid);
+            $this->stream = $this->getStream($uuid);
         }
+
         return $this->stream->getVersion();
     }
 
     public function getEvents(Uuid $uuid): array
     {
         if (is_null($this->stream)) {
-            $this->stream =  $this->getStream($uuid);
+            $this->stream = $this->getStream($uuid);
         }
+
         return self::$eventStore[(string) $this->stream->getId()] ?? [];
     }
 

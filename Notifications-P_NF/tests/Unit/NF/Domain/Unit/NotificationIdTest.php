@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
 use Webmozart\Assert\InvalidArgumentException;
 
-
 /**
  * @group unit
  * @group unid

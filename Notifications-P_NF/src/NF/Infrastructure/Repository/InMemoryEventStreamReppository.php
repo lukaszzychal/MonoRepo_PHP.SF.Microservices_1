@@ -11,15 +11,15 @@ class InMemoryEventStreamReppository implements EventStreamRepositoryInterface
 {
     /**
      * @var array[
-     * 'string' => 'EventStream'  
+     * 'string' => 'EventStream'
      * ]
-     *
      */
     private static array $eventStreams = [];
 
     public function create(Uuid $uuid): EventStream
     {
-        self::$eventStreams[(string) $uuid] =  new EventStream($uuid, 0, new DateTimeImmutable('00:00 00.00.0000'));
+        self::$eventStreams[(string) $uuid] = new EventStream($uuid, 0, new DateTimeImmutable('00:00 00.00.0000'));
+
         return self::$eventStreams[(string) $uuid];
     }
 
@@ -33,9 +33,9 @@ class InMemoryEventStreamReppository implements EventStreamRepositoryInterface
         if ($this->exist($uuid)) {
             return self::$eventStreams[(string) $uuid];
         }
-        /**
+        /*
          * @todo dodać konkreetny wyjątek
          */
-        throw new Exception("No exist stream");
+        throw new Exception('No exist stream');
     }
 }

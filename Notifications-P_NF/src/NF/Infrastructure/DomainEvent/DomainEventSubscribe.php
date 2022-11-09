@@ -12,7 +12,6 @@ use App\NF\Domain\Event\EventLogsTrait;
 
 class DomainEventSubscribe implements EventSubscriberInterface
 {
-
     /**
      * Returns an array of events this subscriber wants to listen to.
      *

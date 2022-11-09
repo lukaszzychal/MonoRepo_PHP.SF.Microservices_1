@@ -24,7 +24,6 @@ class Notification implements EventLogsWriteInterface
         private readonly NotificationId $id,
         private readonly TypeEnum $type,
         private readonly DetailsNotification $detailsNotification
-
     ) {
         $this->status = StatusEnum::CREATED;
         $this->addEvent(
@@ -64,7 +63,7 @@ class Notification implements EventLogsWriteInterface
     }
 
     /**
-     * Get the value of id
+     * Get the value of id.
      */
     public function getId(): NotificationId
     {
