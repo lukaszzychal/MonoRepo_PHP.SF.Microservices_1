@@ -32,7 +32,8 @@ final class Notification implements EventLogsWriteInterface
                 $this->id,
                 $this->type,
                 $this->status,
-                $this->detailsNotification
+                $this->detailsNotification,
+                get_class($this)
             )
         );
     }
