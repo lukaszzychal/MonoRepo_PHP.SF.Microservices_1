@@ -36,3 +36,7 @@ when@test:
         App\NF\Infrastructure\Repository\EventStoreRepositoryInterface:
             alias: App\NF\Infrastructure\Repository\InMemoryEventStoreRepository
             public: true
+
+        App\NF\Infrastructure\Repository\EventStreamRepositoryInterface:
+            alias: App\NF\Infrastructure\Repository\InMemoryEventStoreRepository
+            public: true
