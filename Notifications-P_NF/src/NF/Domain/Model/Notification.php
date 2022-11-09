@@ -18,7 +18,7 @@ class Notification implements EventLogsWriteInterface
 {
     use EventLogsTrait;
 
-    private readonly StatusEnum $status;
+    private StatusEnum $status;
 
     private function __construct(
         private readonly NotificationId $id,

@@ -7,7 +7,9 @@ interface EventLogsReadInterface
     /**
      * Return array Domain Events.
      *
-     * @return DomainEventInterface[]
+     * @return array|DomainEventInterface[]
+     *
+     * @phpstan-ignore-next-line
      */
     public function getEvents(): array;
 

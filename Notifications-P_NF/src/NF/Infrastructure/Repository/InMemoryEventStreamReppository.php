@@ -9,11 +9,6 @@ use Symfony\Component\Uid\Uuid;
 
 class InMemoryEventStreamReppository implements EventStreamRepositoryInterface
 {
-    /**
-     * @var array[
-     * 'string' => 'EventStream'
-     * ]
-     */
     private static array $eventStreams = [];
 
     public function create(Uuid $uuid): EventStream
