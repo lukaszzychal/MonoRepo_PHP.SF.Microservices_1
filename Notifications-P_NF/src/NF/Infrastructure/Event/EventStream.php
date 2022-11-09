@@ -4,10 +4,7 @@ namespace App\NF\Infrastructure\Event;
 
 use App\NF\Infrastructure\Repository\EventStoreRepositoryInterface;
 use DateTimeImmutable;
-use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBagInterface;
 use Symfony\Component\Uid\Uuid;
-
-use function PHPUnit\Framework\isNan;
 
 class EventStream
 {
