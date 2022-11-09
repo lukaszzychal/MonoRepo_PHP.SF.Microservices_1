@@ -4,7 +4,6 @@ namespace App\NF\Infrastructure\Event;
 
 use App\NF\Domain\Event\DomainEventInterface;
 use App\NF\Infrastructure\Repository\EventStoreRepositoryInterface;
-use DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
 
 class EventStream
@@ -14,7 +13,7 @@ class EventStream
     public function __construct(
         private Uuid $id,
         private int $version,
-        private ?DateTimeImmutable $updateAt = null,
+        private ?\DateTimeImmutable $updateAt = null,
     ) {
     }
 
@@ -31,7 +30,7 @@ class EventStream
         ++$this->version;
     }
 
-    public function updateDate(DateTimeImmutable $updateAt): void
+    public function updateDate(\DateTimeImmutable $updateAt): void
     {
         $this->updateAt = $updateAt;
     }

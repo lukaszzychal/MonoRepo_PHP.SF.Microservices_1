@@ -3,7 +3,6 @@
 namespace App\Tests\Unit\NF\Application;
 
 use App\NF\Infrastructure\ExceptionEventSubscriber;
-use Exception;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -51,7 +50,7 @@ class ExceptionEventSubscriberTest extends TestCase
             $htttpKerneel,
             $request,
             HttpKernelInterface::MAIN_REQUEST,
-            new Exception('test message', Response::HTTP_BAD_REQUEST)
+            new \Exception('test message', Response::HTTP_BAD_REQUEST)
         );
         $this->dispatcher->dispatch($event, KernelEvents::EXCEPTION);
         $contentJson = $event->getResponse()->getContent();

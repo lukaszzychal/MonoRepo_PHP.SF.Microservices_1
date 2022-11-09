@@ -3,8 +3,6 @@
 namespace App\NF\Infrastructure\Repository;
 
 use App\NF\Infrastructure\Event\EventStream;
-use DateTimeImmutable;
-use Exception;
 use Symfony\Component\Uid\Uuid;
 
 class InMemoryEventStreamReppository implements EventStreamRepositoryInterface
@@ -13,7 +11,7 @@ class InMemoryEventStreamReppository implements EventStreamRepositoryInterface
 
     public function create(Uuid $uuid): EventStream
     {
-        self::$eventStreams[(string) $uuid] = new EventStream($uuid, 0, new DateTimeImmutable('00:00 00.00.0000'));
+        self::$eventStreams[(string) $uuid] = new EventStream($uuid, 0, new \DateTimeImmutable('00:00 00.00.0000'));
 
         return self::$eventStreams[(string) $uuid];
     }
@@ -31,6 +29,6 @@ class InMemoryEventStreamReppository implements EventStreamRepositoryInterface
         /*
          * @todo dodać konkreetny wyjątek
          */
-        throw new Exception('No exist stream');
+        throw new \Exception('No exist stream');
     }
 }

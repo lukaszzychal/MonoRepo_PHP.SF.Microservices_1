@@ -6,7 +6,6 @@ use App\NF\Infrastructure\Event\EventStream;
 use App\NF\Infrastructure\Repository\EventStoreRepositoryInterface;
 use App\NF\Infrastructure\Repository\EventStreamRepositoryInterface;
 use App\Tests\Providers\NotificationProvider;
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Uid\Uuid;
 
@@ -36,7 +35,7 @@ class EventStreamRepositoryTest extends KernelTestCase
 
     public function testEventStreamGetNoExistStream(): void
     {
-        $this->expectException(Exception::class);
+        $this->expectException(\Exception::class);
         $this->expectExceptionMessage('No exist stream');
         $this->eventStreamRepository->get($this->uuiid);
     }

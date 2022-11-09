@@ -3,12 +3,11 @@
 namespace App\NF\Infrastructure\Event;
 
 use App\NF\Domain\Event\DomainEventInterface;
-use DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
 
 class StoredEvent
 {
-    private DateTimeImmutable $occurredOn;
+    private \DateTimeImmutable $occurredOn;
 
     public function __construct(
         private int $version,
@@ -17,6 +16,6 @@ class StoredEvent
         private string $eventName,
         private DomainEventInterface $event
     ) {
-        $this->occurredOn = new DateTimeImmutable();
+        $this->occurredOn = new \DateTimeImmutable();
     }
 }

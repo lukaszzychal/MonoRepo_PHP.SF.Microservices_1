@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\NF\Application\Write\Handler;
 
-use Exception;
 use Symfony\Component\HttpFoundation\Response;
 
-final class NotSuccessfullySentNotificationExceeption extends Exception
+final class NotSuccessfullySentNotificationExceeption extends \Exception
 {
     public function __construct()
     {

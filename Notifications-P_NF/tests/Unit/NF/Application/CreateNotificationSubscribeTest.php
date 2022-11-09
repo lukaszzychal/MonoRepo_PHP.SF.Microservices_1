@@ -6,7 +6,6 @@ use App\NF\Application\Write\Command\SendEmailCommand;
 use App\NF\Infrastructure\Event\CreateNotificationEvent;
 use App\NF\Infrastructure\Exception\InvalidParemeterRequest;
 use App\NF\Infrastructure\Subscribe\CreateNotificationSubscribe;
-use Exception;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
@@ -112,7 +111,7 @@ class CreateNotificationSubscribeTest extends TestCase
 
     public function testNotificationSubscribeWithWrongTokenANDWithTypeInRequest()
     {
-        $this->expectException(Exception::class);
+        $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Wrong token');
 
         $request = Request::create(

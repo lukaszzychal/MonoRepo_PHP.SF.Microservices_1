@@ -6,7 +6,6 @@ use App\NF\Infrastructure\Event\CreateNotificationEvent;
 use App\NF\Infrastructure\Exception\InvalidParemeterRequest;
 use App\NF\Infrastructure\Subscribe\CreateNotificationSubscribe;
 use App\Tests\EmailNotificationTestCase;
-use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -111,7 +110,7 @@ class CreateNotificationSubscribeTest extends EmailNotificationTestCase
 
     public function testNotificationSubscribeWithWrongTokenANDWithTypeInRequest()
     {
-        $this->expectException(Exception::class);
+        $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Wrong token');
 
         $request = Request::create(
