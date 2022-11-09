@@ -25,14 +25,15 @@ class InMemoryEventStoreRepository implements EventStoreRepositoryInterface
          *
          * @var InMemoryEventStreamReppository
          */
-        private readonly InMemoryEventStreamReppository $eventStreamRepository
+        private readonly EventStreamRepositoryInterface $eventStreamRepository
     ) {
     }
 
     public function storeEvents(Uuid $uuid, string $source, array $events): void
     {
         $this->stream = $this->getStream($uuid);
-
+        dump($uuid);
+        dump($this->stream);
         foreach ($events as $event) {
             $this->store($this->stream, $source, $event);
         }
@@ -57,15 +58,6 @@ class InMemoryEventStoreRepository implements EventStoreRepositoryInterface
         self::$eventStore[(string) $stream->getId()][] = $storedEvent;
     }
 
-    private function getStream(Uuid $uuid): EventStream
-    {
-        if ($this->eventStreamRepository->exist($uuid)) {
-            return $this->eventStreamRepository->get($uuid);
-        }
-
-        return $this->eventStreamRepository->create($uuid);
-    }
-
     public function countEvents(Uuid $uuid): int
     {
         if (is_null($this->stream)) {
@@ -80,5 +72,14 @@ class InMemoryEventStoreRepository implements EventStoreRepositoryInterface
             $this->stream =  $this->getStream($uuid);
         }
         return self::$eventStore[(string) $this->stream->getId()] ?? [];
+    }
+
+    private function getStream(Uuid $uuid): EventStream
+    {
+        if ($this->eventStreamRepository->exist($uuid)) {
+            return $this->eventStreamRepository->get($uuid);
+        }
+
+        return $this->eventStreamRepository->create($uuid);
     }
 }
