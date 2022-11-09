@@ -2,6 +2,7 @@
 
 namespace App\NF\Infrastructure\Event;
 
+use App\NF\Domain\Event\DomainEventInterface;
 use App\NF\Infrastructure\Repository\EventStoreRepositoryInterface;
 use DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
@@ -38,14 +39,17 @@ class EventStream
     /**
      * Get the value of id.
      */
-    public function getId()
+    public function getId(): Uuid
     {
         return $this->id;
     }
 
+    /**
+     * @return DomainEventInterface[]
+     */
     public function getEvents(EventStoreRepositoryInterface $eventStoreRepository): array
     {
-        if (is_null(self::$events)) {
+        if (empty(self::$events)) {
             self::$events = $eventStoreRepository->getEvents($this->getId());
         }
 

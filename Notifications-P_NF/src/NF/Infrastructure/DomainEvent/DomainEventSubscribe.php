@@ -8,7 +8,7 @@ use App\NF\Domain\Model\Notification;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use App\NF\Domain\Event\EventLogsTrait;
+use App\NF\Domain\Event\EventLogs\EventLogsTrait;
 
 class DomainEventSubscribe implements EventSubscriberInterface
 {
@@ -47,6 +47,7 @@ class DomainEventSubscribe implements EventSubscriberInterface
          * @var Notification $object
          */
         $object = $args->getObject();
+        // @phpstan-ignore-next-line
         if (!in_array(EventLogsTrait::class, class_uses($object), true)) {
             return;
         }
