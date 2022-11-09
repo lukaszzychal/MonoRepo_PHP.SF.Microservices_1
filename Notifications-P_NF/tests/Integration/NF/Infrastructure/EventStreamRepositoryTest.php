@@ -10,8 +10,6 @@ use Exception;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Uid\Uuid;
 
-use function Zenstruck\Foundry\create;
-
 /**
  * @group integration
  * @group infrastructure
