@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\NF\Application\Write\Command;
 
-final class CreateNotifcationCommand implements CommandInterface
+final class CreateEmailNotifcationCommand implements CommandInterface
 {
     public function __construct(
         public string $type,
