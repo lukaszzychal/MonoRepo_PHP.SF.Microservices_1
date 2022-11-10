@@ -24,7 +24,8 @@ class EventDispatcherTest extends TestCase
         $event1 = NotificationProvider::createEmailEvent();
         $event2 = NotificationProvider::createEmailEvent();
         $notification->addEvent($event1);
-        $this->assertSame(1, $notification->countEvents());
+        $notification->addEvent($event2);
+        $this->assertSame(2, $notification->countEvents());
 
         /**
          * @var MockObject|MessageBusInterface
@@ -34,7 +35,8 @@ class EventDispatcherTest extends TestCase
             ->onlyMethods(['dispatch'])
             ->getMockForAbstractClass();
 
-        $messageBus->expects($this->once())->method('dispatch')->willReturn(new Envelope($event1));
+        $messageBus->expects($this->exactly(2))->method('dispatch')
+            ->willReturnOnConsecutiveCalls(new Envelope($event1), new Envelope($event1));
 
         $eventDispatcher = new EventDispatcher($messageBus);
         $eventDispatcher->dispatch($notification->getEvents());
