@@ -37,6 +37,5 @@ class EventStoreRepositoryTest extends KernelTestCase
         );
 
         $this->assertSame(1, $eventStore->countEvents($uuid));
-        // $eventDispatcher->dispatch($notification->getEvents());
     }
 }
