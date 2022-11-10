@@ -1,0 +1,24 @@
+# deptrac.yaml
+deptrac:
+  paths:
+    - ./src/NF/
+  layers:
+    - name: Application
+      collectors:
+        - type: directory
+          value: src/NF/Application/.*
+    - name: Domain
+      collectors:
+        - type: directory
+          value: src/NF/Domain/.*
+    - name: Infrastructure
+      collectors:
+        - type: directory
+          value: src/NF/Infrastructure/.*       
+    
+  ruleset:
+    Infrastructure:
+      - Application
+    Application:
+      - Domain
+    Domain: ~
