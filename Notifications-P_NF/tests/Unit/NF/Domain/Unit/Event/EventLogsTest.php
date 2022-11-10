@@ -6,12 +6,10 @@ namespace App\Tests\Unit\NF\Domain\Unit\Event;
 
 use App\NF\Domain\Enum\StatusEnum;
 use App\NF\Domain\Enum\TypeEnum;
-use App\NF\Domain\Event\CreatedNotificationEvent;
 use App\NF\Domain\Event\EventLogs\EventLogsReadInterface;
 use App\NF\Domain\Event\EventLogs\EventLogsTrait;
 use App\NF\Domain\Event\EventLogs\EventLogsWriteInterface;
 use App\NF\Domain\Model\EmailDetailsNotification;
-use App\NF\Domain\Model\NotificationId;
 use App\Tests\Providers\NotificationProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
@@ -41,8 +39,7 @@ class EventLogsTest extends TestCase
 
     public function testEmpty(): EventLogsReadInterface|EventLogsWriteInterface
     {
-        $trait = new class() implements EventLogsReadInterface, EventLogsWriteInterface
-        {
+        $trait = new class () implements EventLogsReadInterface, EventLogsWriteInterface {
             use EventLogsTrait {
                 addEvent as public;
             }
@@ -79,7 +76,7 @@ class EventLogsTest extends TestCase
      */
     public function testAddTwoEvent(EventLogsReadInterface|EventLogsWriteInterface $trait): EventLogsReadInterface|EventLogsWriteInterface
     {
-        $event =  NotificationProvider::createEmailEvent(
+        $event = NotificationProvider::createEmailEvent(
             $this->uuid,
             TypeEnum::EMAIL,
             StatusEnum::SENT,
