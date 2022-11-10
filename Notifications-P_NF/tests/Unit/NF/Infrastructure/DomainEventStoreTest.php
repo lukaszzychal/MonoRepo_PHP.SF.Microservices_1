@@ -49,7 +49,7 @@ class DomainEventStoreTest extends TestCase
         $eventStore = DomainEventStore::getInstance();
         $events = [
             NotificationProvider::createEmailEvent(),
-            NotificationProvider::createEmailEvent()
+            NotificationProvider::createEmailEvent(),
         ];
 
         $eventStore->addArrayEvent($events);
