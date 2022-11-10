@@ -11,8 +11,14 @@ use App\NF\Domain\Model\Notification;
 use App\NF\Domain\Model\NotificationId;
 use Symfony\Component\Uid\Uuid;
 
+// @todo add real data
+// @todo add bulder
+// @todo add multi create
+// @todo add random
 class NotificationProvider
 {
+    private const UUIDS = [];
+
     public static function createEmailDetails(
         string $from = 'from',
         string $to = 'to',
