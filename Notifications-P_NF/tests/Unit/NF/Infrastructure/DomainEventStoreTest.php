@@ -2,12 +2,9 @@
 
 namespace App\Tests\Unit\NF\Infrastructure;
 
-use App\NF\Domain\Enum\StatusEnum;
-use App\NF\Domain\Enum\TypeEnum;
-use App\NF\Domain\Event\CreatedNotificationEvent;
 use App\NF\Infrastructure\DomainEvent\DomainEventStore;
+use App\Tests\Providers\NotificationProvider;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Uid\Uuid;
 
 /**
  * @group Unit
@@ -26,7 +23,7 @@ class DomainEventStoreTest extends TestCase
     public function testAddEventToStore(): void
     {
         $eventStore = DomainEventStore::getInstance();
-        $event = new CreatedNotificationEvent((string) Uuid::v4(), TypeEnum::EMAIL->value, StatusEnum::CREATE->value);
+        $event = NotificationProvider::createEmailEvent();
 
         $eventStore->addEvent($event);
 
@@ -37,8 +34,9 @@ class DomainEventStoreTest extends TestCase
     public function testAddManyEventToStore(): void
     {
         $eventStore = DomainEventStore::getInstance();
-        $event1 = new CreatedNotificationEvent((string) Uuid::v4(), TypeEnum::EMAIL->value, StatusEnum::CREATE->value);
-        $event2 = new CreatedNotificationEvent((string) Uuid::v4(), TypeEnum::EMAIL->value, StatusEnum::CREATE->value);
+
+        $event1 = NotificationProvider::createEmailEvent();
+        $event2 = NotificationProvider::createEmailEvent();
 
         $eventStore->addManyEvent($event1, $event2);
 
@@ -50,8 +48,8 @@ class DomainEventStoreTest extends TestCase
     {
         $eventStore = DomainEventStore::getInstance();
         $events = [
-            new CreatedNotificationEvent((string) Uuid::v4(), TypeEnum::EMAIL->value, StatusEnum::CREATE->value),
-            new CreatedNotificationEvent((string) Uuid::v4(), TypeEnum::EMAIL->value, StatusEnum::CREATE->value),
+            NotificationProvider::createEmailEvent(),
+            NotificationProvider::createEmailEvent()
         ];
 
         $eventStore->addArrayEvent($events);
