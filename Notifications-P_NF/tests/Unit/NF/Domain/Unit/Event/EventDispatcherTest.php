@@ -6,6 +6,7 @@ use App\NF\Infrastructure\Event\EventDispatcher;
 use App\Tests\Providers\NotificationProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 /**
@@ -28,11 +29,14 @@ class EventDispatcherTest extends TestCase
         /**
          * @var MockObject|MessageBusInterface
          */
-        $messageBus = $this->createMock(MessageBusInterface::class);
-        $messageBus->expects($this->once())->method('dispatch')->with($event1);
+        $messageBus = $this->getMockBuilder(MessageBusInterface::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['dispatch'])
+            ->getMockForAbstractClass();
 
+        $messageBus->expects($this->once())->method('dispatch')->willReturn(new Envelope($event1));
 
-        $eventDispatcher = new EventDispatcher();
+        $eventDispatcher = new EventDispatcher($messageBus);
         $eventDispatcher->dispatch($notification->getEvents());
     }
 }
