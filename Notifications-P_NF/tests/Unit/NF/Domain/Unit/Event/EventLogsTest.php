@@ -79,8 +79,8 @@ class EventLogsTest extends TestCase
      */
     public function testAddTwoEvent(EventLogsReadInterface|EventLogsWriteInterface $trait): EventLogsReadInterface|EventLogsWriteInterface
     {
-        $event = new CreatedNotificationEvent(
-            NotificationId::fromUUID($this->uuid),
+        $event =  NotificationProvider::createEmailEvent(
+            $this->uuid,
             TypeEnum::EMAIL,
             StatusEnum::SENT,
             $this->emailDetails
