@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\NF\Domain\Unit\Event;
+namespace App\Tests\Unit\NF\Domain\Event;
 
 use App\NF\Domain\Enum\StatusEnum;
 use App\NF\Domain\Enum\TypeEnum;
@@ -39,7 +39,8 @@ class EventLogsTest extends TestCase
 
     public function testEmpty(): EventLogsReadInterface|EventLogsWriteInterface
     {
-        $trait = new class () implements EventLogsReadInterface, EventLogsWriteInterface {
+        $trait = new class() implements EventLogsReadInterface, EventLogsWriteInterface
+        {
             use EventLogsTrait {
                 addEvent as public;
             }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Unit\NF\Domain\Unit\Event;
+namespace App\Tests\Unit\NF\Domain\Event;
 
 use App\NF\Domain\Model\Notification;
 use App\NF\Domain\Model\NotificationId;

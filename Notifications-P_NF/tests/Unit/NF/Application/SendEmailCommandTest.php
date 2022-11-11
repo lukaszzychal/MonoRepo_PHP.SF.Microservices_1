@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\NF\Application;
 
 use App\NF\Application\Write\Command\SendEmailCommand;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Unit\NF\Domain\Unit\Event;
+namespace App\Tests\Unit\NF\Domain\Event;
 
 use App\NF\Infrastructure\Event\EventDispatcher;
 use App\NF\Infrastructure\Transports\DomainEvent\DomainEventBusInterface;

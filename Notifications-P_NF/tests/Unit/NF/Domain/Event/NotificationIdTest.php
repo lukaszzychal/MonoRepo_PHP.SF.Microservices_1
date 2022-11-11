@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\NF\Domain\Unit;
+namespace App\Tests\Unit\NF\Domain\Event;
 
 use App\NF\Domain\Model\NotificationId;
 use PHPUnit\Framework\TestCase;

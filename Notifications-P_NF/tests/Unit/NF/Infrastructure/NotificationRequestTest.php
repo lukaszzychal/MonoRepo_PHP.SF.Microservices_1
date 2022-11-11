@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\NF\Infrastructure;
 
 use App\NF\Domain\Enum\TypeEnum;

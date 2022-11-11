@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Integration\NF\Application;
 
 use App\NF\Infrastructure\Event\CreateNotificationEvent;
@@ -146,7 +148,7 @@ class CreateNotificationSubscribeTest extends EmailNotificationTestCase
             [],
             [],
             [
-                'HTTP_AUTHORIZATION' => 'Bearer '.$this->appToken,
+                'HTTP_AUTHORIZATION' => 'Bearer ' . $this->appToken,
             ],
             json_encode([
                 'type' => 'email',

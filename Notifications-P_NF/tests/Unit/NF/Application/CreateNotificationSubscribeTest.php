@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\NF\Application;
 
 use App\NF\Application\Write\Command\SendEmailCommand;
@@ -156,7 +158,7 @@ class CreateNotificationSubscribeTest extends TestCase
             [],
             [],
             [
-                'HTTP_AUTHORIZATION' => 'Bearer '.$this->appToken,
+                'HTTP_AUTHORIZATION' => 'Bearer ' . $this->appToken,
             ],
             json_encode([
                 'type' => 'email',
