@@ -1,8 +1,24 @@
 framework:
     messenger:
-        default_bus: notification.bus
+        default_bus: command.bus
         buses:
-            notification.bus: ~
+            command.bus:
+                middleware:
+                    - validation
+                    - doctrine_transaction
+            query.bus:
+                middleware:
+                    - validation
+            event.bus:
+                default_middleware: allow_no_handlers
+                middleware:
+                    - validation
+                    - doctrine_ping_connection
+            domain.event.bus:
+                default_middleware: allow_no_handlers
+            notification.bus:
+                default_middleware: allow_no_handlers
+               
         # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
         failure_transport: failed
 
@@ -11,9 +27,21 @@ framework:
             async: '%env(MESSENGER_TRANSPORT_DSN)%'
             failed: 'doctrine://default?queue_name=failed'
             sync: 'sync://'
+            domain_event_async:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%/%2f/domain_event'
+                failure_transport: domain_event_failed
+                retry_strategy:
+                    max_retries: 10
+                    delay: 10000
+                    multiplier: 2
+            domain_event_failed: 
+              dsn: "doctrine://default?table_name=domain_event_failed&queue_name=domain_event_failed"
+            notification_async: '%env(MESSENGER_TRANSPORT_DSN)%/%2f/notification'
 
         routing:
             # Route your messages to the transports
+            'App\NF\Domain\Event\DomainEventInterface': domain_event_async
+
             'App\NF\Application\Write\ASyncCommandInterface': async
             'Symfony\Component\Mailer\Messenger\SendEmailMessage': async
 
