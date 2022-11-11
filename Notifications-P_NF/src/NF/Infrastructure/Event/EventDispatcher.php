@@ -3,13 +3,14 @@
 namespace App\NF\Infrastructure\Event;
 
 use App\NF\Domain\Event\DomainEventInterface;
+use App\NF\Infrastructure\Transports\DomainEvent\DomainEventBusInterface;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 class EventDispatcher
 {
     public function __construct(
-        private MessageBusInterface $mssageBus
+        private DomainEventBusInterface $domainEventBus
     ) {
     }
     /**
@@ -20,7 +21,7 @@ class EventDispatcher
     public function dispatch(array $events): void
     {
         foreach ($events as $event) {
-            $this->mssageBus->dispatch($event);
+            $this->domainEventBus->dispatch($event);
         }
     }
 }

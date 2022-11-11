@@ -3,11 +3,11 @@
 namespace App\Unit\NF\Domain\Unit\Event;
 
 use App\NF\Infrastructure\Event\EventDispatcher;
+use App\NF\Infrastructure\Transports\DomainEvent\DomainEventBusInterface;
 use App\Tests\Providers\NotificationProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Messenger\Envelope;
-use Symfony\Component\Messenger\MessageBusInterface;
 
 /**
  * @group Unit
@@ -28,9 +28,9 @@ class EventDispatcherTest extends TestCase
         $this->assertSame(2, $notification->countEvents());
 
         /**
-         * @var MockObject|MessageBusInterface
+         * @var MockObject|DomainEventBusInterface
          */
-        $messageBus = $this->getMockBuilder(MessageBusInterface::class)
+        $messageBus = $this->getMockBuilder(DomainEventBusInterface::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['dispatch'])
             ->getMockForAbstractClass();
