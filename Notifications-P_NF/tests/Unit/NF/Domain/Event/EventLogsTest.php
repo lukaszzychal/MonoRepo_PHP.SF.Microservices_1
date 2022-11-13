@@ -63,7 +63,7 @@ class EventLogsTest extends TestCase
             __METHOD__,
             $this->uuid,
             TypeEnum::EMAIL,
-            StatusEnum::CREATED2,
+            StatusEnum::CREATED,
             $this->emailDetails
         );
 
