@@ -41,7 +41,7 @@ class EventStoreTest extends TestCase
             ->willReturn(NotificationId::fromString(self::UUID));
         $notificationMock->expects($this->once())->method('getEvents')
             ->willReturn([
-                NotificationProvider::createEmailEvent(),
+                NotificationProvider::createEmailEvent(__METHOD__),
             ]);
         $uuid = Uuid::fromString((string) $notificationMock->getId());
 

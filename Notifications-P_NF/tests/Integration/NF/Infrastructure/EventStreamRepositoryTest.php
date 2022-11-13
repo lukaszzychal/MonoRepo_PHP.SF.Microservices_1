@@ -77,7 +77,7 @@ class EventStreamRepositoryTest extends KernelTestCase
          * @var EventStoreRepositoryInterface
          */
         $eventStoreRepository = $this->getContainer()->get(EventStoreRepositoryInterface::class);
-        $eventStoreRepository->store($eventStrem, __METHOD__, NotificationProvider::createEmailEvent());
+        $eventStoreRepository->store($eventStrem, __METHOD__, NotificationProvider::createEmailEvent(__METHOD__));
         $this->assertIsArray($eventStrem->getEvents($eventStoreRepository));
         $this->assertSame(1, $eventStrem->getVersion());
     }

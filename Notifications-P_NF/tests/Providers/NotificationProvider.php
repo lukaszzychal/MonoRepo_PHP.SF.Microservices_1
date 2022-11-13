@@ -36,17 +36,19 @@ class NotificationProvider
     }
 
     public static function createEmailEvent(
+        string $placeCreated,
         ?Uuid $uuid = null,
         ?TypeEnum $type = null,
         ?StatusEnum $status = null,
-        ?DetailsNotification $details = null
+        ?DetailsNotification $details = null,
+
     ): CreatedNotificationEvent {
         return new CreatedNotificationEvent(
             NotificationId::fromUUID($uuid ?: Uuid::v4()),
             $type ?: TypeEnum::EMAIL,
             $status ?: StatusEnum::CREATED,
             $details ?: self::createEmailDetails(),
-            __CLASS__
+            $placeCreated
         );
     }
 

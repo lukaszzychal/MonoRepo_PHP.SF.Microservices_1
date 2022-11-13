@@ -21,8 +21,8 @@ class EventDispatcherTest extends TestCase
 
         $notification = NotificationProvider::createNotificaton();
         $notification->clear();
-        $event1 = NotificationProvider::createEmailEvent();
-        $event2 = NotificationProvider::createEmailEvent();
+        $event1 = NotificationProvider::createEmailEvent(__METHOD__);
+        $event2 = NotificationProvider::createEmailEvent(__METHOD__);
         $notification->addEvent($event1);
         $notification->addEvent($event2);
         $this->assertSame(2, $notification->countEvents());

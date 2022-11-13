@@ -25,7 +25,7 @@ class DomainEventStoreTest extends TestCase
     public function testAddEventToStore(): void
     {
         $eventStore = DomainEventStore::getInstance();
-        $event = NotificationProvider::createEmailEvent();
+        $event = NotificationProvider::createEmailEvent(__METHOD__);
 
         $eventStore->addEvent($event);
 
@@ -37,8 +37,8 @@ class DomainEventStoreTest extends TestCase
     {
         $eventStore = DomainEventStore::getInstance();
 
-        $event1 = NotificationProvider::createEmailEvent();
-        $event2 = NotificationProvider::createEmailEvent();
+        $event1 = NotificationProvider::createEmailEvent(__METHOD__);
+        $event2 = NotificationProvider::createEmailEvent(__METHOD__);
 
         $eventStore->addManyEvent($event1, $event2);
 
@@ -50,8 +50,8 @@ class DomainEventStoreTest extends TestCase
     {
         $eventStore = DomainEventStore::getInstance();
         $events = [
-            NotificationProvider::createEmailEvent(),
-            NotificationProvider::createEmailEvent(),
+            NotificationProvider::createEmailEvent(__METHOD__),
+            NotificationProvider::createEmailEvent(__METHOD__),
         ];
 
         $eventStore->addArrayEvent($events);
