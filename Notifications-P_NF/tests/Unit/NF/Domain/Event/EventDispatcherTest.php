@@ -18,7 +18,6 @@ class EventDispatcherTest extends TestCase
 {
     public function testPublisherEvent(): void
     {
-
         $notification = NotificationProvider::createNotificaton();
         $notification->clear();
         $event1 = NotificationProvider::createEmailEvent(__METHOD__);

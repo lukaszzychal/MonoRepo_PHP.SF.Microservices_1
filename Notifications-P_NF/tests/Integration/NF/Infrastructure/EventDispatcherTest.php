@@ -18,9 +18,7 @@ class EventDispatcherTest extends KernelTestCase
 {
     public function testPublisherEvent(): void
     {
-
-        $trait = new class()
-        {
+        $trait = new class () {
             use EventLogsTrait;
         };
 
@@ -36,8 +34,8 @@ class EventDispatcherTest extends KernelTestCase
          */
         $messageBus = $this->getContainer()->get(DomainEventBusInterface::class);
 
-        /** 
-         * @var InMemoryTransport $transport 
+        /**
+         * @var InMemoryTransport $transport
          */
         $transport = $this->getContainer()->get('messenger.transport.domain_event_async');
 

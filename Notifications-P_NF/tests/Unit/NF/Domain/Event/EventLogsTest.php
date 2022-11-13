@@ -30,7 +30,6 @@ class EventLogsTest extends TestCase
         $this->uuid = Uuid::v4();
         $this->uuid = Uuid::fromString('c4259905-2583-4bbd-9d39-75e71f340333');
 
-
         $this->emailDetails = new EmailDetailsNotification(
             'from',
             'to',
@@ -41,8 +40,7 @@ class EventLogsTest extends TestCase
 
     public function testEmpty(): EventLogsReadInterface|EventLogsWriteInterface
     {
-        $trait = new class() implements EventLogsReadInterface, EventLogsWriteInterface
-        {
+        $trait = new class () implements EventLogsReadInterface, EventLogsWriteInterface {
             use EventLogsTrait {
                 addEvent as public;
             }

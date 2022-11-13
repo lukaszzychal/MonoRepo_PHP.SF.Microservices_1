@@ -41,7 +41,6 @@ class NotificationProvider
         ?TypeEnum $type = null,
         ?StatusEnum $status = null,
         ?DetailsNotification $details = null,
-
     ): CreatedNotificationEvent {
         return new CreatedNotificationEvent(
             NotificationId::fromUUID($uuid ?: Uuid::v4()),
