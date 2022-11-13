@@ -28,6 +28,8 @@ class EventLogsTest extends TestCase
         parent::setUp();
 
         $this->uuid = Uuid::v4();
+        $this->uuid = Uuid::fromString('c4259905-2583-4bbd-9d39-75e71f340333');
+
 
         $this->emailDetails = new EmailDetailsNotification(
             'from',
@@ -58,9 +60,10 @@ class EventLogsTest extends TestCase
     public function testAddOneEvent(EventLogsReadInterface|EventLogsWriteInterface $trait): EventLogsReadInterface|EventLogsWriteInterface
     {
         $event = NotificationProvider::createEmailEvent(
+            __METHOD__,
             $this->uuid,
             TypeEnum::EMAIL,
-            StatusEnum::CREATED,
+            StatusEnum::CREATED2,
             $this->emailDetails
         );
 
@@ -78,6 +81,7 @@ class EventLogsTest extends TestCase
     public function testAddTwoEvent(EventLogsReadInterface|EventLogsWriteInterface $trait): EventLogsReadInterface|EventLogsWriteInterface
     {
         $event = NotificationProvider::createEmailEvent(
+            __METHOD__,
             $this->uuid,
             TypeEnum::EMAIL,
             StatusEnum::SENT,
