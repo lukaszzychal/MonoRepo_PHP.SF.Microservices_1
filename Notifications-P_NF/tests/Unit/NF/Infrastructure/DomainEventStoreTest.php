@@ -14,59 +14,59 @@ use PHPUnit\Framework\TestCase;
  */
 class DomainEventStoreTest extends TestCase
 {
-    public function testEmptyStore(): void
-    {
-        $eventStore = DomainEventStore::getInstance();
-        $eventStore->clear();
-        $this->assertFalse($eventStore->hasEvents());
-        $this->assertSame(0, $eventStore->countEvents());
-    }
+        public function testEmptyStore(): void
+        {
+                $eventStore = DomainEventStore::getInstance();
+                $eventStore->clear();
+                $this->assertFalse($eventStore->hasEvents());
+                $this->assertSame(0, $eventStore->countEvents());
+        }
 
-    public function testAddEventToStore(): void
-    {
-        $eventStore = DomainEventStore::getInstance();
-        $event = NotificationProvider::createEmailEvent(__METHOD__);
+        public function testAddEventToStore(): void
+        {
+                $eventStore = DomainEventStore::getInstance();
+                $event = NotificationProvider::createEmailEvent(__METHOD__);
 
-        $eventStore->addEvent($event);
+                $eventStore->addEvent($event);
 
-        $this->assertTrue($eventStore->hasEvents());
-        $this->assertSame(1, $eventStore->countEvents());
-    }
+                $this->assertTrue($eventStore->hasEvents());
+                $this->assertSame(1, $eventStore->countEvents());
+        }
 
-    public function testAddManyEventToStore(): void
-    {
-        $eventStore = DomainEventStore::getInstance();
+        public function testAddManyEventToStore(): void
+        {
+                $eventStore = DomainEventStore::getInstance();
 
-        $event1 = NotificationProvider::createEmailEvent(__METHOD__);
-        $event2 = NotificationProvider::createEmailEvent(__METHOD__);
+                $event1 = NotificationProvider::createEmailEvent(__METHOD__);
+                $event2 = NotificationProvider::createEmailEvent(__METHOD__);
 
-        $eventStore->addManyEvent($event1, $event2);
+                $eventStore->addManyEvent($event1, $event2);
 
-        $this->assertTrue($eventStore->hasEvents());
-        $this->assertSame(3, $eventStore->countEvents());
-    }
+                $this->assertTrue($eventStore->hasEvents());
+                $this->assertSame(3, $eventStore->countEvents());
+        }
 
-    public function testAddArrayEventToStore(): void
-    {
-        $eventStore = DomainEventStore::getInstance();
-        $events = [
-            NotificationProvider::createEmailEvent(__METHOD__),
-            NotificationProvider::createEmailEvent(__METHOD__),
-        ];
+        public function testAddArrayEventToStore(): void
+        {
+                $eventStore = DomainEventStore::getInstance();
+                $events = [
+                        NotificationProvider::createEmailEvent(__METHOD__),
+                        NotificationProvider::createEmailEvent(__METHOD__),
+                ];
 
-        $eventStore->addArrayEvent($events);
+                $eventStore->addArrayEvent($events);
 
-        $this->assertTrue($eventStore->hasEvents());
-        $this->assertSame(5, $eventStore->countEvents());
-    }
+                $this->assertTrue($eventStore->hasEvents());
+                $this->assertSame(5, $eventStore->countEvents());
+        }
 
-    public function testClearStore(): void
-    {
-        $eventStore = DomainEventStore::getInstance();
+        public function testClearStore(): void
+        {
+                $eventStore = DomainEventStore::getInstance();
 
-        $eventStore->clear();
+                $eventStore->clear();
 
-        $this->assertFalse($eventStore->hasEvents());
-        $this->assertSame(0, $eventStore->countEvents());
-    }
+                $this->assertFalse($eventStore->hasEvents());
+                $this->assertSame(0, $eventStore->countEvents());
+        }
 }
