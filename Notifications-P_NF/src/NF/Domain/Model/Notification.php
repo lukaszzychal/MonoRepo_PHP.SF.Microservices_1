@@ -25,14 +25,14 @@ class Notification implements EventLogsWriteInterface
         private readonly TypeEnum $type,
         private readonly DetailsNotification $detailsNotification
     ) {
-        $this->status = StatusEnum::CREATED;
+        $this->status = StatusEnum::FAILED;
         $this->addEvent(
             new CreatedNotificationEvent(
                 $this->id,
                 $this->type,
                 $this->status,
                 $this->detailsNotification,
-                get_class($this)
+                __METHOD__
             )
         );
     }
