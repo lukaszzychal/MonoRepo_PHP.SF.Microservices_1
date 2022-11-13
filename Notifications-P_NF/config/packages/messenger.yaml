@@ -54,3 +54,6 @@ when@test:
             async: 'in-memory://'
             failed: 'in-memory://'
             sync: 'in-memory://'
+
+            domain_event_async: 'in-memory://'
+            domain_event_failed: 'in-memory://'
