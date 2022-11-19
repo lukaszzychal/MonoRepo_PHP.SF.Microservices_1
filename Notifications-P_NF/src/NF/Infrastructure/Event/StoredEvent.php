@@ -18,4 +18,21 @@ class StoredEvent
     ) {
         $this->occurredOn = new \DateTimeImmutable();
     }
+
+
+    /**
+     * Get the value of event
+     */
+    public function getEvent(): DomainEventInterface
+    {
+        return $this->event;
+    }
+
+    /**
+     * Get the value of version
+     */
+    public function getVersion()
+    {
+        return $this->version;
+    }
 }

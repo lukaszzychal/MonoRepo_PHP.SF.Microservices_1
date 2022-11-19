@@ -42,11 +42,14 @@ class NotificationProvider
         ?StatusEnum $status = null,
         ?DetailsNotification $details = null,
     ): CreatedNotificationEvent {
+        $notif = NotificationProvider::createNotificaton();
         return new CreatedNotificationEvent(
             NotificationId::fromUUID($uuid ?: Uuid::v4()),
             $type ?: TypeEnum::EMAIL,
             $status ?: StatusEnum::CREATED,
             $details ?: self::createEmailDetails(),
+            get_class($notif),
+            $notif,
             $placeCreated
         );
     }

@@ -3,6 +3,7 @@
 namespace App\NF\Infrastructure\Repository;
 
 use App\NF\Domain\Event\DomainEventInterface;
+use App\NF\Domain\Model\AggregateInterface;
 use App\NF\Infrastructure\Event\EventStream;
 use Symfony\Component\Uid\Uuid;
 
@@ -21,4 +22,6 @@ interface EventStoreRepositoryInterface
      * @return DomainEventInterface[]
      */
     public function getEvents(Uuid $uuid): array;
+
+    public function aggregate(Uuid $uuid, string $className): AggregateInterface;
 }
