@@ -79,6 +79,7 @@ class InMemoryEventStreamRepositoryTest extends KernelTestCase
      */
     public function testEventStreamGetExistEvents(): void
     {
+        $this->eventStreamRepository->create($this->uuiid);
         $eventStrem = $this->eventStreamRepository->get($this->uuiid);
         $this->assertInstanceOf(EventStream::class, $eventStrem);
         /**
