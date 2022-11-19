@@ -3,12 +3,11 @@
 namespace App\NF\Infrastructure\Repository;
 
 use App\NF\Domain\Event\DomainEventInterface;
-use App\NF\Domain\Model\Aggregate;
 use App\NF\Infrastructure\Event\EventStream;
 use App\NF\Infrastructure\Event\StoredEvent;
 use Symfony\Component\Uid\Uuid;
 
-class InMemoryEventStoreRepository implements EventStoreRepositoryInterface
+class DoctrineEventStoreRepository implements EventStoreRepositoryInterface
 {
     private static array $eventStore = [];
     private ?EventStream $stream = null;

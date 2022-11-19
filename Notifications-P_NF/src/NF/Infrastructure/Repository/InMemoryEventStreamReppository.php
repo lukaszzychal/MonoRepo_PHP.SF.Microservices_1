@@ -11,7 +11,8 @@ class InMemoryEventStreamReppository implements EventStreamRepositoryInterface
 
     public function create(Uuid $uuid): EventStream
     {
-        self::$eventStreams[(string) $uuid] = new EventStream($uuid, 0, new \DateTimeImmutable('00:00 00.00.0000'));
+        self::$eventStreams[] = [];
+        self::$eventStreams[(string) $uuid] = EventStream::create($uuid);
 
         return self::$eventStreams[(string) $uuid];
     }

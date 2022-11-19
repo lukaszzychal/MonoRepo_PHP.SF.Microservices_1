@@ -5,6 +5,7 @@ namespace App\Integration\NF\Infrastructure;
 use App\NF\Infrastructure\Event\EventStream;
 use App\NF\Infrastructure\Repository\EventStoreRepositoryInterface;
 use App\NF\Infrastructure\Repository\EventStreamRepositoryInterface;
+use App\NF\Infrastructure\Repository\InMemoryEventStreamReppository;
 use App\Tests\Providers\NotificationProvider;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Uid\Uuid;
@@ -12,9 +13,10 @@ use Symfony\Component\Uid\Uuid;
 /**
  * @group integration
  * @group infrastructure
- * @group iestr
+ * @group imestr
+ * @group InMemory
  */
-class EventStreamRepositoryTest extends KernelTestCase
+class InMemoryEventStreamRepositoryTest extends KernelTestCase
 {
     private EventStreamRepositoryInterface $eventStreamRepository;
     private Uuid $uuiid;
@@ -22,12 +24,17 @@ class EventStreamRepositoryTest extends KernelTestCase
     protected function setUp(): void
     {
         /*
-         * @var EventStreamRepositoryInterface $eventStreamRepository
-         */
-        $this->eventStreamRepository = $this->getContainer()->get(EventStreamRepositoryInterface::class);
+          * @var EventStreamRepositoryInterface $eventStreamRepository
+          */
+        $this->eventStreamRepository = $this->getContainer()->get('test.InMemoryEventStreamRepository');
         $this->uuiid = Uuid::fromString('eca5fcaa-5601-429c-b760-80f6d27821cb');
     }
 
+    /**
+     * @group g111
+     *
+     * @return void
+     */
     public function testEventStreamNoExistStream(): void
     {
         $this->assertFalse($this->eventStreamRepository->exist($this->uuiid));
@@ -54,14 +61,15 @@ class EventStreamRepositoryTest extends KernelTestCase
     {
         $eventStrem = $this->eventStreamRepository->get($this->uuiid);
         $this->assertSame((string) $this->uuiid, (string) $eventStrem->getId());
-        $this->assertSame(0, $eventStrem->getVersion());
+        $this->assertSame(0, $eventStrem->getEventNumber());
     }
 
     public function testEventStreamGetNoExistEvents(): void
     {
         $eventStrem = $this->eventStreamRepository->get($this->uuiid);
         $this->assertInstanceOf(EventStream::class, $eventStrem);
-        $eventStoreRepository = $this->getContainer()->get(EventStoreRepositoryInterface::class);
+        $this->assertSame(0, $eventStrem->getEventNumber());
+        $eventStoreRepository = $this->getContainer()->get('test.InMemoryEventStoreRepositoryInterface');
         $this->assertIsArray($eventStrem->getEvents($eventStoreRepository));
         $this->assertSame([], $eventStrem->getEvents($eventStoreRepository));
     }
@@ -79,6 +87,6 @@ class EventStreamRepositoryTest extends KernelTestCase
         $eventStoreRepository = $this->getContainer()->get(EventStoreRepositoryInterface::class);
         $eventStoreRepository->store($eventStrem, __METHOD__, NotificationProvider::createEmailEvent(__METHOD__));
         $this->assertIsArray($eventStrem->getEvents($eventStoreRepository));
-        $this->assertSame(1, $eventStrem->getVersion());
+        $this->assertSame(1, $eventStrem->getEventNumber());
     }
 }

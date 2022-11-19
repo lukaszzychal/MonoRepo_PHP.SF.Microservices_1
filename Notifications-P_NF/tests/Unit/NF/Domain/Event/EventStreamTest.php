@@ -22,8 +22,8 @@ class EventStreamTest extends TestCase
     {
         $event = NotificationProvider::createEmailEvent(__METHOD__);
         $eventStream = EventStream::createEmptyStream(Uuid::fromString(self::UUID));
-        $this->assertSame(0, $eventStream->getVersion());
+        $this->assertSame(0, $eventStream->getEventNumber());
         $eventStream->IncremetVersion();
-        $this->assertSame(1, $eventStream->getVersion());
+        $this->assertSame(1, $eventStream->getEventNumber());
     }
 }
