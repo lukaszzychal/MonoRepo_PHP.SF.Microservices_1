@@ -8,7 +8,6 @@ use App\NF\Domain\Enum\StatusEnum;
 use App\NF\Domain\Enum\TypeEnum;
 use App\NF\Domain\Model\AggregateInterface;
 use App\NF\Domain\Model\DetailsNotification;
-use App\NF\Domain\Model\Notification;
 use App\NF\Domain\Model\NotificationId;
 use Symfony\Component\Uid\Uuid;
 
@@ -43,14 +42,17 @@ class FailedSentNotificationEvent implements NotificationDomainEventInterface
     {
         return Uuid::fromString((string) $this->id);
     }
+
     public function getType(): TypeEnum
     {
         return $this->type;
     }
+
     public function getStatus(): StatusEnum
     {
         return $this->status;
     }
+
     public function getDetails(): DetailsNotification
     {
         return $this->details;

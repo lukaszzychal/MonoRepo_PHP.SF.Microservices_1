@@ -23,5 +23,5 @@ interface EventStoreRepositoryInterface
      */
     public function getEvents(Uuid $uuid): array;
 
-    public function aggregate(Uuid $uuid, string $className): AggregateInterface;
+    public function aggregate(Uuid $uuid, string $className): ?AggregateInterface;
 }

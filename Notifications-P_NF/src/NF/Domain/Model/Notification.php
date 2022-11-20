@@ -11,8 +11,6 @@ use App\NF\Domain\Event\DomainEventInterface;
 use App\NF\Domain\Event\EventLogs\EventLogsTrait;
 use App\NF\Domain\Event\EventLogs\EventLogsWriteInterface;
 use App\NF\Domain\Event\FailedSentNotificationEvent;
-use App\NF\Domain\Event\NotificationDomainEventInterface;
-use App\NF\Infrastructure\Event\StoredEvent;
 use Symfony\Component\Serializer\Annotation\DiscriminatorMap;
 
 // #[DiscriminatorMap(typeProperty: 'type', mapping: [
@@ -88,7 +86,7 @@ class Notification implements AggregateInterface, EventLogsWriteInterface
     }
 
     /**
-     * Get the value of status
+     * Get the value of status.
      */
     public function getStatus(): StatusEnum
     {

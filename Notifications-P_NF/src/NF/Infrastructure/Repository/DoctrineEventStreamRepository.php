@@ -8,6 +8,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Uid\Uuid;
 
+//  @phpstan-ignore-next-line
 class DoctrineEventStreamRepository extends ServiceEntityRepository implements EventStreamRepositoryInterface
 {
     public function __construct(
@@ -24,6 +25,7 @@ class DoctrineEventStreamRepository extends ServiceEntityRepository implements E
         $this->_em->persist($eventStreams);
         $this->_em->flush();
         $this->logger->info(sprintf('Create Stream. UUID: %s ', $uuid));
+
         return $eventStreams;
     }
 
@@ -37,6 +39,7 @@ class DoctrineEventStreamRepository extends ServiceEntityRepository implements E
         if (is_null($stream)) {
             return false;
         }
+
         return true;
     }
 

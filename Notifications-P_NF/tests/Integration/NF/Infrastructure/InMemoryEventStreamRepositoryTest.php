@@ -5,7 +5,6 @@ namespace App\Integration\NF\Infrastructure;
 use App\NF\Infrastructure\Event\EventStream;
 use App\NF\Infrastructure\Repository\EventStoreRepositoryInterface;
 use App\NF\Infrastructure\Repository\EventStreamRepositoryInterface;
-use App\NF\Infrastructure\Repository\InMemoryEventStreamReppository;
 use App\Tests\Providers\NotificationProvider;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Uid\Uuid;
@@ -32,8 +31,6 @@ class InMemoryEventStreamRepositoryTest extends KernelTestCase
 
     /**
      * @group g111
-     *
-     * @return void
      */
     public function testEventStreamNoExistStream(): void
     {

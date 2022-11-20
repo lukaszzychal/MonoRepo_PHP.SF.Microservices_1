@@ -3,13 +3,9 @@
 namespace App\NF\Infrastructure\Repository;
 
 use App\NF\Domain\Event\DomainEventInterface;
-use App\NF\Domain\Model\Aggregate;
 use App\NF\Domain\Model\AggregateInterface;
-use App\NF\Domain\Model\Notification;
 use App\NF\Infrastructure\Event\EventStream;
 use App\NF\Infrastructure\Event\StoredEvent;
-use App\Tests\Providers\NotificationProvider;
-use ReflectionClass;
 use Symfony\Component\Uid\Uuid;
 
 class InMemoryEventStoreRepository implements EventStoreRepositoryInterface
@@ -91,23 +87,34 @@ class InMemoryEventStoreRepository implements EventStoreRepositoryInterface
         return $this->eventStreamRepository->create($uuid);
     }
 
-    public function aggregate(Uuid $uuid, string $className): AggregateInterface
+    public function aggregate(Uuid $uuid, string $className): ?AggregateInterface
     {
         $events = $this->getEvents($uuid);
-
-        uasort(
-            $events,
-            function ($a, $b) {
-                return strnatcmp($a->getVersion(), $b->getVersion());
-            }
-        );
-
+        $this->sortEvents($events);
+        $aggregate = null;
         /**
          * @var StoredEvent $storedEvent
          */
         foreach ($events as $storedEvent) {
-            $aggregate =  $storedEvent->getEvent()->getObject();
+            $aggregate = $storedEvent->getEvent()->getObject();
         }
+
         return $aggregate;
+    }
+
+    /**
+     * @param StoredEvent[] $storedEvents
+     */
+    public function sortEvents(array &$storedEvents): void
+    {
+        $stored = [];
+        /**
+         * @var StoredEvent $event
+         */
+        foreach ($storedEvents as $event) {
+            $stored[$event->getVersion()] = $event;
+        }
+
+        $storedEvents = $stored;
     }
 }

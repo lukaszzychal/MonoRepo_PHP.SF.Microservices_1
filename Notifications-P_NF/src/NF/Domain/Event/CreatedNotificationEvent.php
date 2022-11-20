@@ -47,14 +47,17 @@ class CreatedNotificationEvent implements NotificationDomainEventInterface
     {
         return Uuid::fromString((string) $this->id);
     }
+
     public function getType(): TypeEnum
     {
         return $this->type;
     }
+
     public function getStatus(): StatusEnum
     {
         return $this->status;
     }
+
     public function getDetails(): DetailsNotification
     {
         return $this->details;

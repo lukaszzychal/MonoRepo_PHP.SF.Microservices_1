@@ -148,7 +148,7 @@ class CreateNotificationSubscribeTest extends EmailNotificationTestCase
             [],
             [],
             [
-                'HTTP_AUTHORIZATION' => 'Bearer ' . $this->appToken,
+                'HTTP_AUTHORIZATION' => 'Bearer '.$this->appToken,
             ],
             json_encode([
                 'type' => 'email',

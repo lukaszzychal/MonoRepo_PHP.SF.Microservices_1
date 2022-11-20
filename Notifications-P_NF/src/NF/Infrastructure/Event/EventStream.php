@@ -4,8 +4,6 @@ namespace App\NF\Infrastructure\Event;
 
 use App\NF\Domain\Event\DomainEventInterface;
 use App\NF\Infrastructure\Repository\EventStoreRepositoryInterface;
-use DateTimeImmutable;
-use Doctrine\DBAL\Types\Type;
 use Symfony\Component\Uid\Uuid;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -19,10 +17,8 @@ class EventStream
         #[ORM\Id]
         #[ORM\Column(type: 'uuid')]
         private Uuid $id,
-
         #[ORM\Column]
         private int $eventNumber = 0,
-
         #[ORM\Column]
         private ?\DateTimeImmutable $updateAt = null,
     ) {
@@ -30,10 +26,8 @@ class EventStream
 
     public static function create(Uuid $id): self
     {
-        return new self($id, 0, new DateTimeImmutable());
+        return new self($id, 0, new \DateTimeImmutable());
     }
-
-
 
     public function IncremetVersion(): void
     {
@@ -56,10 +50,10 @@ class EventStream
     /**
      * @return DomainEventInterface[]
      */
-    public function getEvents(EventStoreRepositoryInterface $eventStoreRepository): array
+    public function getEvents(EventStoreRepositoryInterface $eventStoreRepositoryInterface): array
     {
         if (empty($this->events)) {
-            $this->events = $eventStoreRepository->getEvents($this->getId());
+            $this->events = $eventStoreRepositoryInterface->getEvents($this->getId());
         }
 
         return $this->events;
@@ -71,9 +65,9 @@ class EventStream
     }
 
     /**
-     * Get the value of eventNumber
+     * Get the value of eventNumber.
      */
-    public function getEventNumber()
+    public function getEventNumber(): int
     {
         return $this->eventNumber;
     }
