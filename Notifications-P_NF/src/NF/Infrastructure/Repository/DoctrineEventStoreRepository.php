@@ -86,8 +86,17 @@ class DoctrineEventStoreRepository implements EventStoreRepositoryInterface
         return $this->eventStreamRepository->create($uuid);
     }
 
-    public function aggregate(Uuid $uuid, string $className): AggregateInterface
+    public function aggregate(Uuid $uuid, string $className): ?AggregateInterface
     {
-        return NotificationProvider::createNotificaton();
+        $events = $this->getEvents($uuid);
+        $aggregate = null;
+        /**
+         * @var StoredEvent $storedEvent
+         */
+        foreach ($events as $storedEvent) {
+            $aggregate = $storedEvent->getEvent()->getObject();
+        }
+
+        return $aggregate;
     }
 }
