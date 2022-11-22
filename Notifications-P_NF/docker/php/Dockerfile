@@ -16,7 +16,11 @@ RUN apk add \
 --no-cache $PHPIZE_DEPS \ 
  &&  apk add --update linux-headers \
  && pecl install xdebug-3.2.0alpha2 \
- && docker-php-ext-enable xdebug
+ && docker-php-ext-enable xdebug \
+ && docker-php-ext-configure intl \
+ && docker-php-ext-install \
+        intl \
+ && docker-php-ext-enable intl 
  
 WORKDIR /var/www/html
 # Rozwiązaneie tymczasowe

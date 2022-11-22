@@ -25,31 +25,7 @@ jobs:
           echo ":: Rebulding Contener And Up"
           cp docker-compose.dev.yml docker-compose.yml
           docker-compose -f docker-compose.yml up -d --build
-          echo ":: Clear var"
-          ls -la
-         
-          DIR=./var
-          if [ -d "$DIR" ]
-          then
-          echo "Remove Var"
-          chmod -R 777 ./var
-          rm -rf "$DIR"
-          fi
-          mkdir ./var
-          chmod -R 777 ./var
           
-          ls -la ./src/NF
-          docker exec PHP_P_NF composer install
-          chmod +x ./bin/console
-          echo 'docker container ls'
-          docker container ls
-          echo 'docker-compose ps '
-          docker-compose ps 
-          echo 'docker-compose exec postgres ls -l'
-          docker-compose exec -T postgres ls -l
-          echo '  docker-compose exec php ping postgres'
-          docker-compose exec -T php ping -c 2 postgres
-          docker-compose exec -T php ./bin/console doctrine:database:create  --env=test
 
           echo ":: Version"
           docker exec PHP_P_NF ls -l
@@ -131,6 +107,7 @@ jobs:
           docker exec PHP_P_NF composer install
           chmod +x ./bin/console
           docker-compose exec -T php ./bin/console doctrine:database:create  --env=test
+          docker-compose exec -T php ./bin/console doctrine:migrations:migrate  --env=test 
 
       - 
         name: Unit Test
@@ -161,6 +138,6 @@ jobs:
         name: No Group Test
         run: | 
           echo "No Group Test"
-          chmod -R +x  ${PWD}/docker/symfony/cmd tests/.
+          chmod -R +x  ${PWD}/docker/. ${PWD}/tests/. ${PWD}/bin/. 
           ${PWD}/docker/symfony/cmd php bin/phpunit tests/ --exclude-group Unit,Integration,Application
   

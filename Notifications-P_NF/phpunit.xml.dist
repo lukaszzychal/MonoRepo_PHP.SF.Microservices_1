@@ -18,9 +18,59 @@
     </php>
 
     <testsuites>
-        <testsuite name="Project Test Suite">
+        <testsuite name="test">
             <directory>tests</directory>
         </testsuite>
+        <testsuite name="TUnit">
+            <directory>tests/Unit</directory>
+        </testsuite>
+        <testsuite name="testUn">
+            <directory>tests/Unit</directory>
+        </testsuite>
+        <testsuite name="TIntegration">
+            <directory>tests/Integration</directory>
+        </testsuite>
+        <testsuite name="testInfr">
+            <directory>tests/Integration</directory>
+        </testsuite>
+        <testsuite name="TAplication">
+            <directory>tests/Application</directory>
+        </testsuite>
+          <testsuite name="testApp">
+            <directory>tests/Application</directory>
+        </testsuite>
+
+        <testsuite name="TLApplication">
+            <directory>tests/Application/NF/Application</directory>
+            <directory>tests/Integration/NF/Application</directory>
+            <directory>tests/Unit/NF/Application</directory>
+        </testsuite>
+             <testsuite name="TLApp">
+            <directory>tests/Application/NF/Application</directory>
+            <directory>tests/Integration/NF/Application</directory>
+            <directory>tests/Unit/NF/Application</directory>
+        </testsuite>
+        <testsuite name="TLDomain">
+            <directory>tests/Application/NF/Domain</directory>
+            <directory>tests/Integration/NF/Domain</directory>
+            <directory>tests/Unit/NF/Domain</directory>
+        </testsuite>
+          <testsuite name="TLDo">
+            <directory>tests/Application/NF/Domain</directory>
+            <directory>tests/Integration/NF/Domain</directory>
+            <directory>tests/Unit/NF/Domain</directory>
+        </testsuite>
+        <testsuite name="TLInfrastructure">
+            <directory>tests/Application/NF/Infrastructure</directory>
+            <directory>tests/Integration/NF/Infrastructure</directory>
+            <directory>tests/Unit/NF/Infrastructure</directory>
+        </testsuite>
+             <testsuite name="TLInfr">
+            <directory>tests/Application/NF/Infrastructure</directory>
+            <directory>tests/Integration/NF/Infrastructure</directory>
+            <directory>tests/Unit/NF/Infrastructure</directory>
+        </testsuite>
+
     </testsuites>
 
     <coverage processUncoveredFiles="true">

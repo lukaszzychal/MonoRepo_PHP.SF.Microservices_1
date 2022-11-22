@@ -24,10 +24,10 @@ class SendNotificationController extends AbstractController
     #[Route('/notification', methods: ['POST'])]
     public function notification(Request $request): JsonResponse
     {
-        $this->eventDispatcher->dispatch(
-            new SendNotificationEvent($request),
-            SendNotificationEvent::NAME
-        );
+        // $this->eventDispatcher->dispatch(
+        //     new SendNotificationEvent($request),
+        //     SendNotificationEvent::NAME
+        // );
 
         return new NotificationResponse();
     }

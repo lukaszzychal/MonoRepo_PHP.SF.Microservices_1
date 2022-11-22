@@ -1,9 +1,9 @@
 #!/bin/bash
 
 echo ":: Run Symfony Serverr"
- docker-compose exec -T php bash -c " ls -la "
- docker-compose exec -T php bash -c " chmod -R 0777 ./var && rm -rf ./var "
- docker-compose exec -T php bash -c " ls -la "
+#  docker-compose exec -T php bash -c " ls -la "
+#  docker-compose exec -T php bash -c " chmod -R 0777 ./var && rm -rf ./var "
+#  docker-compose exec -T php bash -c " ls -la "
 
  docker-compose exec -T php bash -c " symfony server:ca:install && symfony server:stop && symfony server:start --port=8000 -d"
 echo ":: Drop Database"

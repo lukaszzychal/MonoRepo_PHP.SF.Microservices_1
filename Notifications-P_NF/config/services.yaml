@@ -26,6 +26,21 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    App\NF\Infrastructure\Subscribe\SendNotificationSubscribe:
+    App\NF\Infrastructure\Subscribe\CreateNotificationSubscribe:
         bind:
           $appToken:  '%env(APP_TOKEN)%'
+
+
+when@test:
+    services:  
+        App\NF\Infrastructure\Repository\EventStoreRepositoryInterface:
+            alias: App\NF\Infrastructure\Repository\DoctrineEventStoreRepository
+            public: true 
+
+        App\NF\Infrastructure\Repository\EventStreamRepositoryInterface:
+            alias: App\NF\Infrastructure\Repository\DoctrineEventStreamRepository
+            public: true
+
+        App\NF\Infrastructure\Transports\DomainEvent\DomainEventBusInterface:
+            alias: App\NF\Infrastructure\Transports\DomainEvent\DomainEventBus
+            public: true
