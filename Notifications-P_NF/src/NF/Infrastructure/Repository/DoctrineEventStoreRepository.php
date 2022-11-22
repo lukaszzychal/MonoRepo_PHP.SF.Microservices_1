@@ -6,7 +6,6 @@ use App\NF\Domain\Event\DomainEventInterface;
 use App\NF\Domain\Model\AggregateInterface;
 use App\NF\Infrastructure\Event\EventStream;
 use App\NF\Infrastructure\Event\StoredEvent;
-use App\Tests\Providers\NotificationProvider;
 use Symfony\Component\Uid\Uuid;
 
 class DoctrineEventStoreRepository implements EventStoreRepositoryInterface

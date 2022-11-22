@@ -22,7 +22,7 @@ class StoredEvent
         private string $placeOccurrence,
         #[ORM\Column]
         private string $eventName,
-        #[ORM\Column(type: "json", options: ["jsonb" => true])]
+        #[ORM\Column(type: 'json', options: ['jsonb' => true])]
         private DomainEventInterface $event
     ) {
         $this->occurredOn = new \DateTimeImmutable();

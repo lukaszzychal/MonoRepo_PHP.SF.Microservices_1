@@ -17,7 +17,6 @@ class FakeEventStoreRepository implements EventStoreRepositoryInterface
 
     public function __construct(
         /**
-         *
          * @var FakeEventStreamReppository
          */
         private readonly EventStreamRepositoryInterface $eventStreamRepository

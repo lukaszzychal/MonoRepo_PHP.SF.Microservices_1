@@ -12,7 +12,6 @@ use App\NF\Infrastructure\Repository\EventStreamRepositoryInterface;
 use App\Tests\Providers\NotificationProvider;
 use App\Tests\TestDouble\FakeEventStoreRepository;
 use PHPUnit\Framework\MockObject\Stub as MockObjectStub;
-use PHPUnit\Framework\MockObject\Stub\Stub;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
 

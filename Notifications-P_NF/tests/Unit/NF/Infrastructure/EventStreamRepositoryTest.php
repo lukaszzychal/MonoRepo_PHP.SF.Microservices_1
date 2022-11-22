@@ -24,7 +24,7 @@ class EventStreamRepositoryTest extends TestCase
 
     protected function setUp(): void
     {
-        /**
+        /*
          * @var EventStreamRepositoryInterface $eventStreamRepository
          */
         $this->eventStreamRepository = new FakeEventStreamReppository();
