@@ -71,44 +71,44 @@ jobs:
         !./Notifications-P_NF/var/*
         !./Notifications-P_NF/vendor/*
 
-  StaticCodeAnalysis:
-    runs-on: ubuntu-latest
-    needs: Build
-    steps:
-      -
-       name: Download a Build Artifact
-       uses: actions/download-artifact@v3.0.0
-       with:
-        name: P_NF 
+  # StaticCodeAnalysis:
+  #   runs-on: ubuntu-latest
+  #   needs: Build
+  #   steps:
+  #     -
+  #      name: Download a Build Artifact
+  #      uses: actions/download-artifact@v3.0.0
+  #      with:
+  #       name: P_NF 
 
-      - 
-        name: Build and Up Container
-        run: | 
-          echo ":: List Download a Build Artifact "
-          ls -la
-          docker network create background_network
-          docker-compose -f docker-compose.yml up -d --build
-          docker exec PHP_P_NF composer install
-          chmod +x ./bin/console
-          docker-compose exec -T php ./bin/console doctrine:database:create  --env=test
+  #     - 
+  #       name: Build and Up Container
+  #       run: | 
+  #         echo ":: List Download a Build Artifact "
+  #         ls -la
+  #         docker network create background_network
+  #         docker-compose -f docker-compose.yml up -d --build
+  #         docker exec PHP_P_NF composer install
+  #         chmod +x ./bin/console
+  #         docker-compose exec -T php ./bin/console doctrine:database:create  --env=test
 
 
-      -    
-       name: PhpStan
-       run: |
-        echo "PhpStan"
-          sudo chmod -R +x ${PWD}/docker/.
-          sudo chmod -R +x ${PWD}/vendor/.
-          echo "php-cs-fixer script"
-          ${PWD}/docker/symfony/static-code-analysis/phpstan
-      - 
-        name: Php-Cs-Fixer
-        run: | 
-          echo "Php-Cs-Fixer"
-          sudo chmod -R +x ${PWD}/docker/.
-          sudo chmod -R +x ${PWD}/vendor/.
-          echo "php-cs-fixer script"
-          ${PWD}/docker/symfony/static-code-analysis/php-cs-fixer-analysee
+  #     -    
+  #      name: PhpStan
+  #      run: |
+  #       echo "PhpStan"
+  #         sudo chmod -R +x ${PWD}/docker/.
+  #         sudo chmod -R +x ${PWD}/vendor/.
+  #         echo "php-cs-fixer script"
+  #         ${PWD}/docker/symfony/static-code-analysis/phpstan
+  #     - 
+  #       name: Php-Cs-Fixer
+  #       run: | 
+  #         echo "Php-Cs-Fixer"
+  #         sudo chmod -R +x ${PWD}/docker/.
+  #         sudo chmod -R +x ${PWD}/vendor/.
+  #         echo "php-cs-fixer script"
+  #         ${PWD}/docker/symfony/static-code-analysis/php-cs-fixer-analysee
           
 
   Test:
@@ -132,31 +132,31 @@ jobs:
           chmod +x ./bin/console
           docker-compose exec -T php ./bin/console doctrine:database:create  --env=test
 
-      - 
-        name: Unit Test
-        run: | 
-         echo "Unit Test"
-         ls -la ${PWD}
-         chmod -R +x  ${PWD}/docker/symfony/cmd ${PWD}/tests/.
-         ${PWD}/docker/symfony/cmd php bin/phpunit tests/ --group Unit
-      - 
-       name: Integration Test
-       run: |
-         echo "Integration Test"
-         chmod -R +x  ${PWD}/docker/symfony/cmd ${PWD}/tests/.
-         ${PWD}/docker/symfony/cmd php bin/phpunit tests/ --group Integration  
-      -
-        name: Functional Test
-        run: | 
-         echo "Functional Test"
-         chmod -R +x  ${PWD}/docker/. ${PWD}/tests/. ${PWD}/bin/.
-         ${PWD}/docker/symfony/test/functional
-      - 
-       name: Application Test
-       run: | 
-         echo "Application Test"
-         chmod -R +x ${PWD}/docker/symfony/cmd tests/.
-         ${PWD}/docker/symfony/cmd php bin/phpunit tests/ --group Aspplication  
+      # - 
+      #   name: Unit Test
+      #   run: | 
+      #    echo "Unit Test"
+      #    ls -la ${PWD}
+      #    chmod -R +x  ${PWD}/docker/symfony/cmd ${PWD}/tests/.
+      #    ${PWD}/docker/symfony/cmd php bin/phpunit tests/ --group Unit
+      # - 
+      #  name: Integration Test
+      #  run: |
+      #    echo "Integration Test"
+      #    chmod -R +x  ${PWD}/docker/symfony/cmd ${PWD}/tests/.
+      #    ${PWD}/docker/symfony/cmd php bin/phpunit tests/ --group Integration  
+      # -
+      #   name: Functional Test
+      #   run: | 
+      #    echo "Functional Test"
+      #    chmod -R +x  ${PWD}/docker/. ${PWD}/tests/. ${PWD}/bin/.
+      #    ${PWD}/docker/symfony/test/functional
+      # - 
+      #  name: Application Test
+      #  run: | 
+      #    echo "Application Test"
+      #    chmod -R +x ${PWD}/docker/symfony/cmd tests/.
+      #    ${PWD}/docker/symfony/cmd php bin/phpunit tests/ --group Aspplication  
       - 
         name: No Group Test
         run: | 
