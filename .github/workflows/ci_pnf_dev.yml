@@ -1,7 +1,7 @@
 name: ci-P_NF-dev
 
 on:
-  push:
+  pull_request:
     paths:
       - "Notifications-P_NF/**"
       - ".github/workflows/ci_pnf_dev.yml"
@@ -25,20 +25,7 @@ jobs:
           echo ":: Rebulding Contener And Up"
           cp docker-compose.dev.yml docker-compose.yml
           docker-compose -f docker-compose.yml up -d --build
-          echo ":: Clear var"
-          ls -la
-         
-          DIR=./var
-          if [ -d "$DIR" ]
-          then
-          echo "Remove Var"
-          chmod -R 777 ./var
-          rm -rf "$DIR"
-          fi
-          mkdir ./var
-          chmod -R 777 ./var
           
-          ls -la ./src/NF
           docker exec PHP_P_NF composer install
           chmod +x ./bin/console
           echo 'docker container ls'
@@ -50,6 +37,7 @@ jobs:
           echo '  docker-compose exec php ping postgres'
           docker-compose exec -T php ping -c 2 postgres
           docker-compose exec -T php ./bin/console doctrine:database:create  --env=test
+          docker-compose exec -T php ./bin/console doctrine:migrations:migrate  --env=test 
 
           echo ":: Version"
           docker exec PHP_P_NF ls -l
