@@ -31,31 +31,8 @@ services:
           $appToken:  '%env(APP_TOKEN)%'
 
 
-    App\NF\Infrastructure\Repository\EventStreamRepositoryInterface:
-            alias: App\NF\Infrastructure\Repository\DoctrineEventStreamRepository
-            public: true
-
-    App\NF\Infrastructure\Repository\EventStoreRepositoryInterface:
-            alias: App\NF\Infrastructure\Repository\DoctrineEventStoreRepository
-            public: true
-
 when@test:
     services:  
-        App\NF\Infrastructure\Repository\EventStoreRepositoryInterface:
-            alias: App\NF\Infrastructure\Repository\DoctrineEventStoreRepository
-            public: true
-
-        test.InMemoryEventStoreRepositoryInterface:
-            alias: App\NF\Infrastructure\Repository\InMemoryEventStoreRepository
-            public: true    
-
-        App\NF\Infrastructure\Repository\EventStreamRepositoryInterface:
-            alias: App\NF\Infrastructure\Repository\DoctrineEventStreamRepository
-            public: true
-
-        test.InMemoryEventStreamRepository:
-            alias: App\NF\Infrastructure\Repository\InMemoryEventStreamReppository
-            public: true
 
         App\NF\Infrastructure\Transports\DomainEvent\DomainEventBusInterface:
             alias: App\NF\Infrastructure\Transports\DomainEvent\DomainEventBus

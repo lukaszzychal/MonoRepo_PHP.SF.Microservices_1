@@ -1,31 +1,33 @@
 <?php
 
-namespace App\Integration\NF\Infrastructure;
+namespace App\Tests\Unit\NF\Infrastructure;
 
 use App\NF\Infrastructure\Event\EventStream;
 use App\NF\Infrastructure\Repository\EventStoreRepositoryInterface;
 use App\NF\Infrastructure\Repository\EventStreamRepositoryInterface;
 use App\Tests\Providers\NotificationProvider;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use App\Tests\TestDouble\FakeEventStoreRepository;
+use App\Tests\TestDouble\FakeEventStreamReppository;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
 
 /**
- * @group integration
+ * @group unit
  * @group infrastructure
- * @group imestr
+ * @group umestr
  * @group InMemory
  */
-class InMemoryEventStreamRepositoryTest extends KernelTestCase
+class EventStreamRepositoryTest extends TestCase
 {
     private EventStreamRepositoryInterface $eventStreamRepository;
     private Uuid $uuiid;
 
     protected function setUp(): void
     {
-        /*
-          * @var EventStreamRepositoryInterface $eventStreamRepository
-          */
-        $this->eventStreamRepository = $this->getContainer()->get('test.InMemoryEventStreamRepository');
+        /**
+         * @var EventStreamRepositoryInterface $eventStreamRepository
+         */
+        $this->eventStreamRepository = new FakeEventStreamReppository();
         $this->uuiid = Uuid::fromString('eca5fcaa-5601-429c-b760-80f6d27821cb');
     }
 
@@ -66,7 +68,7 @@ class InMemoryEventStreamRepositoryTest extends KernelTestCase
         $eventStrem = $this->eventStreamRepository->get($this->uuiid);
         $this->assertInstanceOf(EventStream::class, $eventStrem);
         $this->assertSame(0, $eventStrem->getEventNumber());
-        $eventStoreRepository = $this->getContainer()->get('test.InMemoryEventStoreRepositoryInterface');
+        $eventStoreRepository = new FakeEventStoreRepository($this->eventStreamRepository);
         $this->assertIsArray($eventStrem->getEvents($eventStoreRepository));
         $this->assertSame([], $eventStrem->getEvents($eventStoreRepository));
     }
@@ -80,9 +82,9 @@ class InMemoryEventStreamRepositoryTest extends KernelTestCase
         $eventStrem = $this->eventStreamRepository->get($this->uuiid);
         $this->assertInstanceOf(EventStream::class, $eventStrem);
         /**
-         * @var EventStoreRepositoryInterface
+         * @var EventStoreRepositoryInterface $eventStoreRepository
          */
-        $eventStoreRepository = $this->getContainer()->get(EventStoreRepositoryInterface::class);
+        $eventStoreRepository = new FakeEventStoreRepository($this->eventStreamRepository);
         $eventStoreRepository->store($eventStrem, __METHOD__, NotificationProvider::createEmailEvent(__METHOD__));
         $this->assertIsArray($eventStrem->getEvents($eventStoreRepository));
         $this->assertSame(1, $eventStrem->getEventNumber());

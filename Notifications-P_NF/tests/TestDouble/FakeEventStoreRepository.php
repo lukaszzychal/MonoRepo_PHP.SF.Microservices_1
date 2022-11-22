@@ -1,23 +1,24 @@
 <?php
 
-namespace App\NF\Infrastructure\Repository;
+namespace App\Tests\TestDouble;
 
 use App\NF\Domain\Event\DomainEventInterface;
 use App\NF\Domain\Model\AggregateInterface;
 use App\NF\Infrastructure\Event\EventStream;
 use App\NF\Infrastructure\Event\StoredEvent;
+use App\NF\Infrastructure\Repository\EventStoreRepositoryInterface;
+use App\NF\Infrastructure\Repository\EventStreamRepositoryInterface;
 use Symfony\Component\Uid\Uuid;
 
-class InMemoryEventStoreRepository implements EventStoreRepositoryInterface
+class FakeEventStoreRepository implements EventStoreRepositoryInterface
 {
     private static array $eventStore = [];
     private ?EventStream $stream = null;
 
     public function __construct(
         /**
-         * @todo change to inteerface
          *
-         * @var InMemoryEventStreamReppository
+         * @var FakeEventStreamReppository
          */
         private readonly EventStreamRepositoryInterface $eventStreamRepository
     ) {

@@ -1,11 +1,12 @@
 <?php
 
-namespace App\NF\Infrastructure\Repository;
+namespace App\Tests\TestDouble;
 
 use App\NF\Infrastructure\Event\EventStream;
+use App\NF\Infrastructure\Repository\EventStreamRepositoryInterface;
 use Symfony\Component\Uid\Uuid;
 
-class InMemoryEventStreamReppository implements EventStreamRepositoryInterface
+class FakeEventStreamReppository implements EventStreamRepositoryInterface
 {
     private static array $eventStreams = [];
 

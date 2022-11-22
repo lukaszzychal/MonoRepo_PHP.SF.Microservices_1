@@ -9,9 +9,8 @@ use App\NF\Domain\Model\NotificationId;
 use App\NF\Infrastructure\Event\EventStream;
 use App\NF\Infrastructure\Repository\EventStoreRepositoryInterface;
 use App\NF\Infrastructure\Repository\EventStreamRepositoryInterface;
-use App\NF\Infrastructure\Repository\InMemoryEventStoreRepository;
 use App\Tests\Providers\NotificationProvider;
-use PHPUnit\Framework\MockObject\MockObject;
+use App\Tests\TestDouble\FakeEventStoreRepository;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
 
@@ -70,7 +69,7 @@ class EventStoreTest extends TestCase
             ->willReturn(EventStream::createEmptyStream(Uuid::fromString(self::UUID)));
 
         return [
-            [new InMemoryEventStoreRepository(
+            [new FakeEventStoreRepository(
                 $eventStreamReppositoryMock
             )],
         ];

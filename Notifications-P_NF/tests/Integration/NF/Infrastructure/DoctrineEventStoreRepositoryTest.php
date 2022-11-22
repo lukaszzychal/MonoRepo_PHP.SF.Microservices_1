@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Integration\NF\Infrastructure;
+namespace App\Tests\Integration\NF\Infrastructure;
 
 use App\NF\Domain\Enum\StatusEnum;
 use App\NF\Domain\Event\EventLogs\EventLogsReadInterface;
@@ -14,9 +14,9 @@ use Symfony\Component\Uid\Uuid;
 /**
  * @group integration
  * @group infrastructure
- * @group iesr
+ * @group idesr
  */
-class InMemoryEventStoreRepositoryTest extends KernelTestCase
+class DoctrineEventStoreRepositoryTest extends KernelTestCase
 {
     public function testEventStore(): void
     {
@@ -29,7 +29,7 @@ class InMemoryEventStoreRepositoryTest extends KernelTestCase
         /**
          * @var EventStoreRepositoryInterface
          */
-        $eventStore = $this->getContainer()->get('test.InMemoryEventStoreRepositoryInterface');
+        $eventStore = $this->getContainer()->get(EventStoreRepositoryInterface::class);
         $uuid = Uuid::fromString($notification->getId());
         $eventStore->storeEvents(
             $uuid,
@@ -55,7 +55,7 @@ class InMemoryEventStoreRepositoryTest extends KernelTestCase
         /**
          * @var EventStoreRepositoryInterface
          */
-        $eventStore = $this->getContainer()->get('test.InMemoryEventStoreRepositoryInterface');
+        $eventStore = $this->getContainer()->get(EventStoreRepositoryInterface::class);
         $uuid = Uuid::fromString($notification->getId());
         $eventStore->storeEvents(
             $uuid,
