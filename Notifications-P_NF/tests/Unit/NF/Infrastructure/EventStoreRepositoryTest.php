@@ -6,11 +6,14 @@ use App\NF\Domain\Enum\StatusEnum;
 use App\NF\Domain\Event\EventLogs\EventLogsReadInterface;
 use App\NF\Domain\Event\EventLogs\EventLogsWriteInterface;
 use App\NF\Domain\Model\Notification;
+use App\NF\Infrastructure\Event\EventStream;
 use App\NF\Infrastructure\Repository\EventStoreRepositoryInterface;
 use App\NF\Infrastructure\Repository\EventStreamRepositoryInterface;
 use App\Tests\Providers\NotificationProvider;
 use App\Tests\TestDouble\FakeEventStoreRepository;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use PHPUnit\Framework\MockObject\Stub as MockObjectStub;
+use PHPUnit\Framework\MockObject\Stub\Stub;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
 
 /**
@@ -18,7 +21,7 @@ use Symfony\Component\Uid\Uuid;
  * @group infrastructure
  * @group uesr
  */
-class EventStoreRepositoryTest extends KernelTestCase
+class EventStoreRepositoryTest extends TestCase
 {
     public function testEventStore(): void
     {
@@ -28,13 +31,17 @@ class EventStoreRepositoryTest extends KernelTestCase
         $notification = NotificationProvider::createNotificaton();
         $this->assertSame(1, $notification->countEvents());
 
-        $eventStreamRepositoryMock = $this->createMock(EventStreamRepositoryInterface::class);
+        $uuid = Uuid::fromString($notification->getId());
+        /**
+         * @var MockObjectStub|EventStreamRepositoryInterface $eventStreamRepositoryStub
+         */
+        $eventStreamRepositoryStub = $this->createEventStreamRepositoryStub($uuid);
 
         /**
-         * @var EventStoreRepositoryInterface
+         * @var EventStoreRepositoryInterface $eventStore
          */
-        $eventStore = new FakeEventStoreRepository($eventStreamRepositoryMock);
-        $uuid = Uuid::fromString($notification->getId());
+        $eventStore = new FakeEventStoreRepository($eventStreamRepositoryStub);
+
         $eventStore->storeEvents(
             $uuid,
             get_class($notification),
@@ -56,12 +63,17 @@ class EventStoreRepositoryTest extends KernelTestCase
         $this->assertSame(StatusEnum::FAILED, $notification->getStatus());
         $this->assertSame(2, $notification->countEvents());
 
-        $eventStreamRepositoryMock = $this->createMock(EventStreamRepositoryInterface::class);
+        $uuid = Uuid::fromString($notification->getId());
+
+        /**
+         * @var MockObjectStub|EventStreamRepositoryInterface $eventStreamRepositoryStub
+         */
+        $eventStreamRepositoryStub = $this->createEventStreamRepositoryStub($uuid);
+
         /**
          * @var EventStoreRepositoryInterface
          */
-        $eventStore = new FakeEventStoreRepository($eventStreamRepositoryMock);
-        $uuid = Uuid::fromString($notification->getId());
+        $eventStore = new FakeEventStoreRepository($eventStreamRepositoryStub);
         $eventStore->storeEvents(
             $uuid,
             get_class($notification),
@@ -75,5 +87,19 @@ class EventStoreRepositoryTest extends KernelTestCase
          */
         $notificationAgregade = $eventStore->aggregate($uuid, Notification::class);
         $this->assertSame(StatusEnum::FAILED, $notificationAgregade->getStatus());
+    }
+
+    private function createEventStreamRepositoryStub(Uuid $uuid): MockObjectStub|EventStreamRepositoryInterface
+    {
+        /**
+         * @var MockObjectStub|EventStreamRepositoryInterface $eventStreamRepositoryStub
+         */
+        $eventStreamRepositoryStub = $this->createStub(EventStreamRepositoryInterface::class);
+
+        $es = EventStream::createEmptyStream($uuid);
+        $eventStreamRepositoryStub->method('exist')->willReturn(false);
+        $eventStreamRepositoryStub->method('create')->willReturn($es);
+
+        return $eventStreamRepositoryStub;
     }
 }
