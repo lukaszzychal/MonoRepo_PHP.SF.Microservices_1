@@ -33,6 +33,13 @@ services:
 
 when@test:
     services:  
+        App\NF\Infrastructure\Repository\EventStoreRepositoryInterface:
+            alias: App\NF\Infrastructure\Repository\DoctrineEventStoreRepository
+            public: true 
+
+        App\NF\Infrastructure\Repository\EventStreamRepositoryInterface:
+            alias: App\NF\Infrastructure\Repository\DoctrineEventStreamRepository
+            public: true
 
         App\NF\Infrastructure\Transports\DomainEvent\DomainEventBusInterface:
             alias: App\NF\Infrastructure\Transports\DomainEvent\DomainEventBus
