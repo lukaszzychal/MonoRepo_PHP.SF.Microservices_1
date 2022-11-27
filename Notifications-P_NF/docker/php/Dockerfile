@@ -9,6 +9,8 @@ RUN  apk add --update --no-cache  --virtual .build-dependencies $PHPIZE_DEPS \
 
 COPY --from=composer/composer /usr/bin/composer /usr/bin/composer
 
+COPY xdebug.ini.dev 82d5cc926001:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
 RUN apk add --no-cache bash 
 RUN curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.alpine.sh' | bash 
 RUN apk add symfony-cli
