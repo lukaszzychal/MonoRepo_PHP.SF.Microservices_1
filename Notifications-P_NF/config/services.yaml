@@ -20,7 +20,7 @@ services:
         exclude:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
-            - '../src/NF/Domain'
+            - '../src/NF/Domain/Enum,Event,Model'
             - '../src/Kernel.php'
 
     # add more service definitions when explicit configuration is needed
@@ -44,3 +44,5 @@ when@test:
         App\NF\Infrastructure\Transports\DomainEvent\DomainEventBusInterface:
             alias: App\NF\Infrastructure\Transports\DomainEvent\DomainEventBus
             public: true
+
+    
