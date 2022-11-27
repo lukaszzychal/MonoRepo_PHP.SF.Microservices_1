@@ -5,75 +5,38 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Listen for Xdebug ${workspaceRoot}",
+            "name": "Launch built-in server and debug",
             "type": "php",
             "request": "launch",
-            "port": 9000,
-            "pathMappings": {
-                "/var/www/html": "${workspaceRoot}/src",
+            "runtimeArgs": [
+                "-S",
+                "localhost:8000",
+                "-t",
+                "."
+            ],
+            "port": 9003,
+            "serverReadyAction": {
+                "action": "openExternally"
             }
         },
         {
-            "name": "Listen for Xdebug 2 ${workspaceFolder}",
-            "type": "php",
-            "request": "launch",
-            "port": 9000,
-            "pathMappings": {
-                "/var/www/html": "${workspaceFolder}/src",
-            }
-        },
-        
-
-        {
-            "name": "Listen for Xdebug",
-            "type": "php",
-            "request": "launch",
-            "port": 9003
-        },
-        {
-            "name": "Listen for Xdebug",
-            "type": "php",
-            "request": "launch",
-            "port": 9003
-        },
-        {
-            "name": "Listen for Xdebug",
-            "type": "php",
-            "request": "launch",
-            "port": 9003
-        },
-        {
-            "name": "Launch currently open script",
+            "name": "Debug current script in console",
             "type": "php",
             "request": "launch",
             "program": "${file}",
             "cwd": "${fileDirname}",
-            "port": 0,
-            "runtimeArgs": [
-                "-dxdebug.start_with_request=yes"
-            ],
-            "env": {
-                "XDEBUG_MODE": "debug,develop",
-                "XDEBUG_CONFIG": "client_port=${port}"
-            }
+            "externalConsole": false,
+            "port": 9003
         },
         {
-            "name": "Launch Built-in web server",
+            "name": "Listen for Xdebug",
             "type": "php",
             "request": "launch",
-            "runtimeArgs": [
-                "-dxdebug.mode=debug",
-                "-dxdebug.start_with_request=yes",
-                "-S",
-                "localhost:0"
-            ],
-            "program": "",
-            "cwd": "${workspaceRoot}",
             "port": 9003,
-            "serverReadyAction": {
-                "pattern": "Development Server \\(http://localhost:([0-9]+)\\) started",
-                "uriFormat": "http://localhost:%s",
-                "action": "openExternally"
+            // server -> local
+            "pathMappings": {
+                // "/var/www/html": "d:/Projekty/MonoRepo_PHP.Symfony.Microservices_1/xdebug/",
+                "/var/www/html": "d:/Projekty/MonoRepo_PHP.Symfony.Microservices_1/Notifications-P_NF/",
             }
         }
     ]
