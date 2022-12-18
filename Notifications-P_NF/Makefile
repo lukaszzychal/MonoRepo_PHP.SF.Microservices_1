@@ -10,5 +10,6 @@ migration.make: ; ./docker/cmd ./bin/console doctrine:migrations:diff
 migration.run: ; ./docker/cmd ./bin/console doctrine:migrations:migrate  \
 	&& ./docker/cmd ./bin/console doctrine:migrations:migrate  --env=test 
 
+migration.run.full: ; make database.drop database.create migration.run
 
 test: ; docker/symfony/test/test
