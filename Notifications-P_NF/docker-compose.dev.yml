@@ -4,8 +4,8 @@ services:
   php:
     container_name: PHP_P_NF
     build:
-      context: ./docker/php
-      dockerfile: ./Dockerfile
+      context: .
+      dockerfile: ./docker/php/Dockerfile
     ports:
       - 8002:8000
     volumes:

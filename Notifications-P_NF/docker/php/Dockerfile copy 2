@@ -1,4 +1,9 @@
-FROM php:8.1-fpm-alpine 
+FROM composer as builder 
+WORKDIR /var/www/html
+COPY ./composer.* ./
+RUN composer install
+
+FROM php:8.1-fpm-alpine AS base
 LABEL Name=P_AE-LukaszZychal Version=0.0.1
 WORKDIR /var/www/html
 COPY ./ /var/www/html
@@ -19,16 +24,17 @@ RUN pecl install apcu && docker-php-ext-enable apcu && pecl clear-cache
 
 RUN curl -sS https://get.symfony.com/cli/installer | bash
 COPY --from=composer/composer /usr/bin/composer /usr/bin/composer
-
- 
-
-# RUN addgroup -S nf && adduser -S nf -G nf
-# USER nf:nf
-
-# CMD [ "composer", "install" ] 
+RUN composer install
+ # Rozwiązaneie tymczasowe
+RUN chmod -R ugo+rwx .
 
 EXPOSE 80
 
-
-
-
+# FROM composer as builder
+# WORKDIR /app/
+# COPY composer.* ./
+# RUN composer install
+# ...
+# FROM php:7.1-fpm-alpine
+# ...
+# COPY --from=builder /app/vendor /var/www/vendor
