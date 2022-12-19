@@ -18,7 +18,7 @@ class SendEmailCommandTest extends EmailNotificationTestCase
 {
     public function testSendEEmail(): void
     {
-        $this->markTestSkipped(' To fix after refactory');
+
         $command = new SendEmailCommand(
             TypeEnum::EMAIL->value,
             'my.email@test',
