@@ -6,3 +6,4 @@ $PWD/docker/symfony/vendor-install
 # # docker/symfony/create_project
 
 $PWD/docker/symfony/run-server-symfony
+make migration.run.full

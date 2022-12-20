@@ -8,6 +8,7 @@ services:
       dockerfile: ./docker/php/Dockerfile
     ports:
       - 8002:8000
+      - 9003:9003 
     volumes:
       - ./:/var/www/html
       - ./var/xdebug/xdebug:/logs/xdebug

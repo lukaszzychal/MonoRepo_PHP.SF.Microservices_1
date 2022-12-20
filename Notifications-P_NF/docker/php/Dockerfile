@@ -21,6 +21,7 @@ RUN apk add symfony-cli
 
 COPY --from=composer/composer /usr/bin/composer /usr/bin/composer
 COPY ./ /var/www/html
+RUN mkdir -p ./var/cache ./var/dev && chmod -R 777 ./var/
 EXPOSE 80
 
 

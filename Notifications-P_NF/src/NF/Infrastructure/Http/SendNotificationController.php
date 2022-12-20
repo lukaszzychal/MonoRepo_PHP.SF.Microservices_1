@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace App\NF\Infrastructure\Http;
 
-use App\NF\Infrastructure\Event\CreateNotificationEvent;
-use App\NF\Infrastructure\Response\NotificationResponse;
+use App\NF\Infrastructure\Factory\NotificationFactory;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -17,7 +16,8 @@ class SendNotificationController extends AbstractController
 {
     public function __construct(
         private EventDispatcherInterface $eventDispatcher,
-        private LoggerInterface $logger // @phpstan-ignore-line
+        private LoggerInterface $logger, // @phpstan-ignore-line
+        private NotificationFactory $notificationFactory
     ) {
     }
 
@@ -25,10 +25,10 @@ class SendNotificationController extends AbstractController
     public function notification(Request $request): JsonResponse
     {
         $this->eventDispatcher->dispatch(
-            new CreateNotificationEvent($request),
-            CreateNotificationEvent::NAME
+            $this->notificationFactory->command($request),
+            $this->notificationFactory->getNameCommand()
         );
 
-        return new NotificationResponse();
+        return $this->notificationFactory->response();
     }
 }
