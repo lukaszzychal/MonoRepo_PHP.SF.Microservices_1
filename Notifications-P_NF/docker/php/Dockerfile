@@ -17,7 +17,8 @@ RUN pecl install apcu && docker-php-ext-enable apcu && pecl clear-cache
         intl \
  && docker-php-ext-enable intl 
 
-RUN curl -sS https://get.symfony.com/cli/installer | bash
+RUN curl -sS https://get.symfony.com/cli/installer | bash \
+ $ mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
 COPY --from=composer/composer /usr/bin/composer /usr/bin/composer
 
  
