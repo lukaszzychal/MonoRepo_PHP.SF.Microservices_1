@@ -10,7 +10,7 @@ use Webmozart\Assert\InvalidArgumentException;
 
 final class NotificationId
 {
-    private readonly string $uuid;
+    public readonly string $uuid;
 
     public function __construct(string $uuid)
     {
@@ -32,6 +32,11 @@ final class NotificationId
     public static function fromUUID(Uuid $uuid): self
     {
         return new self((string) $uuid);
+    }
+
+    public function asUuid(): Uuid
+    {
+        return Uuid::fromString($this->uuid);
     }
 
     public static function random(): self

@@ -29,12 +29,12 @@ final class CreateNotificationSubscribe implements EventSubscriberInterface
     {
         return [
             CreateNotificationEvent::NAME => [
-                'send',
+                'create',
             ],
         ];
     }
 
-    public function send(CreateNotificationEvent $createNotificationEvent): void
+    public function create(CreateNotificationEvent $createNotificationEvent): void
     {
         $request = $createNotificationEvent->request;
         $notifiRequeest = NotificationRequest::fromRequest($request);
@@ -47,6 +47,7 @@ final class CreateNotificationSubscribe implements EventSubscriberInterface
         }
 
         $obj = $this->deserializeRequest($request);
+
         $this->crateNotification($obj);
     }
 

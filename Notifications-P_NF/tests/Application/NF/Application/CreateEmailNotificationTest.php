@@ -14,7 +14,6 @@ class CreateEmailNotificationTest extends EmailNotificationTestCase
 {
     public function testSendEmailNotificaton()
     {
-        $this->markTestSkipped(' To fix after refactory');
         $client = $this->createClient();
         $client->request(
             'POST',

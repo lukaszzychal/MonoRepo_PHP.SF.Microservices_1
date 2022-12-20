@@ -7,30 +7,35 @@ namespace App\NF\Domain\Model;
 use App\NF\Domain\Enum\StatusEnum;
 use App\NF\Domain\Enum\TypeEnum;
 use App\NF\Domain\Event\CreatedNotificationEvent;
-use App\NF\Domain\Event\DomainEventInterface;
 use App\NF\Domain\Event\EventLogs\EventLogsTrait;
 use App\NF\Domain\Event\EventLogs\EventLogsWriteInterface;
 use App\NF\Domain\Event\FailedSentNotificationEvent;
-use Symfony\Component\Serializer\Annotation\DiscriminatorMap;
+use App\NF\Domain\Event\SentNotificationEvent;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Uuid;
 
-// #[DiscriminatorMap(typeProperty: 'type', mapping: [
-//     'email' => NotificationEmail::class,
-// ])]
+#[ORM\Entity()]
+#[ORM\Table(name: 'notification', schema: 'notification')]
 class Notification implements AggregateInterface, EventLogsWriteInterface
 {
     use EventLogsTrait;
 
+    #[ORM\Column()]
     private StatusEnum $status;
 
     private function __construct(
-        private readonly NotificationId $id,
+        #[ORM\Id]
+        #[ORM\Column(type: 'uuid')]
+        private readonly Uuid $id,
+        #[ORM\Column()]
         private readonly TypeEnum $type,
+        #[ORM\Column(type: 'json', options: ['jsonb' => true])]
         private readonly DetailsNotification $detailsNotification
     ) {
         $this->status = StatusEnum::CREATED;
         $this->addEvent(
             new CreatedNotificationEvent(
-                $this->id,
+                NotificationId::fromUUID($this->id),
                 $this->type,
                 $this->status,
                 $this->detailsNotification,
@@ -46,12 +51,23 @@ class Notification implements AggregateInterface, EventLogsWriteInterface
         TypeEnum $type,
         DetailsNotification $detailsNotification
     ): self {
-        return new self($id, $type, $detailsNotification);
+        return new self($id->asUuid(), $type, $detailsNotification);
     }
 
     public function send(): void
     {
         $this->status = StatusEnum::SENT;
+        $this->addEvent(
+            new SentNotificationEvent(
+                NotificationId::fromUUID($this->id),
+                $this->type,
+                $this->status,
+                $this->detailsNotification,
+                get_class($this),
+                $this,
+                __METHOD__
+            )
+        );
     }
 
     public function failedSent(): void
@@ -59,7 +75,7 @@ class Notification implements AggregateInterface, EventLogsWriteInterface
         $this->status = StatusEnum::FAILED;
         $this->addEvent(
             new FailedSentNotificationEvent(
-                $this->id,
+                NotificationId::fromUUID($this->id),
                 $this->type,
                 $this->status,
                 $this->detailsNotification,
@@ -82,7 +98,7 @@ class Notification implements AggregateInterface, EventLogsWriteInterface
      */
     public function getId(): NotificationId
     {
-        return $this->id;
+        return NotificationId::fromUUID($this->id);
     }
 
     /**
@@ -92,18 +108,4 @@ class Notification implements AggregateInterface, EventLogsWriteInterface
     {
         return $this->status;
     }
-
-    // /**
-    //  * @todo zrobić osobny service
-    //  *
-    //  * @param DomainEventInterface $domainEvent
-    //  * @return void
-    //  */
-    // public  function apply(DomainEventInterface $domainEvent): void
-    // {
-    //     $this->id = NotificationId::fromUUID($domainEvent->getId());
-    //     $this->status = $domainEvent->getStatus();
-    //     $this->type = $domainEvent->getType();
-    //     $this->detailsNotification = $domainEvent->getDetails();
-    // }
 }

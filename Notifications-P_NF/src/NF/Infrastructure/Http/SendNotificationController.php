@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\NF\Infrastructure\Http;
 
-use App\NF\Infrastructure\Event\SendNotificationEvent;
+use App\NF\Infrastructure\Event\CreateNotificationEvent;
 use App\NF\Infrastructure\Response\NotificationResponse;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,10 +24,10 @@ class SendNotificationController extends AbstractController
     #[Route('/notification', methods: ['POST'])]
     public function notification(Request $request): JsonResponse
     {
-        // $this->eventDispatcher->dispatch(
-        //     new SendNotificationEvent($request),
-        //     SendNotificationEvent::NAME
-        // );
+        $this->eventDispatcher->dispatch(
+            new CreateNotificationEvent($request),
+            CreateNotificationEvent::NAME
+        );
 
         return new NotificationResponse();
     }

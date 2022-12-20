@@ -70,9 +70,9 @@ jobs:
 
 
       -    
-       name: PhpStan
-       run: |
-        echo "PhpStan"
+        name: PhpStan
+        run: |
+          echo "PhpStan"
           sudo chmod -R +x ${PWD}/docker/.
           sudo chmod -R +x ${PWD}/vendor/.
           echo "php-cs-fixer script"
@@ -85,6 +85,14 @@ jobs:
           sudo chmod -R +x ${PWD}/vendor/.
           echo "php-cs-fixer script"
           ${PWD}/docker/symfony/static-code-analysis/php-cs-fixer-analysee
+
+      - 
+        name: Deptrac
+        run: | 
+          echo "Deptrac"
+          sudo chmod -R +x ${PWD}/docker/.
+          sudo chmod -R +x ${PWD}/vendor/.
+          ${PWD}/docker/cmd ./vendor/bin/deptrac 
           
 
   Test:

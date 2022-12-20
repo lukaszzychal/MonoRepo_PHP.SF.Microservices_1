@@ -18,6 +18,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @group Integration
+ * @group icns
  */
 class CreateNotificationSubscribeTest extends EmailNotificationTestCase
 {
@@ -30,7 +31,6 @@ class CreateNotificationSubscribeTest extends EmailNotificationTestCase
 
     protected function setUp(): void
     {
-        $this->markTestSkipped(' To fix after refactory');
         $params = $this->getContainer()->get(ParameterBagInterface::class);
         $this->appToken = $params->get('app_token');
         $this->serializer = $this->getContainer()->get(SerializerInterface::class);
