@@ -31,7 +31,6 @@ class CreateNotificationSubscribeTest extends EmailNotificationTestCase
 
     protected function setUp(): void
     {
-
         $params = $this->getContainer()->get(ParameterBagInterface::class);
         $this->appToken = $params->get('app_token');
         $this->serializer = $this->getContainer()->get(SerializerInterface::class);
@@ -149,7 +148,7 @@ class CreateNotificationSubscribeTest extends EmailNotificationTestCase
             [],
             [],
             [
-                'HTTP_AUTHORIZATION' => 'Bearer ' . $this->appToken,
+                'HTTP_AUTHORIZATION' => 'Bearer '.$this->appToken,
             ],
             json_encode([
                 'type' => 'email',

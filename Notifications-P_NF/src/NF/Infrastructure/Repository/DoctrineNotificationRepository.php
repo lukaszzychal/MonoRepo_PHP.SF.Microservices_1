@@ -18,6 +18,10 @@ class DoctrineNotificationRepository extends ServiceEntityRepository implements 
         private readonly LoggerInterface $logger,
         private readonly EventStoreRepositoryInterface $eventStoreRepository
     ) {
+        /*
+         * @var ManagerRegistry $registry
+         * @var string $entityClass
+         */
         parent::__construct($registry, Notification::class);
     }
 
@@ -26,7 +30,7 @@ class DoctrineNotificationRepository extends ServiceEntityRepository implements 
         $this->_em->persist($notification);
         $this->_em->flush();
 
-        $this->logger->info('Save data notification #' . $notification->getId());
+        $this->logger->info('Save data notification #'.$notification->getId());
 
         $this->eventStoreRepository->storeEvents(
             Uuid::fromString((string) $notification->getId()),

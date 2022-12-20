@@ -7,12 +7,10 @@ namespace App\NF\Domain\Model;
 use App\NF\Domain\Enum\StatusEnum;
 use App\NF\Domain\Enum\TypeEnum;
 use App\NF\Domain\Event\CreatedNotificationEvent;
-use App\NF\Domain\Event\DomainEventInterface;
 use App\NF\Domain\Event\EventLogs\EventLogsTrait;
 use App\NF\Domain\Event\EventLogs\EventLogsWriteInterface;
 use App\NF\Domain\Event\FailedSentNotificationEvent;
 use App\NF\Domain\Event\SentNotificationEvent;
-use Symfony\Component\Serializer\Annotation\DiscriminatorMap;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
@@ -29,7 +27,6 @@ class Notification implements AggregateInterface, EventLogsWriteInterface
         #[ORM\Id]
         #[ORM\Column(type: 'uuid')]
         private readonly Uuid $id,
-
         #[ORM\Column()]
         private readonly TypeEnum $type,
         #[ORM\Column(type: 'json', options: ['jsonb' => true])]

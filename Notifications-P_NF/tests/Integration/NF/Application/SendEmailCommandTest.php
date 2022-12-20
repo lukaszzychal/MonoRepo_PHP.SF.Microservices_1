@@ -18,7 +18,6 @@ class SendEmailCommandTest extends EmailNotificationTestCase
 {
     public function testSendEEmail(): void
     {
-
         $command = new SendEmailCommand(
             TypeEnum::EMAIL->value,
             'my.email@test',

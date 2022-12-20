@@ -9,13 +9,9 @@ use App\NF\Application\Write\Handler\CreateNotificationEventHandler;
 use App\NF\Domain\Enum\TypeEnum;
 use App\NF\Domain\Model\Notification;
 use App\NF\Domain\Repository\NotificationRepositoryInterface;
-use App\NF\Infrastructure\Event\CreateNotificationEvent;
 use App\Tests\EmailNotificationTestCase;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\OrderBy;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Messenger\MessageBusInterface;
-
 
 /**
  * @group gg1
@@ -51,7 +47,6 @@ class CreateEmailNotifcationCommandTest extends EmailNotificationTestCase
         $result = $qb->getQuery()->getArrayResult();
         $this->assertSame($command->subject, $result[count($result) - 1]['detailsNotification']['subject']);
         $this->assertSame($command->context, $result[count($result) - 1]['detailsNotification']['body']);
-
 
         $transport = $this->getTransport();
         $this->assertCount(1, $transport->getSent());

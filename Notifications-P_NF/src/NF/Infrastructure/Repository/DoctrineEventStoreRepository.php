@@ -54,7 +54,7 @@ class DoctrineEventStoreRepository implements EventStoreRepositoryInterface
         );
 
         $stream->updateDate($event->getDateCalled());
-        /**
+        /*
          * @todo static ?? - Przypomniec sobie po co tak zrobiłęm
          */
         self::$eventStore[(string) $stream->getId()][] = $storedEvent;

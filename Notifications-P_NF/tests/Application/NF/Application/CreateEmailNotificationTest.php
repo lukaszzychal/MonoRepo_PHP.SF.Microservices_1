@@ -14,7 +14,6 @@ class CreateEmailNotificationTest extends EmailNotificationTestCase
 {
     public function testSendEmailNotificaton()
     {
-
         $client = $this->createClient();
         $client->request(
             'POST',

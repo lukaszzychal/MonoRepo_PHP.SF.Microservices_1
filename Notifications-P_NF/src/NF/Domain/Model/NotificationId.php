@@ -38,6 +38,7 @@ final class NotificationId
     {
         return Uuid::fromString($this->uuid);
     }
+
     public static function random(): self
     {
         return self::fromUUID(

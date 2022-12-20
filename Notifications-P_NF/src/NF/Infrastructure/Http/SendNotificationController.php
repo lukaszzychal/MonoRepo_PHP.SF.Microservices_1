@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\NF\Infrastructure\Http;
 
 use App\NF\Infrastructure\Event\CreateNotificationEvent;
-use App\NF\Infrastructure\Event\SendNotificationEvent;
 use App\NF\Infrastructure\Response\NotificationResponse;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

@@ -9,12 +9,11 @@ class FakeDoctrineNotificationRepository implements NotificationRepositoryInterf
 {
     /**
      * @var Notification[]
-     *
-     * @var array
      */
     public array $notifications = [];
+
     public function save(Notification $notification): void
     {
-        $this->notifications[(string)$notification->getId()] = $notification;
+        $this->notifications[(string) $notification->getId()] = $notification;
     }
 }

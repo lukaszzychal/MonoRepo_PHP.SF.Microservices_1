@@ -11,7 +11,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
 
-
 /**
  * @group integration
  * @group infrastructure
@@ -19,7 +18,6 @@ use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
  */
 class DoctrineNotificationRepositoryTest extends KernelTestCase
 {
-
     use ReloadDatabaseTrait;
 
     public function testSaveNotification(): void
@@ -42,7 +40,6 @@ class DoctrineNotificationRepositoryTest extends KernelTestCase
 
     private function countRow(): int
     {
-
         /**
          * @var EntityManagerInterface
          */

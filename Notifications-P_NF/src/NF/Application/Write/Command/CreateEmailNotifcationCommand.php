@@ -10,7 +10,7 @@ final class CreateEmailNotifcationCommand implements CommandInterface
         public string $type,
         public string $email,
         public string $context,
-        public ?string $subject = ''
+        public string $subject = ''
     ) {
     }
 }

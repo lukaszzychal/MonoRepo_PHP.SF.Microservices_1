@@ -11,7 +11,6 @@ use App\NF\Domain\Model\EmailDetailsNotification;
 use App\NF\Domain\Model\Notification;
 use App\NF\Domain\Model\NotificationId;
 use App\NF\Domain\Repository\NotificationRepositoryInterface;
-use Symfony\Component\Mailer\Envelope;
 use Symfony\Component\Messenger\Envelope as MessengerEnvelope;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -19,15 +18,14 @@ use Symfony\Component\Messenger\Stamp\DispatchAfterCurrentBusStamp;
 
 final class CreateNotificationEventHandler implements MessageHandlerInterface
 {
-
     public function __construct(
         private readonly NotificationRepositoryInterface $notificationRepository,
         private readonly MessageBusInterface $commandBus
     ) {
     }
+
     public function __invoke(CreateEmailNotifcationCommand $command): void
     {
-
         $notificationId = NotificationId::random();
         $notification = Notification::create(
             $notificationId,
