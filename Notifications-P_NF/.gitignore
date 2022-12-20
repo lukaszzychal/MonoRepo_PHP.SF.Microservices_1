@@ -1,5 +1,7 @@
 docker-compose.yml
 tmp_code
+**/.deptrac.cache
+
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
