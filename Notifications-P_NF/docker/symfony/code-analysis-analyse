@@ -2,5 +2,3 @@
 
 docker/symfony/static-code-analysis/phpstan
 docker/symfony/static-code-analysis/php-cs-fixer-analysee
-echo ":: Run Phpmetrics Analyse"
-docker/symfony/cmd vendor/bin/phpmetrics --report-html="./report" ./src

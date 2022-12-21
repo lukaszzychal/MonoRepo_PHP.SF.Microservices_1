@@ -1,5 +1,5 @@
 #!/bin/bash
 
 docker/symfony/code-analysis-fix
-echo ":: Run PHP Metrics "
-docker/symfony/cmd vendor/bin/phpmetrics --report-html="./report" ./src
+echo ":: Run PHP Metrics Analyse"
+docker/symfony/cmd vendor/bin/phpmetrics --report-html="./var/report" ./src
