@@ -36,6 +36,7 @@
     },
     "require-dev": {
         "hautelook/alice-bundle": "^2.7",
+        "phpmetrics/phpmetrics": "^2.8",
         "phpstan/phpstan": "^1.8",
         "phpunit/phpunit": "^9.5",
         "qossmic/deptrac-shim": "^1.0",
